@@ -1,38 +1,74 @@
-.App {
-  text-align: center;
+.dashboard {
+  background-color: #F0F2F5;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.dashboard .sidebar-area {
+  padding: 30px 40px;
+  height: 100vh;
+  background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+  border-radius: 15px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.dashboard .sidebar-area .logo-area {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding-top: 20px;
 }
-
-.App-link {
-  color: #61dafb;
+.dashboard .sidebar-area .logo-area img {
+  width: 2rem;
+  margin-right: 15px;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dashboard .sidebar-area .logo-area h4 {
+  color: #fff;
 }
+.dashboard .sidebar-area hr {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255), rgba(255, 255, 255, 0)) !important;
+  flex-shrink: 0;
+  border-top: 0px solid rgba(0, 0, 0, 0.08);
+  border-right: 0px solid rgba(0, 0, 0, 0.08);
+  border-left: 0px solid rgba(0, 0, 0, 0.08);
+  height: 0.0625rem;
+  margin: 1rem 0px;
+  border-bottom: none;
+  opacity: 0.25;
+  background-color: transparent;
+}
+.dashboard .sidebar-area .single-nav {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  margin: 1rem 0;
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.3s;
+  border-radius: 15px;
+}
+.dashboard .sidebar-area .single-nav:hover {
+  background-color: rgba(128, 128, 128, 0.37);
+}
+.dashboard .sidebar-area .single-nav h5 {
+  margin-left: 15px;
+  margin-bottom: 0 !important;
+}
+.dashboard .dashboard-area {
+  margin-top: 30px;
+}
+.dashboard .dashboard-area .top-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dashboard .dashboard-area .top-area .left-side h5 {
+  letter-spacing: 0.0075em;
+  overflow: hidden;
+  text-transform: capitalize;
+  vertical-align: unset;
+  text-decoration: none;
+  color: rgb(52, 71, 103);
+  font-weight: 700;
+}
+.dashboard .dashboard-area .top-area .right-side img {
+  width: 3rem;
+  margin-left: 16px;
+}
+.dashboard .dashboard-area .top-area .right-side .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 14px !important;
+}/*# sourceMappingURL=App.css.map */

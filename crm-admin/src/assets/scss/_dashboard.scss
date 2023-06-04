@@ -1,0 +1,93 @@
+@import './partials/variables';
+
+.dashboard {
+    background-color: #F0F2F5;
+
+    .sidebar-area {
+        padding: 30px 40px;
+        height: 100vh;
+        background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+        border-radius: 15px;
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            padding-top: 20px;
+
+            img {
+                width: 2rem;
+                margin-right: 15px;
+            }
+
+            h4 {
+                color: $colorWhite;
+            }
+        }
+
+        hr {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255), rgba(255, 255, 255, 0)) !important;
+            flex-shrink: 0;
+            border-top: 0px solid rgba(0, 0, 0, 0.08);
+            border-right: 0px solid rgba(0, 0, 0, 0.08);
+            border-left: 0px solid rgba(0, 0, 0, 0.08);
+            height: 0.0625rem;
+            margin: 1rem 0px;
+            border-bottom: none;
+            opacity: 0.25;
+            background-color: transparent;
+        }
+
+        .single-nav {
+            display: flex;
+            align-items: center;
+            color: $colorWhite;
+            margin: 1rem 0;
+            cursor: pointer;
+            padding: 10px;
+            transition: all .3s;
+            border-radius: 15px;
+
+            &:hover {
+                background-color: rgba(128, 128, 128, 0.37);
+            }
+
+            h5 {
+                margin-left: 15px;
+                margin-bottom: 0 !important;
+            }
+        }
+
+    }
+
+    .dashboard-area {
+        margin-top: 30px;
+        .top-area{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .left-side{
+                h5 {
+                    letter-spacing: 0.0075em;
+                    overflow: hidden;
+                    text-transform: capitalize;
+                    vertical-align: unset;
+                    text-decoration: none;
+                    color: rgb(52, 71, 103);
+                    font-weight: 700;
+                }
+            }
+            .right-side{
+                img{
+                    width: 3rem;
+                    margin-left: 16px;
+
+                }
+                .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+                    padding: 14px !important;
+                }
+
+            }
+        }
+     
+    }
+}
