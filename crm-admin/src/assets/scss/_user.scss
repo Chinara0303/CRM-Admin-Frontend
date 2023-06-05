@@ -1,0 +1,47 @@
+@import './partials/variables';
+
+.signin-area {
+    height: 617px;
+    background-size: cover;
+    background-position: center;
+    margin-top: 30px;
+
+    .css-0 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 100px;
+
+        .css-1ps6pg7-MuiPaper-root {
+            width: 35%;
+            padding: 20px;
+        }
+    }
+
+    .top-area {
+        text-align: center;
+        width: 80%;
+        margin: 0 auto;
+        background-color: $mainColor;
+        padding: 20px;
+        color: $colorWhite;
+        position: relative;
+        top: -55px;
+        border-radius: 4px;
+        box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .inputs {
+        .css-1u3bzj6-MuiFormControl-root-MuiTextField-root{
+            width: 100%;
+            margin-bottom: 30px;
+        }
+    }
+    .css-jsexje-MuiSwitch-thumb{
+        background-color: $mainColor !important;
+    }
+    .css-sghohy-MuiButtonBase-root-MuiButton-root{
+        margin-top: 30px;
+        background-color: $mainColor !important;
+    }
+}

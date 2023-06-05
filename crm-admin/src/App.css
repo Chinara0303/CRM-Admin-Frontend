@@ -1,25 +1,35 @@
-.dashboard {
+.active {
+  background-color: #174873 !important;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
+
+.navigate {
+  text-decoration: none !important;
+}
+
+.body {
   background-color: #F0F2F5;
 }
-.dashboard .sidebar-area {
+.body .sidebar-area {
+  margin-top: 20px;
   padding: 30px 40px;
   height: 100vh;
   background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
   border-radius: 15px;
 }
-.dashboard .sidebar-area .logo-area {
+.body .sidebar-area .logo-area {
   display: flex;
   align-items: center;
   padding-top: 20px;
 }
-.dashboard .sidebar-area .logo-area img {
+.body .sidebar-area .logo-area img {
   width: 2rem;
   margin-right: 15px;
 }
-.dashboard .sidebar-area .logo-area h4 {
+.body .sidebar-area .logo-area h4 {
   color: #fff;
 }
-.dashboard .sidebar-area hr {
+.body .sidebar-area hr {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255), rgba(255, 255, 255, 0)) !important;
   flex-shrink: 0;
   border-top: 0px solid rgba(0, 0, 0, 0.08);
@@ -31,7 +41,7 @@
   opacity: 0.25;
   background-color: transparent;
 }
-.dashboard .sidebar-area .single-nav {
+.body .sidebar-area .single-nav {
   display: flex;
   align-items: center;
   color: #fff;
@@ -41,22 +51,22 @@
   transition: all 0.3s;
   border-radius: 15px;
 }
-.dashboard .sidebar-area .single-nav:hover {
+.body .sidebar-area .single-nav:hover {
   background-color: rgba(128, 128, 128, 0.37);
 }
-.dashboard .sidebar-area .single-nav h5 {
+.body .sidebar-area .single-nav h5 {
   margin-left: 15px;
   margin-bottom: 0 !important;
 }
-.dashboard .dashboard-area {
+.body .nav-area {
   margin-top: 30px;
 }
-.dashboard .dashboard-area .top-area {
+.body .nav-area .top-area {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.dashboard .dashboard-area .top-area .left-side h5 {
+.body .nav-area .top-area .left-side h5 {
   letter-spacing: 0.0075em;
   overflow: hidden;
   text-transform: capitalize;
@@ -65,10 +75,54 @@
   color: rgb(52, 71, 103);
   font-weight: 700;
 }
-.dashboard .dashboard-area .top-area .right-side img {
+.body .nav-area .top-area .right-side img {
   width: 3rem;
   margin-left: 16px;
 }
-.dashboard .dashboard-area .top-area .right-side .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+.body .nav-area .top-area .right-side .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 14px !important;
+}
+
+.room-area {
+  margin-top: 60px;
+}
+
+.signin-area {
+  height: 617px;
+  background-size: cover;
+  background-position: center;
+  margin-top: 30px;
+}
+.signin-area .css-0 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px;
+}
+.signin-area .css-0 .css-1ps6pg7-MuiPaper-root {
+  width: 35%;
+  padding: 20px;
+}
+.signin-area .top-area {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  background-color: #174873;
+  padding: 20px;
+  color: #fff;
+  position: relative;
+  top: -55px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+.signin-area .inputs .css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  width: 100%;
+  margin-bottom: 30px;
+}
+.signin-area .css-jsexje-MuiSwitch-thumb {
+  background-color: #174873 !important;
+}
+.signin-area .css-sghohy-MuiButtonBase-root-MuiButton-root {
+  margin-top: 30px;
+  background-color: #174873 !important;
 }/*# sourceMappingURL=App.css.map */
