@@ -1,19 +1,21 @@
 @import './partials/variables';
-.active{
-    background-color: $mainColor !important;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
-}
-.navigate{
+
+
+
+.navigate {
     text-decoration: none !important;
 }
+
 .body {
     background-color: #F0F2F5;
+
     .sidebar-area {
         margin-top: 20px;
         padding: 30px 40px;
         height: 100vh;
         background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
         border-radius: 15px;
+
         .logo-area {
             display: flex;
             align-items: center;
@@ -41,7 +43,7 @@
             opacity: 0.25;
             background-color: transparent;
         }
-     
+
         .single-nav {
             display: flex;
             align-items: center;
@@ -56,7 +58,7 @@
                 background-color: rgba(128, 128, 128, 0.37);
             }
 
-           
+
             h5 {
                 margin-left: 15px;
                 margin-bottom: 0 !important;
@@ -64,13 +66,16 @@
         }
 
     }
+
     .nav-area {
         margin-top: 30px;
-        .top-area{
+
+        .top-area {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .left-side{
+
+            .left-side {
                 h5 {
                     letter-spacing: 0.0075em;
                     overflow: hidden;
@@ -81,21 +86,20 @@
                     font-weight: 700;
                 }
             }
-            .right-side{
-                img{
+
+            .right-side {
+                img {
                     width: 3rem;
                     margin-left: 16px;
 
                 }
-                .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+
+                .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
                     padding: 14px !important;
                 }
 
             }
         }
-     
+
     }
-}
-.room-area{
-    margin-top: 60px;
 }
