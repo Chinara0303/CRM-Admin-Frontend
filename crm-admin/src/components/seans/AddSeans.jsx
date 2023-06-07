@@ -7,7 +7,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText } from 'reac
 
 function AddSeans() {
   return (
-    <div className='create-area mt-5'>
+    <div className='create-area area mt-5'>
       <div className="title-area">
         <Paper>
           <h4>Create</h4>

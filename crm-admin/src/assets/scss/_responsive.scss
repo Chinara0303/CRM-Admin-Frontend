@@ -1,0 +1,49 @@
+@import './partials/variables';
+
+@media (min-width:0) and (max-width:850px) {
+    .sidebar-area {
+        width: 70% !important;
+        margin-top: 0 !important;
+        border-radius: 0px !important;
+        position: fixed;
+        top: 0;
+        left: -400px;
+        z-index: 9999;
+        transition: .4s !important;
+
+        &.active {
+            left: 0;
+          
+        }
+    }
+    .fixed{
+        left: 0 !important;
+        width: 100% !important;
+    }
+    .body .nav-area .top-area .right-side .active span {
+        &:first-child {
+            background-color: $mainColor !important;
+            transform: rotate(39deg) !important;
+        }
+
+        &:nth-child(2) {
+            opacity: 0 !important;
+        }
+
+        &:last-child {
+            background-color: $mainColor !important;
+            transform: rotate(-41deg) !important;
+        }
+    }
+
+}
+
+@media (min-width:768px) and(max-width:1200px){
+    .sidebar-area{
+        width: 40% !important;
+    }
+   
+    .css-mhc70k-MuiGrid-root{
+        display: block !important;
+    }
+}

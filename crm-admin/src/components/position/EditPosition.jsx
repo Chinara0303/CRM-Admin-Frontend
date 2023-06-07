@@ -8,7 +8,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText } from 'reac
 
 function EditPosition() {
   return (
-    <div className='edit-area'>
+    <div className='edit-area area'>
     <div className="title-area">
         <Paper>
             <h4>Edit</h4>

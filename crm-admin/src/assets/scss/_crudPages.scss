@@ -1,0 +1,132 @@
+@import './partials/variables';
+
+.area {
+    margin-top: 60px;
+    height: 100vh;
+
+    .css-15wwp11-MuiTableHead-root {
+        background-color: $mainColor;
+
+        .css-1ygcj2i-MuiTableCell-root {
+            color: $colorWhite;
+        }
+    }
+
+    .css-1oqqzyl-MuiContainer-root {
+        border-radius: 10px;
+    }
+
+    #demo-customized-menu {
+        background-color: $colorWhite;
+        box-shadow: 'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px';
+    }
+}
+
+.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+    .css-6hp17o-MuiList-root-MuiMenu-list {
+        display: flex !important;
+
+        .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+            justify-content: center !important;
+        }
+
+    }
+}
+
+
+
+.create-area,
+.edit-area,
+.detail-area {
+    .css-1ps6pg7-MuiPaper-root {
+        width: 100%;
+        padding: 30px;
+        margin-top: 30px;
+    }
+
+    .form-control:focus {
+        color: var(--bs-body-color);
+        background-color: var(--bs-body-bg);
+        border-color: #86b7fe;
+        outline: none;
+        box-shadow: none !important;
+    }
+
+    .title-area {
+        position: relative;
+        bottom: -34px;
+
+        .css-1ps6pg7-MuiPaper-root {
+            background-color: $mainColor;
+            color: $colorWhite;
+            padding: 15px;
+        }
+    }
+
+    .single-area {
+        margin: 10px 0;
+        padding: 5px 0;
+        display: block;
+        border-bottom: 1px solid #86b7fe;
+
+        img {
+            border-radius: 100%;
+        }
+
+    }
+
+
+}
+
+.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+    width: 60px !important;
+}
+[type="file"] {
+    display: none  !important;
+}
+
+[type="file"]+ label {
+    background: $secondMainColor;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Rubik', sans-serif;
+    font-size: inherit;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    outline: none;
+    padding: 1rem 50px;
+    position: relative;
+    transition: all 0.3s;
+    vertical-align: middle;
+   
+    &.btn-2 {
+        background-color: $secondMainColor !important;
+        border-radius: 50px !important;
+        overflow: hidden !important;
+        width: 15%;
+        position: relative;
+        font-size: 20px;
+        &::before {
+            color: #fff;
+            content: url('../images/cloud-upload-fill.svg');
+            right: 100%;
+            line-height: 3.3;
+            text-align: center;
+            position: absolute;
+            top: 0px;
+            transition: all 0.3s;
+        }
+    
+        &:hover {
+            background-color: darken(#99c793, 30%);
+    
+            &::before {
+                right: 75%;
+            }
+        }
+    }
+}
+

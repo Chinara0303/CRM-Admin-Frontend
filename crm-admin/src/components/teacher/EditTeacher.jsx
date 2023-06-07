@@ -6,12 +6,12 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText } from 'reactstrap'
 
-function EditRoom() {
+function EditTeacher() {
     return (
         <div className='edit-area area'>
             <div className="title-area">
                 <Paper>
-                   <h4>Edit</h4>
+                    <h4>Edit</h4>
                 </Paper>
             </div>
             <Container maxWidth='lg'>
@@ -20,18 +20,41 @@ function EditRoom() {
                         <Form>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Name</InputGroupText>
+                                    <Input type='file' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Full name</InputGroupText>
                                     <Input type='text' />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText >Capacity</InputGroupText>
-                                    <Input type='number' min='12' max='20' />
+                                    <InputGroupText>Email</InputGroupText>
+                                    <Input type='email' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Age</InputGroupText>
+                                    <Input type='number' min='25' max='55' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Addres</InputGroupText>
+                                    <Input type='text' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Salary</InputGroupText>
+                                    <Input type='text' />
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
-                                <NavLink to='/rooms'>
+                                <NavLink to='/teachers'>
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>
@@ -46,4 +69,4 @@ function EditRoom() {
     )
 }
 
-export default EditRoom
+export default EditTeacher

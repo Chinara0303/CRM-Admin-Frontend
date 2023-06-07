@@ -1,7 +1,5 @@
 @import './partials/variables';
 
-
-
 .navigate {
     text-decoration: none !important;
 }
@@ -12,10 +10,11 @@
     .sidebar-area {
         margin-top: 20px;
         padding: 30px 40px;
-        height: 100vh;
         background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
-        border-radius: 15px;
-
+        height: 100vh;
+        position:fixed;
+        width: 22%;
+        overflow-y: scroll;
         .logo-area {
             display: flex;
             align-items: center;
@@ -64,13 +63,17 @@
                 margin-bottom: 0 !important;
             }
         }
+      
+      
 
     }
 
     .nav-area {
-        margin-top: 30px;
+        margin: 30px 0;
+
 
         .top-area {
+            transition: .4s;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -88,18 +91,58 @@
             }
 
             .right-side {
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img {
                     width: 3rem;
                     margin-left: 16px;
-
+                    background-color: black;
+                    border-radius: 100%;
                 }
 
                 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
                     padding: 14px !important;
                 }
 
+                .hamburger{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    width: 28px;
+                    height: 20px;
+                    margin-left: 10px;
+                    cursor: pointer;
+                    span{
+                        background-color: $mainColor;
+                        height: 3px;
+                        transition: all .4s ease-in;
+                        width: 100%;
+                        transform-origin:left;
+                       
+                    }
+                }
+                
+
+            }
+            .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root{
+                width: 100%;
             }
         }
 
     }
+    .fixed {
+        position: fixed;
+        top: 10px;
+        left: 351px;
+        background: $colorWhite;
+        width: 77%;
+        z-index: 20;
+        padding: 15px 0;
+        box-shadow: rgba(255, 255, 255, 0.9) 0rem 0rem 0.0625rem 0.0625rem inset, rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
+        backdrop-filter: saturate(200%) blur(1.875rem);
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    
 }
+

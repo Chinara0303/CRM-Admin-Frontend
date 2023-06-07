@@ -1,11 +1,10 @@
 import React from 'react'
-import NavArea from '../components/main/NavArea'
 
 function Dashboard() {
 
   return (
-    <>          
-    </>
+    <div className='area'>          
+    </div>
    
   )
 }

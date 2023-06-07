@@ -15,7 +15,7 @@ function Seans() {
       setAnchorEl(null);
     };
   return (
-    <div className='area' style={{ height: 400, width: '100%', }}>
+    <div className='area'>
     <Tooltip title='Add' arrow placement="top-start">
       <NavLink to='/seanses/create'>
         <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />

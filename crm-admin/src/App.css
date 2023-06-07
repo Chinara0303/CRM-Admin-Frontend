@@ -1,3 +1,41 @@
+@media (min-width: 0) and (max-width: 850px) {
+  .sidebar-area {
+    width: 70% !important;
+    margin-top: 0 !important;
+    border-radius: 0px !important;
+    position: fixed;
+    top: 0;
+    left: -400px;
+    z-index: 9999;
+    transition: 0.4s !important;
+  }
+  .sidebar-area.active {
+    left: 0;
+  }
+  .fixed {
+    left: 0 !important;
+    width: 100% !important;
+  }
+  .body .nav-area .top-area .right-side .active span:first-child {
+    background-color: #174873 !important;
+    transform: rotate(39deg) !important;
+  }
+  .body .nav-area .top-area .right-side .active span:nth-child(2) {
+    opacity: 0 !important;
+  }
+  .body .nav-area .top-area .right-side .active span:last-child {
+    background-color: #174873 !important;
+    transform: rotate(-41deg) !important;
+  }
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  .sidebar-area {
+    width: 40% !important;
+  }
+  .css-mhc70k-MuiGrid-root {
+    display: block !important;
+  }
+}
 .navigate {
   text-decoration: none !important;
 }
@@ -8,9 +46,11 @@
 .body .sidebar-area {
   margin-top: 20px;
   padding: 30px 40px;
-  height: 100vh;
   background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
-  border-radius: 15px;
+  height: 100vh;
+  position: fixed;
+  width: 22%;
+  overflow-y: scroll;
 }
 .body .sidebar-area .logo-area {
   display: flex;
@@ -54,9 +94,10 @@
   margin-bottom: 0 !important;
 }
 .body .nav-area {
-  margin-top: 30px;
+  margin: 30px 0;
 }
 .body .nav-area .top-area {
+  transition: 0.4s;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -70,12 +111,51 @@
   color: rgb(52, 71, 103);
   font-weight: 700;
 }
+.body .nav-area .top-area .right-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .body .nav-area .top-area .right-side img {
   width: 3rem;
   margin-left: 16px;
+  background-color: black;
+  border-radius: 100%;
 }
 .body .nav-area .top-area .right-side .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 14px !important;
+}
+.body .nav-area .top-area .right-side .hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.body .nav-area .top-area .right-side .hamburger span {
+  background-color: #174873;
+  height: 3px;
+  transition: all 0.4s ease-in;
+  width: 100%;
+  transform-origin: left;
+}
+.body .nav-area .top-area .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+  width: 100%;
+}
+.body .fixed {
+  position: fixed;
+  top: 10px;
+  left: 351px;
+  background: #fff;
+  width: 77%;
+  z-index: 20;
+  padding: 15px 0;
+  box-shadow: rgba(255, 255, 255, 0.9) 0rem 0rem 0.0625rem 0.0625rem inset, rgba(0, 0, 0, 0.05) 0rem 1.25rem 1.6875rem 0rem;
+  -webkit-backdrop-filter: saturate(200%) blur(1.875rem);
+          backdrop-filter: saturate(200%) blur(1.875rem);
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .signin-area {
@@ -118,16 +198,20 @@
   background-color: #174873 !important;
 }
 
-.area, .area {
+.area {
   margin-top: 60px;
+  height: 100vh;
 }
-.area .css-15wwp11-MuiTableHead-root, .area .css-15wwp11-MuiTableHead-root {
+.area .css-15wwp11-MuiTableHead-root {
   background-color: #174873;
 }
-.area .css-15wwp11-MuiTableHead-root .css-1ygcj2i-MuiTableCell-root, .area .css-15wwp11-MuiTableHead-root .css-1ygcj2i-MuiTableCell-root {
+.area .css-15wwp11-MuiTableHead-root .css-1ygcj2i-MuiTableCell-root {
   color: #fff;
 }
-.area #demo-customized-menu, .area #demo-customized-menu {
+.area .css-1oqqzyl-MuiContainer-root {
+  border-radius: 10px;
+}
+.area #demo-customized-menu {
   background-color: #fff;
   box-shadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px";
 }
@@ -139,28 +223,96 @@
   justify-content: center !important;
 }
 
-.create-area .css-1ps6pg7-MuiPaper-root, .edit-area .css-1ps6pg7-MuiPaper-root {
+.create-area .css-1ps6pg7-MuiPaper-root,
+.edit-area .css-1ps6pg7-MuiPaper-root,
+.detail-area .css-1ps6pg7-MuiPaper-root {
   width: 100%;
   padding: 30px;
   margin-top: 30px;
 }
-.create-area .form-control:focus, .edit-area .form-control:focus {
+.create-area .form-control:focus,
+.edit-area .form-control:focus,
+.detail-area .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
   border-color: #86b7fe;
   outline: none;
   box-shadow: none !important;
 }
-.create-area .title-area, .edit-area .title-area {
+.create-area .title-area,
+.edit-area .title-area,
+.detail-area .title-area {
   position: relative;
   bottom: -34px;
 }
-.create-area .title-area .css-1ps6pg7-MuiPaper-root, .edit-area .title-area .css-1ps6pg7-MuiPaper-root {
+.create-area .title-area .css-1ps6pg7-MuiPaper-root,
+.edit-area .title-area .css-1ps6pg7-MuiPaper-root,
+.detail-area .title-area .css-1ps6pg7-MuiPaper-root {
   background-color: #174873;
   color: #fff;
   padding: 15px;
 }
+.create-area .single-area,
+.edit-area .single-area,
+.detail-area .single-area {
+  margin: 10px 0;
+  padding: 5px 0;
+  display: block;
+  border-bottom: 1px solid #86b7fe;
+}
+.create-area .single-area img,
+.edit-area .single-area img,
+.detail-area .single-area img {
+  border-radius: 100%;
+}
 
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
   width: 60px !important;
+}
+
+[type=file] {
+  display: none !important;
+}
+
+[type=file] + label {
+  background: #e79800;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Rubik", sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+[type=file] + label.btn-2 {
+  background-color: #e79800 !important;
+  border-radius: 50px !important;
+  overflow: hidden !important;
+  width: 15%;
+  position: relative;
+  font-size: 20px;
+}
+[type=file] + label.btn-2::before {
+  color: #fff;
+  content: url("./assets/images/cloud-upload-fill.svg");
+  fill:#fff;
+  right: 100%;
+  line-height: 3.3;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  transition: all 0.3s;
+}
+[type=file] + label.btn-2:hover {
+  background-color: #497f42;
+}
+[type=file] + label.btn-2:hover::before {
+  right: 75%;
 }/*# sourceMappingURL=App.css.map */

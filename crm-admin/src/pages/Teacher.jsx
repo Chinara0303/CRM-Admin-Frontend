@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 
-function Position() {
+function Teacher() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -17,7 +17,7 @@ function Position() {
     return (
         <div className='area'>
             <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/positions/create'>
+                <NavLink to='/teachers/create'>
                     <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
                 </NavLink>
             </Tooltip>
@@ -27,7 +27,8 @@ function Position() {
                         <TableHead >
                             <TableRow>
                                 <TableCell>#</TableCell>
-                                <TableCell>Name</TableCell>
+                                <TableCell>Image</TableCell>
+                                <TableCell>Full name</TableCell>
                                 <TableCell>Action</TableCell>
                             </TableRow>
                         </TableHead>
@@ -35,7 +36,7 @@ function Position() {
                             <TableRow>
                                 <TableCell>Capacity</TableCell>
                                 <TableCell>Capacity</TableCell>
-                           
+                                <TableCell>Capacity</TableCell>
                                 <TableCell>
                                     <Button
                                         id="basic-button"
@@ -52,9 +53,14 @@ function Position() {
                                         open={open}
                                         onClose={handleClose}
                                     >
+                                        <Tooltip title='Info' placement='top-start'>
+                                            <MenuItem>
+                                                <NavLink to='/teachers/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
+                                            </MenuItem>
+                                        </Tooltip>
                                         <Tooltip title='Edit' placement='top-start'>
                                             <MenuItem>
-                                                <NavLink to='/positions/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                                                <NavLink to='/teachers/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                                             </MenuItem>
                                         </Tooltip>
                                         <Tooltip title='Delete' placement='top-start'>
@@ -65,7 +71,7 @@ function Position() {
                                     </Menu>
                                 </TableCell>
                             </TableRow>
-                            
+
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -74,4 +80,4 @@ function Position() {
     )
 }
 
-export default Position
+export default Teacher
