@@ -79,7 +79,7 @@ export default function Room() {
                 <TableCell>
                   <Button
                     id="basic-button"
-                    aria-controls={open ? '2' : undefined}
+                    aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
@@ -87,7 +87,7 @@ export default function Room() {
                     <FontAwesomeIcon icon={faAlignRight} size='xl' style={{color:"#174873"}} />
                   </Button>
                   <Menu 
-                    id="2"
+                    id="basic-menu"
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}

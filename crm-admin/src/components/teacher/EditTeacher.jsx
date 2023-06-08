@@ -8,7 +8,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText } from 'reac
 
 function EditTeacher() {
     return (
-        <div className='edit-area area'>
+        <div className='edit-area'>
             <div className="title-area">
                 <Paper>
                     <h4>Edit</h4>
@@ -33,6 +33,12 @@ function EditTeacher() {
                                 <InputGroup>
                                     <InputGroupText>Email</InputGroupText>
                                     <Input type='email' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Phone</InputGroupText>
+                                    <Input type='text' />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>

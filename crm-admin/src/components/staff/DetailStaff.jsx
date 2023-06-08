@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
 
-function DetailtTeacher() {
+function DetailStaff() {
     return (
         <div className='detail-area area'>
             <div className="title-area">
@@ -33,17 +33,26 @@ function DetailtTeacher() {
                                 <p>Lokbatan</p>
                             </div>
                         </Tooltip>
+                        <Tooltip title='Phone' placement='left' arrow>
+                            <div className="single-area">
+                                <p>050...</p>
+                            </div>
+                        </Tooltip>
                         <Tooltip title='Salary' placement='left' arrow>
                             <div className="single-area">
                                 <p>44</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Go to list'  arrow placement="bottom-start">
-                            <NavLink to='/teachers'>
+                        <Tooltip title='Position' placement='left' arrow>
+                            <div className="single-area">
+                                <p>developer</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Go to list' arrow placement="bottom-start">
+                            <NavLink to='/staff'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                             </NavLink>
                         </Tooltip>
-                        
                     </Paper>
                 </Grid>
             </Container>
@@ -51,4 +60,4 @@ function DetailtTeacher() {
     )
 }
 
-export default DetailtTeacher
+export default DetailStaff

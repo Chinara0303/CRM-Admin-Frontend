@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material'
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBorderAll, faStroopwafel, faCalendarDays, faCalendarWeek, faChalkboardUser, faChalkboard, faChalkboardTeacher, faUserTie, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBorderAll,faUserPlus, faStroopwafel, faCalendarDays, faCalendarWeek, faChalkboardTeacher, faUserTie, faUsers, faLayerGroup, faGraduationCap,faAddressCard } from '@fortawesome/free-solid-svg-icons'
 import { useContext } from 'react';
 import { MyContext } from '../../MyContext';
 
@@ -75,6 +75,30 @@ function Sidebar(props) {
                     <div className="single-nav">
                         <FontAwesomeIcon icon={faUsers} size="lg" style={{ color: "#fff", }} />
                         <h5 onClick={(e) => handleClick(e)}>Staff</h5>
+                    </div>
+                </NavLink>
+                <NavLink className='navigate' to='/groups' onClick={() => handleClose()}>
+                    <div className="single-nav">
+                        <FontAwesomeIcon icon={faLayerGroup} size="lg" style={{ color: "#fff", }} />
+                        <h5 onClick={(e) => handleClick(e)}>Groups</h5>
+                    </div>
+                </NavLink>
+                <NavLink className='navigate' to='/students' onClick={() => handleClose()}>
+                    <div className="single-nav">
+                        <FontAwesomeIcon icon={faGraduationCap} size="lg" style={{ color: "#fff", }} />
+                        <h5 onClick={(e) => handleClick(e)}>Students</h5>
+                    </div>
+                </NavLink>
+                <NavLink className='navigate' to='/staffposition' onClick={() => handleClose()}>
+                    <div className="single-nav">
+                        <FontAwesomeIcon icon={faAddressCard} size="lg" style={{ color: "#fff", }} />
+                        <h5 onClick={(e) => handleClick(e)}>Add position to employee</h5>
+                    </div>
+                </NavLink>
+                <NavLink className='navigate' to='/groupteacher' onClick={() => handleClose()}>
+                    <div className="single-nav">
+                        <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#fff", }} />
+                        <h5 onClick={(e) => handleClick(e)}>Add teacher to group</h5>
                     </div>
                 </NavLink>
             

@@ -5,7 +5,7 @@ import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortaweso
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 
-function Staff() {
+function Student() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -17,7 +17,7 @@ function Staff() {
     return (
         <div className='area'>
             <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/staff/create'>
+                <NavLink to='/students/create'>
                     <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
                 </NavLink>
             </Tooltip>
@@ -55,12 +55,12 @@ function Staff() {
                                     >
                                         <Tooltip title='Info' placement='top-start'>
                                             <MenuItem>
-                                                <NavLink to='/staff/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
+                                                <NavLink to='/students/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
                                             </MenuItem>
                                         </Tooltip>
                                         <Tooltip title='Edit' placement='top-start'>
                                             <MenuItem>
-                                                <NavLink to='/staff/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                                                <NavLink to='/students/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                                             </MenuItem>
                                         </Tooltip>
                                         <Tooltip title='Delete' placement='top-start'>
@@ -80,4 +80,4 @@ function Staff() {
     )
 }
 
-export default Staff
+export default Student

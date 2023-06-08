@@ -215,20 +215,75 @@
   background-color: #fff;
   box-shadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px";
 }
+.area .position-name span {
+  font-size: 16px;
+  cursor: pointer;
+}
+.area .img-area {
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  position: relative;
+}
+.area .img-area img {
+  border-radius: 100%;
+}
+.area .img-area .remove-area {
+  position: relative;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+.area .img-area .remove-area .remove-icon {
+  position: absolute;
+  bottom: 27px;
+  left: 13px;
+}
+.area .img-area:hover img {
+  filter: blur(0.7px);
+}
+.area .img-area:hover .remove-area {
+  opacity: 1;
+  visibility: visible;
+}
 
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper .css-6hp17o-MuiList-root-MuiMenu-list {
+#basic-menu .css-6hp17o-MuiList-root-MuiMenu-list {
   display: flex !important;
 }
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper .css-6hp17o-MuiList-root-MuiMenu-list .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+#basic-menu .css-6hp17o-MuiList-root-MuiMenu-list .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
   justify-content: center !important;
+  width: 60px !important;
 }
 
+.create-area,
+.edit-area,
+.detail-area {
+  height: 100vh;
+}
 .create-area .css-1ps6pg7-MuiPaper-root,
 .edit-area .css-1ps6pg7-MuiPaper-root,
 .detail-area .css-1ps6pg7-MuiPaper-root {
   width: 100%;
   padding: 30px;
   margin-top: 30px;
+}
+.create-area .forms,
+.edit-area .forms,
+.detail-area .forms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.create-area .forms .ul-list,
+.edit-area .forms .ul-list,
+.detail-area .forms .ul-list {
+  display: initial !important;
+}
+.create-area .forms .ul-list .menu-item,
+.edit-area .forms .ul-list .menu-item,
+.detail-area .forms .ul-list .menu-item {
+  justify-content: initial !important;
+  width: 100px !important;
 }
 .create-area .form-control:focus,
 .edit-area .form-control:focus,
@@ -258,16 +313,23 @@
   margin: 10px 0;
   padding: 5px 0;
   display: block;
-  border-bottom: 1px solid #86b7fe;
+  border-style: solid;
+  border-color: #8c8b8b;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
 }
 .create-area .single-area img,
 .edit-area .single-area img,
 .detail-area .single-area img {
   border-radius: 100%;
 }
-
-.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
-  width: 60px !important;
+.create-area .single-area p,
+.edit-area .single-area p,
+.detail-area .single-area p {
+  text-transform: capitalize;
+  font-weight: 500;
+  font-size: 18px;
+  margin: 10px !important;
 }
 
 [type=file] {
@@ -301,8 +363,7 @@
 }
 [type=file] + label.btn-2::before {
   color: #fff;
-  content: url("./assets/images/cloud-upload-fill.svg");
-  fill:#fff;
+  content: url("/src/assets/images/upload-file-svgrepo-com.svg");
   right: 100%;
   line-height: 3.3;
   text-align: center;
@@ -315,4 +376,8 @@
 }
 [type=file] + label.btn-2:hover::before {
   right: 75%;
+}
+
+.form-select:focus {
+  box-shadow: none !important;
 }/*# sourceMappingURL=App.css.map */

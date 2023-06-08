@@ -23,8 +23,25 @@ import EditPosition from './components/position/EditPosition';
 import Teacher from './pages/Teacher';
 import AddTeacher from './components/teacher/AddTeacher';
 import EditTeacher from './components/teacher/EditTeacher';
-import DetailtTeacher from './components/teacher/DetailtTeacher';
+import DetailTeacher from './components/teacher/DetailTeacher';
 import Staff from './pages/Staff';
+import AddStaff from './components/staff/AddStaff';
+import EditStaff from './components/staff/EditStaff';
+import DetailStaff from './components/staff/DetailStaff';
+import Group from './pages/Group';
+import AddGroup from './components/group/AddGroup';
+import EditGroup from './components/group/EditGroup';
+import DetailGroup from './components/group/DetailGroup';
+import Student from './pages/Student';
+import AddStudent from './components/student/AddStudent';
+import EditStudent from './components/student/EditStudent';
+import DetailStudent from './components/student/DetailStudent';
+import StaffPosition from './pages/StaffPosition';
+import AddPositionToEmployee from './components/staffPosition/AddPositionToEmployee';
+import GroupTeacher from './pages/GroupTeacher';
+import AddTeacherToGroup from './components/group/AddTeacherToGroup';
+import EditTeacherGroup from './components/group/EditTeacherGroup';
+import EditStaffPosition from './components/staffPosition/EditStaffPosition';
 
 
 function App() {
@@ -63,9 +80,25 @@ function App() {
                 <Route path='/teachers' element={<Teacher />} />
                 <Route path='/teachers/create' element={<AddTeacher />} />
                 <Route path='/teachers/edit/:id' element={<EditTeacher />} />
-                <Route path='/teachers/detail/:id' element={<DetailtTeacher />} />
+                <Route path='/teachers/detail/:id' element={<DetailTeacher />} />
                 <Route path='/staff' element={<Staff />} />
-
+                <Route path='/staff/create' element={<AddStaff />} />
+                <Route path='/staff/edit/:id' element={<EditStaff />} />
+                <Route path='/staff/detail/:id' element={<DetailStaff />} />
+                <Route path='/groups' element={<Group />} />
+                <Route path='/groups/create' element={<AddGroup />} />
+                <Route path='/groups/edit/:id' element={<EditGroup />} />
+                <Route path='/groups/detail/:id' element={<DetailGroup />} />
+                <Route path='/students' element={<Student />} />
+                <Route path='/students/create' element={<AddStudent />} />
+                <Route path='/students/edit/:id' element={<EditStudent />} />
+                <Route path='/students/detail/:id' element={<DetailStudent />} />
+                <Route path='/staffposition' element={<StaffPosition />} />
+                <Route path='/staffposition/create' element={<AddPositionToEmployee />} />
+                <Route path='/staffposition/edit/:id' element={<EditStaffPosition />} />
+                <Route path='/groupteacher' element={<GroupTeacher />} />
+                <Route path='/groupteacher/create' element={<AddTeacherToGroup />} />
+                <Route path='/groupteacher/edit/:id' element={<EditTeacherGroup />} />
               </Routes>
             </Grid>
           </Grid>

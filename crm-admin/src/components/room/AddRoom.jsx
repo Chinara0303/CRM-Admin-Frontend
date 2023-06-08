@@ -26,7 +26,7 @@ function AddRoom() {
             <FormGroup>
               <InputGroup>
                 <InputGroupText >Capacity</InputGroupText>
-                <Input type='number' min='12' max='20' />
+                <Input type='number' min='8' max='15' />
               </InputGroup>
             </FormGroup>
             <Tooltip title='Go to list' arrow placement="bottom-start">

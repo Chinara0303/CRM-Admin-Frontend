@@ -20,28 +20,89 @@
         background-color: $colorWhite;
         box-shadow: 'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px';
     }
-}
+    .position-name{
+        span{
+            font-size: 16px;
+            cursor: pointer;
+        }
+    }
+    .img-area {
+        width: 90px;
+        height: 90px;
+        cursor: pointer;
+        position: relative;
 
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
-    .css-6hp17o-MuiList-root-MuiMenu-list {
-        display: flex !important;
-
-        .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
-            justify-content: center !important;
+        img {
+            border-radius: 100%;
         }
 
+        .remove-area {
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            transition: all .3s;
+           
+            .remove-icon {
+                position: absolute;
+                bottom: 27px;
+                left: 13px;
+            }
+        }
+
+        &:hover {
+            img{
+                filter: blur(0.7px);
+            }
+            .remove-area {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+       
+
     }
+    
+
+
+
 }
 
+#basic-menu{
+    .css-6hp17o-MuiList-root-MuiMenu-list {
+        display: flex !important;
+        .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
+            justify-content: center !important;
+            width: 60px !important;
+        }
+    }
+}
 
 
 .create-area,
 .edit-area,
 .detail-area {
+    height: 100vh;
     .css-1ps6pg7-MuiPaper-root {
         width: 100%;
         padding: 30px;
         margin-top: 30px;
+    }
+
+    .forms {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .ul-list {
+            display: initial !important;
+
+            .menu-item {
+                justify-content: initial !important;
+                width: 100px !important;
+            }
+        }
+
+
     }
 
     .form-control:focus {
@@ -67,25 +128,32 @@
         margin: 10px 0;
         padding: 5px 0;
         display: block;
-        border-bottom: 1px solid #86b7fe;
+        border-style: solid;
+        border-color: #8c8b8b;
+        border-width: 0 0 1px 0;
+        border-radius: 20px;
 
         img {
             border-radius: 100%;
         }
 
+        p {
+            text-transform: capitalize;
+            font-weight: 500;
+            font-size: 18px;
+            margin: 10px !important;
+        }
     }
 
 
 }
 
-.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
-    width: 60px !important;
-}
+
 [type="file"] {
-    display: none  !important;
+    display: none !important;
 }
 
-[type="file"]+ label {
+[type="file"]+label {
     background: $secondMainColor;
     border: none;
     border-radius: 5px;
@@ -101,17 +169,18 @@
     position: relative;
     transition: all 0.3s;
     vertical-align: middle;
-   
+
     &.btn-2 {
-        background-color: $secondMainColor !important;
+        background-color: $secondMainColor  !important;
         border-radius: 50px !important;
         overflow: hidden !important;
         width: 15%;
         position: relative;
         font-size: 20px;
+
         &::before {
             color: #fff;
-            content: url('../images/cloud-upload-fill.svg');
+            content: url('/src/assets/images/upload-file-svgrepo-com.svg');
             right: 100%;
             line-height: 3.3;
             text-align: center;
@@ -119,10 +188,10 @@
             top: 0px;
             transition: all 0.3s;
         }
-    
+
         &:hover {
             background-color: darken(#99c793, 30%);
-    
+
             &::before {
                 right: 75%;
             }
@@ -130,3 +199,6 @@
     }
 }
 
+.form-select:focus {
+    box-shadow: none !important;
+}
