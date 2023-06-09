@@ -113,17 +113,7 @@
         box-shadow: none !important;
     }
 
-    .title-area {
-        position: relative;
-        bottom: -34px;
-
-        .css-1ps6pg7-MuiPaper-root {
-            background-color: $mainColor;
-            color: $colorWhite;
-            padding: 15px;
-        }
-    }
-
+    
     .single-area {
         margin: 10px 0;
         padding: 5px 0;
@@ -146,6 +136,15 @@
     }
 
 
+}
+.title-area {
+    position: relative;
+    bottom: -34px;
+    .css-1ps6pg7-MuiPaper-root {
+        background-color: $mainColor;
+        color: $colorWhite;
+        padding: 15px;
+    }
 }
 
 

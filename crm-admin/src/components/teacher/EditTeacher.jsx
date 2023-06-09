@@ -55,8 +55,8 @@ function EditTeacher() {
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Salary</InputGroupText>
-                                    <Input type='text' />
+                                    <InputGroupText>Biography</InputGroupText>
+                                    <Input type='textarea' />
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">

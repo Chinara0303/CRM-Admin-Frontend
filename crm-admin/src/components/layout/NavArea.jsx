@@ -1,15 +1,18 @@
-import { Box, Paper, Breadcrumbs, Link, TextField, Container, Grid } from '@mui/material'
+import { Breadcrumbs, Link, TextField, Container, Grid } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBorderAll, faArrowRightToBracket, faUserPlus, faHouseChimneyWindow } from '@fortawesome/free-solid-svg-icons'
+import { faHouseChimneyWindow } from '@fortawesome/free-solid-svg-icons'
 import React, { useContext } from 'react'
 import { MyContext } from '../../MyContext';
+import { NavLink } from 'react-router-dom';
 
 function NavArea(props) {
     const { text, setText } = useContext(MyContext);
+
     const handleClick = () => {
         props.setMenuOpen(!props.menuOpen)
-
     }
+
+
     window.addEventListener("scroll", function () {
         let nav = this.document.querySelector(".nav-area").getBoundingClientRect().top;
         nav > 0 ? document.querySelector(".top-area").classList.remove("fixed") : document.querySelector(".top-area").classList.add("fixed");
@@ -33,15 +36,14 @@ function NavArea(props) {
                                     </Breadcrumbs>
                                     <h5>{text}</h5>
                                 </div>
-
-
                             </div>
                         </Grid>
-
                         <Grid item xs={6} lg={6} sm={6}>
                             <div className="right-side">
                                 <TextField id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
-                                <img src={require('../../assets/images/logo.png')} alt="" />
+                               <NavLink to='/profile' >
+                                 <img src={require('../../assets/images/logo.png')} alt="" />
+                               </NavLink>
                                 <div className={`hamburger d-lg-none ${props.menuOpen && 'active'}`} onClick={() => handleClick()}>
                                     <span className="line1"></span>
                                     <span className="line2"></span>

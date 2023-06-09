@@ -294,19 +294,6 @@
   outline: none;
   box-shadow: none !important;
 }
-.create-area .title-area,
-.edit-area .title-area,
-.detail-area .title-area {
-  position: relative;
-  bottom: -34px;
-}
-.create-area .title-area .css-1ps6pg7-MuiPaper-root,
-.edit-area .title-area .css-1ps6pg7-MuiPaper-root,
-.detail-area .title-area .css-1ps6pg7-MuiPaper-root {
-  background-color: #174873;
-  color: #fff;
-  padding: 15px;
-}
 .create-area .single-area,
 .edit-area .single-area,
 .detail-area .single-area {
@@ -330,6 +317,16 @@
   font-weight: 500;
   font-size: 18px;
   margin: 10px !important;
+}
+
+.title-area {
+  position: relative;
+  bottom: -34px;
+}
+.title-area .css-1ps6pg7-MuiPaper-root {
+  background-color: #174873;
+  color: #fff;
+  padding: 15px;
 }
 
 [type=file] {
@@ -380,4 +377,26 @@
 
 .form-select:focus {
   box-shadow: none !important;
+}
+
+.profile-area {
+  height: 100vh;
+}
+.profile-area .logo-area {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.profile-area .logo-area img {
+  border-radius: 100%;
+}
+.profile-area .left-side {
+  display: flex;
+  align-items: center;
+}
+
+.css-0 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }/*# sourceMappingURL=App.css.map */

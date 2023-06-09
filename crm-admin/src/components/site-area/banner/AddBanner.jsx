@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Form, FormGroup, Input, InputGroup, Button, InputGroupText,Label } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
 
-function AddTeacher() {
+function AddBanner() {
     return (
         <div className='create-area mt-5'>
             <div className="title-area">
@@ -18,47 +18,29 @@ function AddTeacher() {
                     <Paper>
                         <Form>
                             <FormGroup>
-                                <Input type='file' id='file'/>
+                                <Input type='file' id='file' />
                                 <Label className='btn-2' for='file'>Upload</Label>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Full name</InputGroupText>
+                                    <InputGroupText>Title</InputGroupText>
                                     <Input type='text' />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Email</InputGroupText>
-                                    <Input type='email' />
+                                    <InputGroupText>Description</InputGroupText>
+                                    <Input type='textarea' />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Phone</InputGroupText>
-                                    <Input type='text' />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup>
-                                    <InputGroupText>Age</InputGroupText>
-                                    <Input type='number' min='25' max='55' />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup>
-                                    <InputGroupText>Addres</InputGroupText>
-                                    <Input type='text' />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup>
-                                    <InputGroupText>Biography</InputGroupText>
+                                    <InputGroupText>Offer</InputGroupText>
                                     <Input type='textarea' />
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
-                                <NavLink to='/teachers'>
+                                <NavLink to='/site/banners'>
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>
@@ -73,4 +55,4 @@ function AddTeacher() {
     )
 }
 
-export default AddTeacher
+export default AddBanner

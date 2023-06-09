@@ -42,11 +42,29 @@ import GroupTeacher from './pages/GroupTeacher';
 import AddTeacherToGroup from './components/group/AddTeacherToGroup';
 import EditTeacherGroup from './components/group/EditTeacherGroup';
 import EditStaffPosition from './components/staffPosition/EditStaffPosition';
+import Course from './pages/Course';
+import AddCourse from './components/course/AddCourse';
+import Profile from './pages/Profile';
+import SiteCourse from './pages/site-area/SiteCourse';
+import SiteDashboard from './pages/site-area/SiteDashboard';
+import SiteSetting from './pages/site-area/SiteSetting';
+import SiteDetailCourse from './components/site-area/course/SiteDetailCourse';
+import DetailCourse from './components/course/DetailCourse';
+import EditCourse from './components/course/EditCourse';
+import SiteEditSetting from './components/site-area/setting/SiteEditSetting';
+import SiteSlider from './pages/site-area/SiteSlider';
+import AddSlider from './components/site-area/slider/AddSlider';
+import EditSlider from './components/site-area/slider/EditSlider';
+import Banner from './pages/site-area/Banner';
+import AddBanner from './components/site-area/banner/AddBanner';
+import SiteTeacher from './pages/site-area/SiteTeacher';
+import SiteDetailTeacher from './components/site-area/teacher/SiteDetailTeacher';
 
 
 function App() {
   const [text, setText] = useState("Dashboard");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [change, setChange] = useState(true);
 
   return (
     <div className='body'>
@@ -55,7 +73,7 @@ function App() {
           <Grid container spacing={2}>
             <Grid item lg={3}>
               <MyContext.Provider value={{ text, setText }}>
-                <Sidebar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                <Sidebar change={change} setChange={setChange} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
               </MyContext.Provider>
             </Grid>
             <Grid item lg={9}>
@@ -64,6 +82,7 @@ function App() {
               </MyContext.Provider>
               <Routes>
                 <Route path='/signin' element={<SignIn />} />
+                <Route path='/profile' element={<Profile change={change} setChange={setChange} />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/rooms' element={<Room />} />
                 <Route path='/rooms/create' element={<AddRoom />} />
@@ -99,15 +118,28 @@ function App() {
                 <Route path='/groupteacher' element={<GroupTeacher />} />
                 <Route path='/groupteacher/create' element={<AddTeacherToGroup />} />
                 <Route path='/groupteacher/edit/:id' element={<EditTeacherGroup />} />
+                <Route path='/courses' element={<Course />} />
+                <Route path='/courses/create' element={<AddCourse />} />
+                <Route path='/courses/detail/:id' element={<DetailCourse />} />
+                <Route path='/courses/edit/:id' element={<EditCourse />} />
+                <Route path='/site/dashboard' element={<SiteDashboard />} />
+                <Route path='/site/courses' element={<SiteCourse />} />
+                <Route path='/site/courses/detail/:id' element={<SiteDetailCourse />} />
+                <Route path='/site/settings' element={<SiteSetting />} />
+                <Route path='/site/settings/edit/:id' element={<SiteEditSetting />} />
+                <Route path='/site/sliders' element={<SiteSlider />} />
+                <Route path='/site/sliders/create' element={<AddSlider />} />
+                <Route path='/site/sliders/edit/:id' element={<EditSlider />} />
+                <Route path='/site/banners' element={<Banner />} />
+                <Route path='/site/banners/create' element={<AddBanner />} />
+                <Route path='/site/teachers' element={<SiteTeacher />} />
+                <Route path='/site/teachers/detail/:id' element={<SiteDetailTeacher />} />
               </Routes>
             </Grid>
           </Grid>
         </Container>
       </Router>
     </div>
-
-
-
   );
 }
 

@@ -95,8 +95,8 @@ function AddStaff() {
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
-                                    <InputGroupText>Salary</InputGroupText>
-                                    <Input type='text' />
+                                    <InputGroupText>Bio</InputGroupText>
+                                    <Input type='textarea' />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup >
@@ -131,16 +131,6 @@ function AddStaff() {
                                     ))}
                                 </Select>
                                 </FormControl>
-                                {/* <InputGroup>
-                                    <InputGroupText>Position</InputGroupText>
-                                    <Input name="select" multiple type="select">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </Input>
-                                </InputGroup> */}
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/staff'>

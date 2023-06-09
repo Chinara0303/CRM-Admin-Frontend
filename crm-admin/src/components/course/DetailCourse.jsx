@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
 
-function DetailStaff() {
+function DetailCourse() {
     return (
-        <div className='detail-area area'>
+        <div className='detail-area'>
             <div className="title-area">
                 <Paper>
                     <h4>Detail</h4>
@@ -15,41 +15,38 @@ function DetailStaff() {
             <Container maxWidth='lg'>
                 <Grid container>
                     <Paper>
-                        <div className="single-area">
-                            <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
-                        </div>
-                        <Tooltip title='Full name' placement='left' arrow>
+                        <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <p>Chinara Ibadova</p>
+                                <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
                             </div>
                         </Tooltip>
-                        <Tooltip title='Email' placement='left' arrow>
+                        <Tooltip title='Name' placement='left' arrow>
                             <div className="single-area">
-                                <p>test@gmail.com</p>
+                                <p>pROGRAMMING</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Address' placement='left' arrow>
+                        <Tooltip title='Price' placement='left' arrow>
                             <div className="single-area">
-                                <p>Lokbatan</p>
+                                <p>44</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Phone' placement='left' arrow>
+                        <Tooltip title='Description' placement='left' arrow>
                             <div className="single-area">
-                                <p>050...</p>
+                                <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Biography' placement='left' arrow>
+                        <Tooltip title='Offers' placement='left' arrow>
                             <div className="single-area">
-                                <p>edrftgyhj</p>
+                                <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Position' placement='left' arrow>
+                        <Tooltip title='Duration' placement='left' arrow>
                             <div className="single-area">
-                                <p>developer</p>
+                                <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">
-                            <NavLink to='/staff'>
+                            <NavLink to='/courses'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                             </NavLink>
                         </Tooltip>
@@ -60,4 +57,4 @@ function DetailStaff() {
     )
 }
 
-export default DetailStaff
+export default DetailCourse

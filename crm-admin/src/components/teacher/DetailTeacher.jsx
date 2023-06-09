@@ -40,9 +40,9 @@ function DetailTeacher() {
                                 <p>Lokbatan</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Salary' placement='left' arrow>
+                        <Tooltip title='Bio' placement='left' arrow>
                             <div className="single-area">
-                                <p>44</p>
+                                <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list'  arrow placement="bottom-start">

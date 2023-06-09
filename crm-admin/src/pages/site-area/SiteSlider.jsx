@@ -5,7 +5,7 @@ import { faAlignRight, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Menu, Button } from '@mui/material';
 
-export default function Room() {
+function SiteSlider() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,7 +18,7 @@ export default function Room() {
   return (
     <div className='area'>
       <Tooltip title='Add' arrow placement="top-start">
-        <NavLink to='/rooms/create'>
+        <NavLink to='/site/sliders/create'>
           <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
         </NavLink>
       </Tooltip>
@@ -28,13 +28,15 @@ export default function Room() {
             <TableHead >
               <TableRow>
                 <TableCell>#</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Capacity</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Description</TableCell>
                 <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
+                <TableCell>1</TableCell>
                 <TableCell>Capacity</TableCell>
                 <TableCell>Capacity</TableCell>
                 <TableCell>Capacity</TableCell>
@@ -56,45 +58,7 @@ export default function Room() {
                   >
                     <Tooltip title='Edit' placement='top-start'>
                       <MenuItem>
-                        <NavLink to='/rooms/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                      </MenuItem>
-                    </Tooltip>
-                    <Tooltip title='Delete' placement='top-start'>
-                      <MenuItem>
-                        <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{color: "#f50000",}} /></Button>
-                      </MenuItem>
-                    </Tooltip>
-                  </Menu>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Capacity</TableCell>
-                <TableCell>Capacity</TableCell>
-                <TableCell>Capacity</TableCell>
-                <TableCell>
-                  <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
-                  >
-                    <FontAwesomeIcon icon={faAlignRight} size='xl' style={{color:"#174873"}} />
-                  </Button>
-                  <Menu 
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                  >
-                    {/* <Tooltip title='Info' placement='top-start'>
-                      <MenuItem>
-                        <NavLink to='/rooms/detail/2'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{color: "#d0fa00",}} /></NavLink>
-                      </MenuItem>
-                    </Tooltip> */}
-                    <Tooltip title='Edit' placement='top-start'>
-                      <MenuItem>
-                        <NavLink to='/rooms/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                        <NavLink to='/site/sliders/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                       </MenuItem>
                     </Tooltip>
                     <Tooltip title='Delete' placement='top-start'>
@@ -112,3 +76,5 @@ export default function Room() {
     </div>
   );
 }
+
+export default SiteSlider
