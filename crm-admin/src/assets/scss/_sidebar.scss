@@ -15,6 +15,7 @@
         position:fixed;
         width: 22%;
         overflow-y: scroll;
+    
         .logo-area {
             display: flex;
             align-items: center;
@@ -73,7 +74,7 @@
 
 
         .top-area {
-            transition: .4s;
+            transition: .3s;
             display: flex;
             align-items: center;
             justify-content: space-between;

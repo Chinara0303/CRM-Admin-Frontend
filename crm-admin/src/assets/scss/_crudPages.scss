@@ -20,12 +20,14 @@
         background-color: $colorWhite;
         box-shadow: 'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px';
     }
-    .position-name{
-        span{
+
+    .position-name {
+        span {
             font-size: 16px;
             cursor: pointer;
         }
     }
+
     .img-area {
         width: 90px;
         height: 90px;
@@ -41,7 +43,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all .3s;
-           
+
             .remove-icon {
                 position: absolute;
                 bottom: 27px;
@@ -50,26 +52,28 @@
         }
 
         &:hover {
-            img{
+            img {
                 filter: blur(0.7px);
             }
+
             .remove-area {
                 opacity: 1;
                 visibility: visible;
             }
         }
-       
+
 
     }
-    
+
 
 
 
 }
 
-#basic-menu{
+#basic-menu {
     .css-6hp17o-MuiList-root-MuiMenu-list {
         display: flex !important;
+
         .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root {
             justify-content: center !important;
             width: 60px !important;
@@ -82,6 +86,7 @@
 .edit-area,
 .detail-area {
     height: 100vh;
+
     .css-1ps6pg7-MuiPaper-root {
         width: 100%;
         padding: 30px;
@@ -113,7 +118,7 @@
         box-shadow: none !important;
     }
 
-    
+
     .single-area {
         margin: 10px 0;
         padding: 5px 0;
@@ -137,9 +142,11 @@
 
 
 }
+
 .title-area {
     position: relative;
     bottom: -34px;
+
     .css-1ps6pg7-MuiPaper-root {
         background-color: $mainColor;
         color: $colorWhite;
@@ -200,4 +207,51 @@
 
 .form-select:focus {
     box-shadow: none !important;
+}
+
+.profile-area {
+
+    .top-area {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        p {
+            margin: 0 !important;
+            font-size: 20px;
+            font-weight: 600;
+
+        }
+    }
+
+
+    hr {
+        border-top: 0px solid rgba(0, 0, 0, 0.12) !important;
+        border-left: none;
+        border-bottom: none;
+        opacity: 0.25;
+        background-color: transparent;
+        width: 0.0625rem;
+        height: 100%;
+        margin: 0px !important;
+        border-right: 0px solid rgba(0, 0, 0, 0.12) !important;
+        background-image: linear-gradient(rgba(52, 71, 103, 0), rgba(52, 71, 103, 0.4), rgba(52, 71, 103, 0)) !important;
+    }
+    .subscribe-area{
+        .top-area{
+            margin-bottom: 20px;
+        }
+        .subscribe{
+            padding: 10px;
+            background: white;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            p{
+                margin: 0 !important;
+                text-align: center;
+            }
+    
+        }
+    }
+
+   
 }

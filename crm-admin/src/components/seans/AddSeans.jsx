@@ -24,7 +24,7 @@ function AddSeans() {
                 </InputGroup>
               </FormGroup>
               <Tooltip title='Go to list' arrow placement="bottom-start">
-                <NavLink to='/rooms'>
+                <NavLink to='/seanses'>
                   <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                 </NavLink>
               </Tooltip>

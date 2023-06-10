@@ -45,6 +45,21 @@ function DetailTeacher() {
                                 <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
+                        <Tooltip title='Linkedin' placement='left' arrow>
+                            <div className="single-area">
+                                <p>tyguhljghjk</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Facebook' placement='left' arrow>
+                            <div className="single-area">
+                                <p>tyguhljghjk</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Twitter' placement='left' arrow>
+                            <div className="single-area">
+                                <p>tyguhljghjk</p>
+                            </div>
+                        </Tooltip>
                         <Tooltip title='Go to list'  arrow placement="bottom-start">
                             <NavLink to='/teachers'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />

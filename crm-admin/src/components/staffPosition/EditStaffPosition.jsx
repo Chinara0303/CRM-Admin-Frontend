@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faFloppyDisk, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl } from '@mui/material'
 import { NavLink } from 'react-router-dom'
@@ -104,7 +104,7 @@ function EditStaffPosition() {
                                         >
                                             {positionnames.map((name) => (
                                                 <MenuItem
-                                                className='menu-item'
+                                                    className='menu-item'
                                                     key={name}
                                                     value={name}
                                                     style={getStyles(name, personName, theme)}
@@ -152,9 +152,13 @@ function EditStaffPosition() {
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>
-                            <Tooltip title='add' arrow placement="bottom-start">
-                                <Button type='submit' style={{ border: "none" }} color='transparent'><FontAwesomeIcon icon={faPlus} size="2xl" style={{ color: "#0ae60d", }} /></Button>
-                            </Tooltip>
+
+                            <Button type='submit' style={{ border: "none" }} color='transparent'>
+                                <Tooltip title='add' arrow placement="bottom-start">
+                                    <FontAwesomeIcon icon={faFloppyDisk} size="2xl" style={{ color: "#0ae60d", }} />
+                                </Tooltip>
+                            </Button>
+
                         </Form>
                     </Paper>
                 </Grid>

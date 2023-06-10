@@ -59,6 +59,24 @@ function EditTeacher() {
                                     <Input type='textarea' />
                                 </InputGroup>
                             </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Linkedin</InputGroupText>
+                                    <Input type='text' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Twitter</InputGroupText>
+                                    <Input type='text' />
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Facebook</InputGroupText>
+                                    <Input type='text' />
+                                </InputGroup>
+                            </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/teachers'>
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />

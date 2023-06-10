@@ -4,7 +4,6 @@
     height: 617px;
     background-size: cover;
     background-position: center;
-    margin-top: 30px;
 
     .css-0 {
         display: flex;
@@ -44,4 +43,27 @@
         margin-top: 30px;
         background-color: $mainColor !important;
     }
+}
+
+.profile-area {
+    height: 100vh;
+    .logo-area {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+        img {
+            border-radius: 100%;
+        }
+    }
+    .left-side{
+        display: flex;
+        align-items: center;
+    }
+   
+}
+
+.css-0{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

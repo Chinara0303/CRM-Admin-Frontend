@@ -3,7 +3,8 @@ import React from 'react'
 function Dashboard() {
 
   return (
-    <div className='area'>          
+    <div className='area'>   
+             
     </div>
    
   )

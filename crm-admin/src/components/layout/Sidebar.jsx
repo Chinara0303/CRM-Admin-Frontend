@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material'
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBorderAll, faUserPlus, faStroopwafel, faCalendarDays, faCalendarWeek, faChalkboardTeacher, faUserTie, faUsers, faLayerGroup, faGraduationCap, faAddressCard, faGears, faImages } from '@fortawesome/free-solid-svg-icons'
+import { faBorderAll,faCircleInfo, faUserPlus, faStroopwafel, faCalendarDays, faCalendarWeek, faChalkboardTeacher, faUserTie, faUsers, faLayerGroup, faGraduationCap, faAddressCard, faGears, faImages } from '@fortawesome/free-solid-svg-icons'
 import { faBuffer} from '@fortawesome/free-brands-svg-icons'
 import { useContext } from 'react';
 import { MyContext } from '../../MyContext';
@@ -111,6 +111,7 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Courses</h5>
                             </div>
                         </NavLink>
+                     
                         
                     </div>
                 )
@@ -152,6 +153,12 @@ function Sidebar(props) {
                             <div className="single-nav" >
                                 <FontAwesomeIcon icon={faChalkboardTeacher} size="lg" style={{ color: "#fff", }} />
                                 <h5 onClick={(e) => handleClick(e)}>Teachers</h5>
+                            </div>
+                        </NavLink>
+                        <NavLink className='navigate' to='/site/about' onClick={() => handleClose()}>
+                            <div className="single-nav">
+                                <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#fff", }} />
+                                <h5 onClick={(e) => handleClick(e)}>About</h5>
                             </div>
                         </NavLink>
                     </div>

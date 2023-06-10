@@ -2,17 +2,13 @@ import { Breadcrumbs, Link, TextField, Container, Grid } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseChimneyWindow } from '@fortawesome/free-solid-svg-icons'
 import React, { useContext } from 'react'
-import { MyContext } from '../../MyContext';
+// import { MyContext } from '../../MyContext';
 import { NavLink } from 'react-router-dom';
 
 function NavArea(props) {
-    const { text, setText } = useContext(MyContext);
-
     const handleClick = () => {
         props.setMenuOpen(!props.menuOpen)
     }
-
-
     window.addEventListener("scroll", function () {
         let nav = this.document.querySelector(".nav-area").getBoundingClientRect().top;
         nav > 0 ? document.querySelector(".top-area").classList.remove("fixed") : document.querySelector(".top-area").classList.add("fixed");
@@ -27,14 +23,14 @@ function NavArea(props) {
                             <div className="left-side">
                                 <div className="breadcrumb-area">
                                     <Breadcrumbs aria-label="breadcrumb">
-                                        <Link underline="hover" href="/">
+                                        <Link underline="hover" href="/dashboard">
                                             <FontAwesomeIcon icon={faHouseChimneyWindow} size="sm" style={{ color: "rgb(52, 71, 103)", opacity: "0.5" }} />
                                         </Link>
                                         <Link underline="hover" color="inherit" >
-                                            {text}
+                                            {props.text}
                                         </Link>
                                     </Breadcrumbs>
-                                    <h5>{text}</h5>
+                                    <h5>{props.text}</h5>
                                 </div>
                             </div>
                         </Grid>

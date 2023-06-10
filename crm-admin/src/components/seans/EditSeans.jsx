@@ -7,6 +7,9 @@ import { NavLink } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText } from 'reactstrap'
 
 function EditSeans() {
+    const routeParts = window.location.href.split('/');
+   const lastPart = routeParts[routeParts.length - 1]; 
+   console.log(lastPart);
     return (
         <div className='edit-area area'>
             <div className="title-area">

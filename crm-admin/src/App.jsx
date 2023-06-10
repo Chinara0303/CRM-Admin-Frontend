@@ -1,10 +1,10 @@
 import { Container, Grid } from '@mui/material';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
 import SignIn from './pages/SignIn';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MyContext } from './MyContext';
 // import Signup from './pages/Signup';
 import NavArea from './components/layout/NavArea';
@@ -59,29 +59,50 @@ import Banner from './pages/site-area/Banner';
 import AddBanner from './components/site-area/banner/AddBanner';
 import SiteTeacher from './pages/site-area/SiteTeacher';
 import SiteDetailTeacher from './components/site-area/teacher/SiteDetailTeacher';
+import About from './pages/site-area/About';
+import AddAbout from './components/site-area/about/AddAbout';
+import DetailAbout from './components/site-area/about/DetailAbout';
 
 
 function App() {
-  const [text, setText] = useState("Dashboard");
+  const [text, setText] = useState(() => {
+    const storedValue = localStorage.getItem('text');
+    return storedValue ? JSON.parse(storedValue) : 'Dashboard';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('text', JSON.stringify(text));
+  }, [text]);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [change, setChange] = useState(true);
+  const [isLoggedİn, setİsLoggedİn] = useState(true);
 
   return (
     <div className='body'>
       <Router>
+        <Routes>
+          <Route exact path='/signin' element={<SignIn />} />
+          <Route path='/' element={<Navigate to='/signin' />} />
+        </Routes>
         <Container maxWidth='xl'>
           <Grid container spacing={2}>
             <Grid item lg={3}>
               <MyContext.Provider value={{ text, setText }}>
-                <Sidebar change={change} setChange={setChange} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                {
+                  isLoggedİn && (
+                    <Sidebar change={change} setChange={setChange} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                  )
+                }
               </MyContext.Provider>
             </Grid>
             <Grid item lg={9}>
-              <MyContext.Provider value={{ text, setText }}>
-                <NavArea menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-              </MyContext.Provider>
+              {
+                isLoggedİn && (
+                  <NavArea text={text} setText={setText} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                )
+              }
               <Routes>
-                <Route path='/signin' element={<SignIn />} />
                 <Route path='/profile' element={<Profile change={change} setChange={setChange} />} />
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/rooms' element={<Room />} />
@@ -122,6 +143,8 @@ function App() {
                 <Route path='/courses/create' element={<AddCourse />} />
                 <Route path='/courses/detail/:id' element={<DetailCourse />} />
                 <Route path='/courses/edit/:id' element={<EditCourse />} />
+
+
                 <Route path='/site/dashboard' element={<SiteDashboard />} />
                 <Route path='/site/courses' element={<SiteCourse />} />
                 <Route path='/site/courses/detail/:id' element={<SiteDetailCourse />} />
@@ -134,6 +157,10 @@ function App() {
                 <Route path='/site/banners/create' element={<AddBanner />} />
                 <Route path='/site/teachers' element={<SiteTeacher />} />
                 <Route path='/site/teachers/detail/:id' element={<SiteDetailTeacher />} />
+                <Route path='/site/about' element={<About />} />
+                <Route path='/site/about/create' element={<AddAbout />} />
+                <Route path='/site/about/detail/:id' element={<DetailAbout />} />
+
               </Routes>
             </Grid>
           </Grid>

@@ -12,6 +12,9 @@
   .sidebar-area.active {
     left: 0;
   }
+  .css-mhc70k-MuiGrid-root {
+    display: block !important;
+  }
   .fixed {
     left: 0 !important;
     width: 100% !important;
@@ -97,7 +100,7 @@
   margin: 30px 0;
 }
 .body .nav-area .top-area {
-  transition: 0.4s;
+  transition: 0.3s;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -162,7 +165,6 @@
   height: 617px;
   background-size: cover;
   background-position: center;
-  margin-top: 30px;
 }
 .signin-area .css-0 {
   display: flex;
@@ -196,6 +198,28 @@
 .signin-area .css-sghohy-MuiButtonBase-root-MuiButton-root {
   margin-top: 30px;
   background-color: #174873 !important;
+}
+
+.profile-area {
+  height: 100vh;
+}
+.profile-area .logo-area {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.profile-area .logo-area img {
+  border-radius: 100%;
+}
+.profile-area .left-side {
+  display: flex;
+  align-items: center;
+}
+
+.css-0 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .area {
@@ -379,24 +403,37 @@
   box-shadow: none !important;
 }
 
-.profile-area {
-  height: 100vh;
-}
-.profile-area .logo-area {
-  width: 100px;
-  height: 100px;
-  margin-right: 10px;
-}
-.profile-area .logo-area img {
-  border-radius: 100%;
-}
-.profile-area .left-side {
+.profile-area .top-area {
   display: flex;
   align-items: center;
+  justify-content: space-around;
 }
-
-.css-0 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.profile-area .top-area p {
+  margin: 0 !important;
+  font-size: 20px;
+  font-weight: 600;
+}
+.profile-area hr {
+  border-top: 0px solid rgba(0, 0, 0, 0.12) !important;
+  border-left: none;
+  border-bottom: none;
+  opacity: 0.25;
+  background-color: transparent;
+  width: 0.0625rem;
+  height: 100%;
+  margin: 0px !important;
+  border-right: 0px solid rgba(0, 0, 0, 0.12) !important;
+  background-image: linear-gradient(rgba(52, 71, 103, 0), rgba(52, 71, 103, 0.4), rgba(52, 71, 103, 0)) !important;
+}
+.profile-area .subscribe-area .top-area {
+  margin-bottom: 20px;
+}
+.profile-area .subscribe-area .subscribe {
+  padding: 10px;
+  background: white;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.profile-area .subscribe-area .subscribe p {
+  margin: 0 !important;
+  text-align: center;
 }/*# sourceMappingURL=App.css.map */

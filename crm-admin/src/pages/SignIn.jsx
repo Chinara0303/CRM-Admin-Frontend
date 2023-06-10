@@ -1,11 +1,13 @@
 import { Box, Button, FormControlLabel, FormGroup, Paper, Switch, TextField, Grid, Container } from '@mui/material'
 import React from 'react'
+import { Navigate } from 'react-router-dom'
 import BgImage from '../assets/images/signin-bg.jpeg'
 
 
 function SignIn() {
+  
     return (
-        <div className='signin-area' style={{ backgroundImage: `url(${BgImage})` }}>
+        <div className='signin-area' style={{ backgroundImage: `url(${BgImage})`,height:"100vh" }}>
             <Box>
                 <Paper>
                     <div className='top-area'>

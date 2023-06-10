@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignRight, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
@@ -14,6 +14,7 @@ function Seans() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div className='area'>
       <Tooltip title='Add' arrow placement="top-start">
