@@ -15,10 +15,10 @@ function DetailTeacher() {
             <Container maxWidth='lg'>
                 <Grid container>
                     <Paper>
-                    <Tooltip title='Image' placement='left' arrow>
-                        <div className="single-area">
-                            <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
-                        </div>
+                        <Tooltip title='Image' placement='left' arrow>
+                            <div className="single-area">
+                                <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
+                            </div>
                         </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>
                             <div className="single-area">
@@ -60,7 +60,7 @@ function DetailTeacher() {
                                 <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Go to list'  arrow placement="bottom-start">
+                        <Tooltip title='Go to list' arrow placement="bottom-start">
                             <NavLink to='/teachers'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                             </NavLink>

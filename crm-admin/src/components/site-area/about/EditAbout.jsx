@@ -5,28 +5,32 @@ import axios from 'axios'
 import React,{ useEffect ,useState} from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Swal from 'sweetalert2'
 
-function EditSlider() {
+function EditAbout() {
     const navigate = useNavigate();
     const { id } = useParams();
     const baseUrl = "https://localhost:7069";
 
-    const [slider, setSlider] = useState();
+    const [about, setAbout] = useState();
     const [file, setFile] = useState(null);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState();
+    const [title, setTitle] = useState();
+    const [subTitle, setSubTitle] = useState();
+    const [description, setDescription] = useState();
 
-    const newSlider = { photo: file, title: title, description: description };
+    const newAbout = { photo: file, title: title,subTitle:subTitle, description: description };
 
     const getAsync = async (id) => {
         try {
-            await axios.get(`${baseUrl}/api/slider/getbyid/${id}`)
+            await axios.get(`${baseUrl}/api/about/getbyid/${id}`)
                 .then((res) => {
-                    setSlider(res.data);
+                    setAbout(res.data);
                     setImage(res.data.image);
                     setTitle(res.data.title);
+                    setSubTitle(res.data.subTitle);
                     setDescription(res.data.description);
                 });
 
@@ -42,25 +46,21 @@ function EditSlider() {
         }
     }
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
 
-        for (const [key, value] of Object.entries(newSlider)) {
+        for (const [key, value] of Object.entries(newAbout)) {
             formData.append(key, value);
         };
 
         try {
-            await axios.put(`${baseUrl}/api/slider/update/${id}`, formData, {
+            await axios.put(`${baseUrl}/api/about/update/${id}`, formData, {
                 headers: {
                     Accept: "*/*"
                 }
             }).then(() => {
-                navigate("/site/sliders")
+                navigate("/site/about")
             })
         }
         catch (error) {
@@ -104,7 +104,18 @@ function EditSlider() {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <Input type='text' value={title} name={title} onChange={(e)=>setTitle(e.target.value)} />
+                                    <CKEditor
+                                        editor={ClassicEditor}
+                                        // onChange={(editor)=>handleTitleChange(editor)}
+                                        name='title'
+                                    />
+                                    {/* <Input type='text' value={title} name={title} onChange={(e)=>setTitle(e.target.value)} /> */}
+                                </InputGroup>
+                            </FormGroup>
+                            <FormGroup>
+                                <InputGroup>
+                                    <InputGroupText>Title</InputGroupText>
+                                    <Input type='text' value={subTitle} name={subTitle} onChange={(e)=>setSubTitle(e.target.value)} />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
@@ -132,4 +143,4 @@ function EditSlider() {
     )
 }
 
-export default EditSlider
+export default EditAbout

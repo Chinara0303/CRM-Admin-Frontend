@@ -47,7 +47,7 @@ function AddCourse() {
                     </FormGroup>
                     <FormGroup>
                         <InputGroup>
-                            <InputGroupText>Offers</InputGroupText>
+                            <InputGroupText>Promises</InputGroupText>
                             <Input type='textarea' />
                         </InputGroup>
                     </FormGroup>

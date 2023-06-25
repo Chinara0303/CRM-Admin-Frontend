@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Form, FormGroup, Input, InputGroup, Button, InputGroupText,Label } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
 
 function EditStaff() {
-  return (
-    <div className='edit-area area'>
+    return (
+        <div className='edit-area area'>
             <div className="title-area">
                 <Paper>
                     <h4>Edit</h4>
@@ -18,7 +18,7 @@ function EditStaff() {
                 <Grid container>
                     <Paper>
                         <Form>
-                        <FormGroup>
+                            <FormGroup>
                                 <Input type='file' id='file' />
                                 <Label className='btn-2' for='file'>Upload</Label>
                             </FormGroup>
@@ -74,15 +74,18 @@ function EditStaff() {
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>
-                            <Tooltip title='add' arrow placement="bottom-start">
-                                <Button type='submit' style={{ border: "none" }} color='transparent'><FontAwesomeIcon icon={faFloppyDisk} size="2xl" style={{ color: "#0ae60d", }} /></Button>
-                            </Tooltip>
+                            <Button type='submit' style={{ border: "none" }} color='transparent'>
+                                <Tooltip title='add' arrow placement="bottom-start">
+                                    <FontAwesomeIcon icon={faFloppyDisk} size="2xl" style={{ color: "#0ae60d", }} />
+                                </Tooltip>
+                            </Button>
+
                         </Form>
                     </Paper>
                 </Grid>
             </Container>
         </div>
-  )
+    )
 }
 
 export default EditStaff

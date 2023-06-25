@@ -62,6 +62,8 @@ import SiteDetailTeacher from './components/site-area/teacher/SiteDetailTeacher'
 import About from './pages/site-area/About';
 import AddAbout from './components/site-area/about/AddAbout';
 import DetailAbout from './components/site-area/about/DetailAbout';
+import EditBanner from './components/site-area/banner/EditBanner';
+import EditAbout from './components/site-area/about/EditAbout';
 
 
 function App() {
@@ -155,11 +157,13 @@ function App() {
                 <Route path='/site/sliders/edit/:id' element={<EditSlider />} />
                 <Route path='/site/banners' element={<Banner />} />
                 <Route path='/site/banners/create' element={<AddBanner />} />
+                <Route path='/site/banners/edit/:id' element={<EditBanner />} />
                 <Route path='/site/teachers' element={<SiteTeacher />} />
                 <Route path='/site/teachers/detail/:id' element={<SiteDetailTeacher />} />
                 <Route path='/site/about' element={<About />} />
                 <Route path='/site/about/create' element={<AddAbout />} />
                 <Route path='/site/about/detail/:id' element={<DetailAbout />} />
+                <Route path='/site/about/edit/:id' element={<EditAbout />} />
 
               </Routes>
             </Grid>

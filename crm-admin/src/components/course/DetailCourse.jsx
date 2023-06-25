@@ -35,7 +35,7 @@ function DetailCourse() {
                                 <p>tyguhljghjk</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Offers' placement='left' arrow>
+                        <Tooltip title='Promise' placement='left' arrow>
                             <div className="single-area">
                                 <p>tyguhljghjk</p>
                             </div>

@@ -15,9 +15,11 @@ function DetailStaff() {
             <Container maxWidth='lg'>
                 <Grid container>
                     <Paper>
-                        <div className="single-area">
-                            <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
-                        </div>
+                        <Tooltip title='Image' placement='left' arrow>
+                            <div className="single-area">
+                                <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
+                            </div>
+                        </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>
                             <div className="single-area">
                                 <p>Chinara Ibadova</p>

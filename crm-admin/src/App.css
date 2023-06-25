@@ -226,6 +226,14 @@
   margin-top: 60px;
   height: 100vh;
 }
+.area .image-area {
+  width: 150px;
+  height: 150px;
+}
+.area .image-area img {
+  width: 100%;
+  height: 100%;
+}
 .area .css-15wwp11-MuiTableHead-root {
   background-color: #174873;
 }
@@ -283,6 +291,18 @@
 .edit-area,
 .detail-area {
   height: 100vh;
+}
+.create-area .image-area,
+.edit-area .image-area,
+.detail-area .image-area {
+  width: 300px;
+  height: 200px;
+}
+.create-area .image-area img,
+.edit-area .image-area img,
+.detail-area .image-area img {
+  width: 100%;
+  height: 100%;
 }
 .create-area .css-1ps6pg7-MuiPaper-root,
 .edit-area .css-1ps6pg7-MuiPaper-root,
