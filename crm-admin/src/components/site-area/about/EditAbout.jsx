@@ -70,7 +70,6 @@ function EditAbout() {
                 icon: 'error',
                 confirmButtonText: 'Cool'
             })
-            console.log(error);
         }
 
     };
@@ -125,7 +124,7 @@ function EditAbout() {
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
-                                <NavLink to='/site/sliders'>
+                                <NavLink to='/site/about'>
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>

@@ -1,6 +1,6 @@
 import { faChevronLeft, faFloppyDisk, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, DialogTitle, Grid, Paper, Tooltip } from '@mui/material'
+import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
 import React ,{useState,useEffect} from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -38,11 +38,8 @@ function EditBanner() {
                 icon: 'error',
                 confirmButtonText: 'Cool'
             })
-            console.log(error);
-
         }
     }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,9 +65,7 @@ function EditBanner() {
                 icon: 'error',
                 confirmButtonText: 'Cool'
             })
-            console.log(error);
         }
-
     };
     useEffect(() => {
         getAsync(id)
@@ -100,7 +95,7 @@ function EditBanner() {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <Input type='text'  name={DialogTitle} value={title} onChange={(e)=>setTitle(e.target.value)} />
+                                    <Input type='text'  name={title} value={title} onChange={(e)=>setTitle(e.target.value)} />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>

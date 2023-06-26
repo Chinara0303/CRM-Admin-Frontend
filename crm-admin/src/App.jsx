@@ -64,6 +64,8 @@ import AddAbout from './components/site-area/about/AddAbout';
 import DetailAbout from './components/site-area/about/DetailAbout';
 import EditBanner from './components/site-area/banner/EditBanner';
 import EditAbout from './components/site-area/about/EditAbout';
+import DetailPosition from './components/position/DetailPosition';
+import DetailRoom from './components/room/DetailRoom';
 
 
 function App() {
@@ -110,6 +112,7 @@ function App() {
                 <Route path='/rooms' element={<Room />} />
                 <Route path='/rooms/create' element={<AddRoom />} />
                 <Route path='/rooms/edit/:id' element={<EditRoom />} />
+                <Route path='/rooms/detail/:id' element={<DetailRoom />} />
                 <Route path='/seanses' element={<Seans />} />
                 <Route path='/seanses/create' element={<AddSeans />} />
                 <Route path='/seanses/edit/:id' element={<EditSeans />} />
@@ -119,6 +122,7 @@ function App() {
                 <Route path='/positions' element={<Position />} />
                 <Route path='/positions/create' element={<AddPosition />} />
                 <Route path='/positions/edit/:id' element={<EditPosition />} />
+                <Route path='/positions/detail/:id' element={<DetailPosition />} />
                 <Route path='/teachers' element={<Teacher />} />
                 <Route path='/teachers/create' element={<AddTeacher />} />
                 <Route path='/teachers/edit/:id' element={<EditTeacher />} />

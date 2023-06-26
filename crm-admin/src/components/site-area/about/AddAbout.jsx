@@ -54,9 +54,7 @@ function AddAbout() {
                 confirmButtonText: 'Cool'
             })
             console.log(error);
-
         }
-
     };
 
     const handleTitleChange = (event, editor) => {

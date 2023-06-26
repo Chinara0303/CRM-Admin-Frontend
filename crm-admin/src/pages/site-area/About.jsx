@@ -49,39 +49,6 @@ function About() {
             console.log(error);
         }
     }
-    // const remove = (id) => {
-    //     Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             try {
-    //                 axios.delete(`${baseUrl}/api/about/delete/${id}`)
-    //                     .then(() => {
-    //                         Swal.fire(
-    //                             'Deleted!',
-    //                             'Your item has been deleted.',
-    //                             'success'
-    //                         )
-    //                         getAllAsync();
-    //                     });
-
-    //             } catch (error) {
-    //                 Swal.fire({
-    //                     title: 'Error!',
-    //                     text: 'Do you want to continue',
-    //                     icon: 'error',
-    //                     confirmButtonText: 'Cool'
-    //                 })
-    //             }
-    //         }
-    //     })
-    // }
 
     useEffect(() => {
         getAllAsync();

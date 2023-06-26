@@ -342,7 +342,7 @@
 .edit-area .single-area,
 .detail-area .single-area {
   margin: 10px 0;
-  padding: 5px 0;
+  padding: 5px 20px;
   display: block;
   border-style: solid;
   border-color: #8c8b8b;

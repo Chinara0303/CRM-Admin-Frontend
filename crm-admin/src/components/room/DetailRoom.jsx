@@ -1,24 +1,24 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import axios from 'axios'
+import React,{ useState,useEffect } from 'react'
 import moment from 'moment';
+import { NavLink, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
-function DetailAbout() {
+function DetailRoom() {
     const { id } = useParams();
     const baseUrl = "https://localhost:7069";
-    const [about, setAbout] = useState([]);
+
+    const [room, setRoom] = useState([]);
 
     const getAsync = async (id) => {
         try {
-            await axios.get(`${baseUrl}/api/about/getbyid/${id}`)
+            await axios.get(`${baseUrl}/api/room/getbyid/${id}`)
                 .then((res) => {
-                    setAbout(res.data);
+                    setRoom(res.data);
                 });
-
         } catch (error) {
             Swal.fire({
                 title: 'Oops...',
@@ -28,10 +28,10 @@ function DetailAbout() {
             })
         }
     }
+
     useEffect(() => {
         getAsync(id)
     }, [])
-
 
     return (
         <div className='detail-area'>
@@ -44,39 +44,34 @@ function DetailAbout() {
                 <Grid container>
                     {
                         <Paper>
-                            <Tooltip title='Image' placement='left' arrow>
+                            <Tooltip title='Name' placement='left' arrow>
                                 <div className="single-area">
-                                    <img className='img-fluid' src={`data:image;base64,${about.image}`} alt="" />
+                                    <p>{room.name}</p>
                                 </div>
                             </Tooltip>
-                            <Tooltip title='Title' placement='left' arrow>
+                            <Tooltip title='Capacity' placement='left' arrow>
                                 <div className="single-area">
-                                    <p>{about.title}</p>
+                                    <p>{room.capacity}</p>
                                 </div>
                             </Tooltip>
-                            <Tooltip title='Subtitle' placement='left' arrow>
+                            <Tooltip title='Group Count' placement='left' arrow>
                                 <div className="single-area">
-                                    <p>{about.subTitle}</p>
-                                </div>
-                            </Tooltip>
-                            <Tooltip title='Description' placement='left' arrow>
-                                <div className="single-area">
-                                    <p>{about.description}</p>
+                                    <p>{room.groupCount}</p>
                                 </div>
                             </Tooltip>
                             <Tooltip title='Created Date' placement='left' arrow>
                                 <div className="single-area">
-                                    <p>{moment(about.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                                    <p>{moment(room.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                                 </div>
                             </Tooltip>
                             <Tooltip title='Updated Date' placement='left' arrow>
                                 <div className="single-area">
-                                    <p>{moment(about.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                                    <p>{moment(room.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                                 </div>
                             </Tooltip>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
-                                <NavLink to='/site/about'>
-                                    <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff"}} />
+                                <NavLink to='/rooms'>
+                                    <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff" }} />
                                 </NavLink>
                             </Tooltip>
                         </Paper>
@@ -87,4 +82,4 @@ function DetailAbout() {
     )
 }
 
-export default DetailAbout
+export default DetailRoom
