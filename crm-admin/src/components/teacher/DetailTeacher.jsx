@@ -1,10 +1,37 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
+import Swal from 'sweetalert2'
+import axios from 'axios'
 
 function DetailTeacher() {
+    const { id } = useParams();
+    const baseUrl = "https://localhost:7069";
+    const [teacher, setTeacher] = useState([]);
+
+    const getAsync = async (id) => {
+        try {
+            await axios.get(`${baseUrl}/api/teacher/getbyid/${id}`)
+                .then((res) => {
+                    setTeacher(res.data);
+                });
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+    useEffect(() => {
+        getAsync(id)
+    }, [])
+
     return (
         <div className='detail-area'>
             <div className="title-area">
@@ -17,32 +44,32 @@ function DetailTeacher() {
                     <Paper>
                         <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
+                                <img className='img-fluid' src={`data:image;base64,${teacher.image}`} alt="" />
                             </div>
                         </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>
                             <div className="single-area">
-                                <p>Chinara Ibadova</p>
+                                <p>{teacher.fullName}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Email' placement='left' arrow>
                             <div className="single-area">
-                                <p>test@gmail.com</p>
+                                <p>{teacher.email}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Phone' placement='left' arrow>
                             <div className="single-area">
-                                <p>050....</p>
+                                <p>{teacher.phone}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Address' placement='left' arrow>
                             <div className="single-area">
-                                <p>Lokbatan</p>
+                                <p>{teacher.address}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Bio' placement='left' arrow>
                             <div className="single-area">
-                                <p>tyguhljghjk</p>
+                                <p>{teacher.biography}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Linkedin' placement='left' arrow>

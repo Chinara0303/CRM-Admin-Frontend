@@ -224,7 +224,6 @@
 
 .area {
   margin-top: 60px;
-  height: 100vh;
 }
 .area .image-area {
   width: 150px;
@@ -287,11 +286,6 @@
   width: 60px !important;
 }
 
-.create-area,
-.edit-area,
-.detail-area {
-  height: 100vh;
-}
 .create-area .image-area,
 .edit-area .image-area,
 .detail-area .image-area {

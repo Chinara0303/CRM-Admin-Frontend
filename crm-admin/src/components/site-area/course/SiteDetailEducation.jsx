@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
 
-function SiteDetailCourse() {
+function SiteDetailEducation() {
   return (
     <div className='detail-area'>
       <div className="title-area">
@@ -57,4 +57,4 @@ function SiteDetailCourse() {
   )
 }
 
-export default SiteDetailCourse
+export default SiteDetailEducation

@@ -2,41 +2,23 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
-import axios from 'axios'
-import { useState } from 'react'
 import Swal from 'sweetalert2'
+import axios from 'axios'
+import moment from 'moment';
 
-function DetailStudent() {
+
+function DetailEducation() {
     const { id } = useParams();
     const baseUrl = "https://localhost:7069";
-    const [student, setStudent] = useState([]);
-    const [group, setGroup] = useState();
+    const [education, setEducation] = useState([]);
 
     const getAsync = async (id) => {
         try {
-            await axios.get(`${baseUrl}/api/student/getbyid/${id}`)
+            await axios.get(`${baseUrl}/api/education/getbyid/${id}`)
                 .then((res) => {
-                    setStudent(res.data);
-                    getByGroupId(res.data.groupId)
-                });
-
-        } catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        }
-    }
-    const getByGroupId = async (groupId)=>{
-        try {
-            await axios.get(`${baseUrl}/api/group/getbyid/${groupId}`)
-                .then((res) => {
-                    console.log(res.data);
-                    setGroup(res.data);
+                    setEducation(res.data);
                 });
 
         } catch (error) {
@@ -49,11 +31,11 @@ function DetailStudent() {
         }
     }
     useEffect(() => {
-        getAsync(id);
+        getAsync(id)
     }, [])
 
     return (
-        <div className='detail-area area'>
+        <div className='detail-area'>
             <div className="title-area">
                 <Paper>
                     <h4>Detail</h4>
@@ -64,37 +46,51 @@ function DetailStudent() {
                     <Paper>
                         <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <img className='img-fluid' src={`data:image;base64,${student.image}`} alt="" />
+                                <img className='img-fluid' src={`data:image;base64,${education.image}`} alt="" />
                             </div>
                         </Tooltip>
-                     
-                        <Tooltip title='Full name' placement='left' arrow>
+                        <Tooltip title='Name' placement='left' arrow>
                             <div className="single-area">
-                                <p>{student.fullName}</p>
+                                <p>{education.name}</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Email' placement='left' arrow>
+                        <Tooltip title='Price' placement='left' arrow>
                             <div className="single-area">
-                                <p>{student.email}</p>
+                                <p>{education.price}</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Address' placement='left' arrow>
+                        <Tooltip title='Description' placement='left' arrow>
                             <div className="single-area">
-                                <p>{student.address}</p>
+                                <p>{education.description}</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Phone' placement='left' arrow>
+                        <Tooltip title='Promise' placement='left' arrow>
                             <div className="single-area">
-                                <p>{student.phone}</p>
+                                <p>{education.promise}</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Group' placement='left' arrow>
+                        <Tooltip title='Duration' placement='left' arrow>
                             <div className="single-area">
-                                <p>{group?.name}</p>
+                                <p>{education.duration}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Group Count' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{education.groupCount}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Created Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(education.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Updated Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(education.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">
-                            <NavLink to='/students'>
+                            <NavLink to='/educations'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                             </NavLink>
                         </Tooltip>
@@ -105,4 +101,4 @@ function DetailStudent() {
     )
 }
 
-export default DetailStudent
+export default DetailEducation

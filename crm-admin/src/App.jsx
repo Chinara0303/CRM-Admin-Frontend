@@ -42,15 +42,15 @@ import GroupTeacher from './pages/GroupTeacher';
 import AddTeacherToGroup from './components/group/AddTeacherToGroup';
 import EditTeacherGroup from './components/group/EditTeacherGroup';
 import EditStaffPosition from './components/staffPosition/EditStaffPosition';
-import Course from './pages/Course';
-import AddCourse from './components/course/AddCourse';
+import Education from './pages/Education';
+import AddEducation from './components/education/AddEducation';
+import DetailEducation from './components/education/DetailEducation';
+import EditEducation from './components/education/EditEducation';
 import Profile from './pages/Profile';
 import SiteCourse from './pages/site-area/SiteCourse';
 import SiteDashboard from './pages/site-area/SiteDashboard';
 import SiteSetting from './pages/site-area/SiteSetting';
-import SiteDetailCourse from './components/site-area/course/SiteDetailCourse';
-import DetailCourse from './components/course/DetailCourse';
-import EditCourse from './components/course/EditCourse';
+import SiteDetailEducation from './components/site-area/course/SiteDetailEducation';
 import SiteEditSetting from './components/site-area/setting/SiteEditSetting';
 import SiteSlider from './pages/site-area/SiteSlider';
 import AddSlider from './components/site-area/slider/AddSlider';
@@ -145,15 +145,15 @@ function App() {
                 <Route path='/groupteacher' element={<GroupTeacher />} />
                 <Route path='/groupteacher/create' element={<AddTeacherToGroup />} />
                 <Route path='/groupteacher/edit/:id' element={<EditTeacherGroup />} />
-                <Route path='/courses' element={<Course />} />
-                <Route path='/courses/create' element={<AddCourse />} />
-                <Route path='/courses/detail/:id' element={<DetailCourse />} />
-                <Route path='/courses/edit/:id' element={<EditCourse />} />
+                <Route path='/educations' element={<Education />} />
+                <Route path='/educations/create' element={<AddEducation />} />
+                <Route path='/educations/detail/:id' element={<DetailEducation />} />
+                <Route path='/educations/edit/:id' element={<EditEducation />} />
 
 
                 <Route path='/site/dashboard' element={<SiteDashboard />} />
-                <Route path='/site/courses' element={<SiteCourse />} />
-                <Route path='/site/courses/detail/:id' element={<SiteDetailCourse />} />
+                <Route path='/site/educations' element={<SiteCourse />} />
+                <Route path='/site/educations/detail/:id' element={<SiteDetailEducation />} />
                 <Route path='/site/settings' element={<SiteSetting />} />
                 <Route path='/site/settings/edit/:id' element={<SiteEditSetting />} />
                 <Route path='/site/sliders' element={<SiteSlider />} />

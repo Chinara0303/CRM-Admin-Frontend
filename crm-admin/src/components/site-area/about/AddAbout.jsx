@@ -53,7 +53,6 @@ function AddAbout() {
                 icon: 'error',
                 confirmButtonText: 'Cool'
             })
-            console.log(error);
         }
     };
 

@@ -105,14 +105,12 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Add teacher to group</h5>
                             </div>
                         </NavLink>
-                        <NavLink className='navigate' to='/courses' onClick={() => handleClose()}>
+                        <NavLink className='navigate' to='/educations' onClick={() => handleClose()}>
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faDiscourse} size="lg" style={{ color: "#fff", }} />
-                                <h5 onClick={(e) => handleClick(e)}>Courses</h5>
+                                <h5 onClick={(e) => handleClick(e)}>Educations</h5>
                             </div>
                         </NavLink>
-                     
-                        
                     </div>
                 )
             }
@@ -128,7 +126,7 @@ function Sidebar(props) {
                         <NavLink to='/site/courses' className='navigate' onClick={() => handleClose()} >
                             <div className="single-nav" >
                                 <FontAwesomeIcon icon={faDiscourse} size="lg" style={{ color: "#fff", }} />
-                                <h5 onClick={(e) => handleClick(e)}>Courses</h5>
+                                <h5 onClick={(e) => handleClick(e)}>Educations</h5>
                             </div>
                         </NavLink>
                         <NavLink to='/site/settings' className='navigate' onClick={() => handleClose()} >
