@@ -58,6 +58,8 @@ function AddPosition() {
     setName(e.target.value);
     setInvalidName(false)
   };
+
+  
   return (
     <div className='create-area area mt-5'>
       <div className="title-area">

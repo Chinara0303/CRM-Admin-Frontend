@@ -34,7 +34,6 @@ function Seans() {
             setShowCreateArea(true)
           }
           if (res.data.length > 0) {
-            debugger
             setShowTable(true);
             setSeanses(res.data)
           }

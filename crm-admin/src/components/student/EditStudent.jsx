@@ -38,6 +38,7 @@ function EditStudent() {
   const [groups, setGroups] = useState([]);
   const [image, setImage] = useState();
   const [student, setStudent] = useState([]);
+  
   const newStudent = {
     fullName: fullName, email: email, phone: phone, address: address,
     age: age, biography: biography, photo: file, groupId: groupId
@@ -283,7 +284,7 @@ function EditStudent() {
               <FormGroup>
                 <InputGroup>
                   <InputGroupText>Group</InputGroupText>
-                  <Input type="select" name='select' onChange={(e) => handleGroupChange(e)} >
+                  <Input type="select" name='select' value={groupId} onChange={(e) => handleGroupChange(e)} >
                     {
                       groups.map(function (group, i) {
                         return  <option value={group.id} key={i}>{group.name}</option>

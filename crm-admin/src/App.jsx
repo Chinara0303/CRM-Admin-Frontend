@@ -14,9 +14,6 @@ import AddSeans from './components/seans/AddSeans';
 import EditRoom from './components/room/EditRoom';
 import Seans from './pages/Seans';
 import EditSeans from './components/seans/EditSeans';
-import Weekday from './pages/Weekday';
-import AddWeekday from './components/weekday/AddWeekday';
-import EditWeekday from './components/weekday/EditWeekday';
 import Position from './pages/Position';
 import AddPosition from './components/position/AddPosition';
 import EditPosition from './components/position/EditPosition';
@@ -36,12 +33,9 @@ import Student from './pages/Student';
 import AddStudent from './components/student/AddStudent';
 import EditStudent from './components/student/EditStudent';
 import DetailStudent from './components/student/DetailStudent';
-import StaffPosition from './pages/StaffPosition';
-import AddPositionToEmployee from './components/staffPosition/AddPositionToEmployee';
 import GroupTeacher from './pages/GroupTeacher';
 import AddTeacherToGroup from './components/group/AddTeacherToGroup';
 import EditTeacherGroup from './components/group/EditTeacherGroup';
-import EditStaffPosition from './components/staffPosition/EditStaffPosition';
 import Education from './pages/Education';
 import AddEducation from './components/education/AddEducation';
 import DetailEducation from './components/education/DetailEducation';
@@ -66,6 +60,10 @@ import EditBanner from './components/site-area/banner/EditBanner';
 import EditAbout from './components/site-area/about/EditAbout';
 import DetailPosition from './components/position/DetailPosition';
 import DetailRoom from './components/room/DetailRoom';
+import Time from './pages/Time';
+import AddTime from './components/time/AddTime';
+import DetailTime from './components/time/DetailTime';
+import EditTime from './components/time/EditTime';
 
 
 function App() {
@@ -116,9 +114,6 @@ function App() {
                 <Route path='/seanses' element={<Seans />} />
                 <Route path='/seanses/create' element={<AddSeans />} />
                 <Route path='/seanses/edit/:id' element={<EditSeans />} />
-                <Route path='/weekdays' element={<Weekday />} />
-                <Route path='/weekdays/create' element={<AddWeekday />} />
-                <Route path='/weekdays/edit/:id' element={<EditWeekday />} />
                 <Route path='/positions' element={<Position />} />
                 <Route path='/positions/create' element={<AddPosition />} />
                 <Route path='/positions/edit/:id' element={<EditPosition />} />
@@ -139,9 +134,6 @@ function App() {
                 <Route path='/students/create' element={<AddStudent />} />
                 <Route path='/students/edit/:id' element={<EditStudent />} />
                 <Route path='/students/detail/:id' element={<DetailStudent />} />
-                <Route path='/staffposition' element={<StaffPosition />} />
-                <Route path='/staffposition/create' element={<AddPositionToEmployee />} />
-                <Route path='/staffposition/edit/:id' element={<EditStaffPosition />} />
                 <Route path='/groupteacher' element={<GroupTeacher />} />
                 <Route path='/groupteacher/create' element={<AddTeacherToGroup />} />
                 <Route path='/groupteacher/edit/:id' element={<EditTeacherGroup />} />
@@ -149,6 +141,11 @@ function App() {
                 <Route path='/educations/create' element={<AddEducation />} />
                 <Route path='/educations/detail/:id' element={<DetailEducation />} />
                 <Route path='/educations/edit/:id' element={<EditEducation />} />
+                <Route path='/time' element={<Time />} />
+                <Route path='/time/create' element={<AddTime />} />
+                <Route path='/time/detail/:id' element={<DetailTime />} />
+                <Route path='/time/edit/:id' element={<EditTime />} />
+
 
 
                 <Route path='/site/dashboard' element={<SiteDashboard />} />

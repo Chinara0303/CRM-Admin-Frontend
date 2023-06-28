@@ -2,11 +2,10 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React from 'react'
-import { useEffect } from 'react'
+import React,{ useEffect,useState } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
 import Swal from 'sweetalert2'
+import moment from 'moment';
 
 function DetailStudent() {
     const { id } = useParams();
@@ -35,7 +34,6 @@ function DetailStudent() {
         try {
             await axios.get(`${baseUrl}/api/group/getbyid/${groupId}`)
                 .then((res) => {
-                    console.log(res.data);
                     setGroup(res.data);
                 });
 
@@ -92,6 +90,21 @@ function DetailStudent() {
                             <div className="single-area">
                                 <p>{group?.name}</p>
                             </div>
+                        </Tooltip>
+                        <Tooltip title='Created Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(student.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Updated Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(student.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Go to list' arrow placement="bottom-start">
+                            <NavLink to='/staff'>
+                                <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
+                            </NavLink>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">
                             <NavLink to='/students'>

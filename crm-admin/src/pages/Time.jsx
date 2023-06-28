@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { faAlignRight, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Menu, Button, debounce } from '@mui/material';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useState } from 'react';
 
-function Group() {
+function Time() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -20,22 +20,29 @@ function Group() {
     };
 
     const [showTable, setShowTable] = useState(false);
-    const [groups, setGroups] = useState([]);
+    const [time, setTime] = useState([]);
+    const [seans, setSeans] = useState([]);
+    const [showCreateArea, setShowCreateArea] = useState(true);
+
     const baseUrl = "https://localhost:7069";
     let count = 1;
 
     const getAllAsync = async () => {
         try {
-            await axios.get(`${baseUrl}/api/group/getall`)
+            await axios.get(`${baseUrl}/api/time/getall`)
                 .then((res) => {
+
+                    if (res.data.length <= 0) {
+                        setShowTable(false)
+                        setShowCreateArea(true)
+                    }
                     if (res.data.length > 0) {
                         setShowTable(true);
-                        setGroups(res.data)
+                        setTime(res.data);
+                        getSeansByIdAsync(res.data)
                     }
-                    else {
-                        setShowTable(false)
-                    }
-                });
+                }
+                );
 
         } catch (error) {
             Swal.fire({
@@ -58,7 +65,7 @@ function Group() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/group/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/time/softdelete/${id}`)
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -80,18 +87,44 @@ function Group() {
         })
     }
 
+    const getSeansByIdAsync = async (times) => {
+        try {
+            const seansList = [];
+            for (const time of times) {
+                await axios.get(`${baseUrl}/api/seans/getbyid/${time.seansId}`)
+                .then((res) => {
+                    seansList.push(res.data)
+                    setSeans(seansList);
+                });
+            }
+           
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+
     useEffect(() => {
         getAllAsync();
     }, [])
 
-
     return (
         <div className='area'>
-            <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/groups/create'>
-                    <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                </NavLink>
-            </Tooltip>
+            {
+                showCreateArea && (
+                    <Tooltip title='Add' arrow placement="top-start">
+                        <NavLink to='/time/create'>
+                            <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                        </NavLink>
+                    </Tooltip>
+                )
+            }
+
             {
                 showTable && (
                     <Paper style={{ marginTop: "30px" }}>
@@ -100,75 +133,73 @@ function Group() {
                                 <TableHead >
                                     <TableRow>
                                         <TableCell>#</TableCell>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell>Teacher full name</TableCell>
+                                        <TableCell>Interval</TableCell>
+                                        <TableCell>Seans</TableCell>
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        groups.map(function (group, i) {
+                                        time.map(function (time, i) {
                                             return <TableRow key={i}>
                                                 <TableCell>{count++}</TableCell>
-                                                <TableCell>{group.name}</TableCell>
+                                                <TableCell>{time.interval}</TableCell>
                                                 <TableCell>
-                                                    teacherler gelmelidi
-                                                   {/* {group.teacherName} */}
+                                                    seanslar gelecek
+                                                    {/* {
+                                                        seans.map(function(item,i){
+                                                            return <p key={i}>{seans.find((item) => item.id === time.seansId)?.name}</p>
+                                                        })
+                                                    } */}
                                                 </TableCell>
-                                               
                                                 <TableCell>
                                                     <div className="d-flex">
-                                                        <Tooltip title='Info' placement='top-start'>
+                                                    <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
-                                                                <NavLink to={`/groups/detail/${group.id}`}>
+                                                                <NavLink to={`/time/detail/${time.id}`}>
                                                                     <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
-                                                                </NavLink>
+                                                                    </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
-                                                                <NavLink to={`/groups/edit/${group.id}`}>
+                                                                <NavLink to={`/time/edit/${time.id}`}>
                                                                     <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
-                                                            <Button type="button" onClick={(id) => remove(group.id)}>
+                                                            <Button type="button" onClick={(id) => remove(time.id)}>
                                                                 <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
                                                             </Button>
                                                         </Tooltip>
                                                     </div>
                                                     {/* <Button
-                                                    id="basic-button"
-                                                    aria-controls={open ? 'basic-menu' : undefined}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={open ? 'true' : undefined}
-                                                    onClick={handleClick}
-                                                >
-                                                    <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                                                </Button>
-                                                <Menu
-                                                    id="basic-menu"
-                                                    anchorEl={anchorEl}
-                                                    open={open}
-                                                    onClose={handleClose}
-                                                >
-                                                    <Tooltip title='Info' placement='top-start'>
-                                                        <MenuItem>
-                                                            <NavLink to='/groups/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                    <Tooltip title='Edit' placement='top-start'>
-                                                        <MenuItem>
-                                                            <NavLink to='/groups/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                    <Tooltip title='Delete' placement='top-start'>
-                                                        <MenuItem>
-                                                            <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                </Menu> */}
+                          id="basic-button"
+                          aria-controls={open ? 'basic-menu' : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? 'true' : undefined}
+                          onClick={handleClick}
+                        >
+                          <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
+                        </Button>
+                        <Menu
+                          id="basic-menu"
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                        >
+                          <Tooltip title='Edit' placement='top-start'>
+                            <MenuItem>
+                              <NavLink to='/seanses/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                            </MenuItem>
+                          </Tooltip>
+                          <Tooltip title='Delete' placement='top-start'>
+                            <MenuItem>
+                              <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
+                            </MenuItem>
+                          </Tooltip>
+                        </Menu> */}
                                                 </TableCell>
                                             </TableRow>
                                         })
@@ -186,4 +217,4 @@ function Group() {
     )
 }
 
-export default Group
+export default Time

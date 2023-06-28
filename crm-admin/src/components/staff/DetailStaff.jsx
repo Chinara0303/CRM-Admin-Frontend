@@ -1,10 +1,65 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import React from 'react'
+import { useEffect } from 'react'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import { useState } from 'react'
+import moment from 'moment';
 
 function DetailStaff() {
+    const { id } = useParams();
+    const baseUrl = "https://localhost:7069";
+    const [staffMember, setStaffMember] = useState([]);
+    const [positions, setPositions] = useState([]);
+
+    const getAsync = async (id) => {
+        try {
+            await axios.get(`${baseUrl}/api/staff/getbyid/${id}`)
+                .then((res) => {
+                    setStaffMember(res.data);
+                    for (let i = 0; i < res.data.positionIds.length; i++) {
+                        getPositionById(res.data.positionIds[i])
+                    }
+                })
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+    const getPositionById = async (positionId) => {
+        try {
+            await axios.get(`${baseUrl}/api/position/getbyid/${positionId}`)
+                .then((res) => {
+                    const newPosition = res.data.name;
+                    setPositions((prevPositions) => {
+                        if (!prevPositions.includes(newPosition)) {
+                            return [...prevPositions, newPosition];
+                        }
+                        return prevPositions;
+                    });
+                });
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+    useEffect(() => {
+        getAsync(id);
+
+    }, [])
+
     return (
         <div className='detail-area area'>
             <div className="title-area">
@@ -17,37 +72,51 @@ function DetailStaff() {
                     <Paper>
                         <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <img className='img-fluid' src={require('../../assets/images/download.jpeg')} alt="" />
+                                <img className='img-fluid' src={`data:image/;base64,${staffMember.image}`} alt="" />
                             </div>
                         </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>
                             <div className="single-area">
-                                <p>Chinara Ibadova</p>
+                                <p>{staffMember.fullName}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Email' placement='left' arrow>
                             <div className="single-area">
-                                <p>test@gmail.com</p>
+                                <p>{staffMember.email}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Address' placement='left' arrow>
                             <div className="single-area">
-                                <p>Lokbatan</p>
+                                <p>{staffMember.address}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Phone' placement='left' arrow>
                             <div className="single-area">
-                                <p>050...</p>
+                                <p>{staffMember.phone}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Biography' placement='left' arrow>
                             <div className="single-area">
-                                <p>edrftgyhj</p>
+                                <p>{staffMember.biography}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Position' placement='left' arrow>
                             <div className="single-area">
-                                <p>developer</p>
+                                {
+                                    positions.map(function (name, i) {
+                                        return <p key={i}>{name}</p>
+                                    })
+                                }
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Created Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(staffMember.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
+                            </div>
+                        </Tooltip>
+                        <Tooltip title='Updated Date' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{moment(staffMember.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">

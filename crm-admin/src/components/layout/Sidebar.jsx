@@ -56,12 +56,6 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Seanses</h5>
                             </div>
                         </NavLink>
-                        <NavLink className='navigate' to='/weekdays' onClick={() => handleClose()}>
-                            <div className="single-nav">
-                                <FontAwesomeIcon icon={faCalendarWeek} size="lg" style={{ color: "#fff", }} />
-                                <h5 onClick={(e) => handleClick(e)}>Weekdays</h5>
-                            </div>
-                        </NavLink>
                         <NavLink className='navigate' to='/positions' onClick={() => handleClose()}>
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faUserTie} size="lg" style={{ color: "#fff", }} />
@@ -93,12 +87,6 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Students</h5>
                             </div>
                         </NavLink>
-                        <NavLink className='navigate' to='/staffposition' onClick={() => handleClose()}>
-                            <div className="single-nav">
-                                <FontAwesomeIcon icon={faAddressCard} size="lg" style={{ color: "#fff", }} />
-                                <h5 onClick={(e) => handleClick(e)}>Add position to employee</h5>
-                            </div>
-                        </NavLink>
                         <NavLink className='navigate' to='/groupteacher' onClick={() => handleClose()}>
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#fff", }} />
@@ -109,6 +97,12 @@ function Sidebar(props) {
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faDiscourse} size="lg" style={{ color: "#fff", }} />
                                 <h5 onClick={(e) => handleClick(e)}>Educations</h5>
+                            </div>
+                        </NavLink>
+                        <NavLink className='navigate' to='/time' onClick={() => handleClose()}>
+                            <div className="single-nav">
+                                <FontAwesomeIcon icon={faUserTie} size="lg" style={{ color: "#fff", }} />
+                                <h5 onClick={(e) => handleClick(e)}>Time</h5>
                             </div>
                         </NavLink>
                     </div>
