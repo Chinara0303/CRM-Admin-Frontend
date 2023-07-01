@@ -36,7 +36,7 @@ function NavArea(props) {
                         </Grid>
                         <Grid item xs={6} lg={6} sm={6}>
                             <div className="right-side">
-                                <TextField id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+                                {/* <TextField id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" /> */}
                                <NavLink to='/profile' >
                                  <img src={require('../../assets/images/logo.png')} alt="" />
                                </NavLink>

@@ -117,7 +117,7 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Dashboard</h5>
                             </div>
                         </NavLink>
-                        <NavLink to='/site/courses' className='navigate' onClick={() => handleClose()} >
+                        <NavLink to='/site/educations' className='navigate' onClick={() => handleClose()} >
                             <div className="single-nav" >
                                 <FontAwesomeIcon icon={faDiscourse} size="lg" style={{ color: "#fff", }} />
                                 <h5 onClick={(e) => handleClick(e)}>Educations</h5>

@@ -41,10 +41,9 @@ import AddEducation from './components/education/AddEducation';
 import DetailEducation from './components/education/DetailEducation';
 import EditEducation from './components/education/EditEducation';
 import Profile from './pages/Profile';
-import SiteCourse from './pages/site-area/SiteCourse';
 import SiteDashboard from './pages/site-area/SiteDashboard';
 import SiteSetting from './pages/site-area/SiteSetting';
-import SiteDetailEducation from './components/site-area/course/SiteDetailEducation';
+import SiteDetailEducation from './components/site-area/education/SiteDetailEducation';
 import SiteEditSetting from './components/site-area/setting/SiteEditSetting';
 import SiteSlider from './pages/site-area/SiteSlider';
 import AddSlider from './components/site-area/slider/AddSlider';
@@ -64,6 +63,7 @@ import Time from './pages/Time';
 import AddTime from './components/time/AddTime';
 import DetailTime from './components/time/DetailTime';
 import EditTime from './components/time/EditTime';
+import SiteEducation from './pages/site-area/SiteEducation';
 
 
 function App() {
@@ -149,7 +149,7 @@ function App() {
 
 
                 <Route path='/site/dashboard' element={<SiteDashboard />} />
-                <Route path='/site/educations' element={<SiteCourse />} />
+                <Route path='/site/educations' element={<SiteEducation />} />
                 <Route path='/site/educations/detail/:id' element={<SiteDetailEducation />} />
                 <Route path='/site/settings' element={<SiteSetting />} />
                 <Route path='/site/settings/edit/:id' element={<SiteEditSetting />} />

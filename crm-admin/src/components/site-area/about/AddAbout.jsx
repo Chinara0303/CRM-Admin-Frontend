@@ -1,5 +1,3 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
@@ -56,9 +54,8 @@ function AddAbout() {
         }
     };
 
-    const handleTitleChange = (event, editor) => {
-        const title = editor.getData();
-        setTitle(title);
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
       };
     const handleDescChange = (e) => {
         setDescription(e.target.value);
@@ -87,12 +84,7 @@ function AddAbout() {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <CKEditor
-                                        editor={ClassicEditor}
-                                        onChange={(editor)=>handleTitleChange(editor)}
-                                        name='title'
-                                    />
-                                    {/* <Input type='text' /> */}
+                                    <Input type='text' name="title" onChange={(e) => handleTitleChange(e)}  />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>

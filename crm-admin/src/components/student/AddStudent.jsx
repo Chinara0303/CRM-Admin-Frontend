@@ -69,6 +69,7 @@ function AddStudent() {
 
         }
         catch (error) {
+            console.log(error.response.data);
             const errors = error.response.data.errors;
             if (errors.FullName !== undefined) {
                 if (errors.FullName.length > 0) {
@@ -259,6 +260,8 @@ function AddStudent() {
                                 <InputGroup>
                                     <InputGroupText>Group</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleGroupChange(e)} >
+                                    <option value="">Choose</option>
+
                                         {
                                             groups.map(function (group, i) {
                                                 return <option value={group.id} key={i}>{group.name}</option>

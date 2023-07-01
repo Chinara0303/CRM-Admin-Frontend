@@ -126,16 +126,14 @@ function Banner() {
                             <Tooltip title='Edit' placement='top-start'>
                               <MenuItem>
                                 <NavLink to={`/site/banners/edit/${banner.id}`}>
-                                  <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
+                                  <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
                                 </NavLink>
                               </MenuItem>
                             </Tooltip>
                             <Tooltip title='Delete' placement='top-start'>
-                              <MenuItem>
                                 <Button type='button' onClick={(id) => remove(banner.id)}>
-                                  <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
+                                  <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
                                 </Button>
-                              </MenuItem>
                             </Tooltip>
                           </div>
                           {/* <Button

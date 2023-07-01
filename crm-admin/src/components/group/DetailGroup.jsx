@@ -22,7 +22,6 @@ function DetailGroup() {
         try {
             await axios.get(`${baseUrl}/api/group/getbyid/${id}`)
                 .then((res) => {
-                    console.log(res.data);
                     setGroup(res.data);
                     getRoomAsync(res.data.roomId);
                     getEducationAsync(res.data.educationId);
@@ -112,7 +111,6 @@ function DetailGroup() {
         try {
             await axios.get(`${baseUrl}/api/teacher/getbyid/${teacherId}`)
                 .then((res) => {
-                    console.log(res.data);
                     const newTeacher = res.data.fullName;
                     setTeachers((prevTeachers) => {
                         if (!prevTeachers.includes(newTeacher)) {
@@ -131,7 +129,6 @@ function DetailGroup() {
         }
 
     }
-
    
     useEffect(() => {
         getAsync(id)

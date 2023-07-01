@@ -2,7 +2,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import moment from 'moment';
@@ -45,7 +45,9 @@ function DetailTeacher() {
                     <Paper>
                         <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <img className='img-fluid' src={`data:image;base64,${teacher.image}`} alt="" />
+                                <div className="image">
+                                    <img className='img-fluid' src={`data:image;base64,${teacher.image}`} alt="" />
+                                </div>
                             </div>
                         </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>
@@ -58,11 +60,17 @@ function DetailTeacher() {
                                 <p>{teacher.email}</p>
                             </div>
                         </Tooltip>
+                        <Tooltip title='Age' placement='left' arrow>
+                            <div className="single-area">
+                                <p>{teacher.age}</p>
+                            </div>
+                        </Tooltip>
                         <Tooltip title='Phone' placement='left' arrow>
                             <div className="single-area">
                                 <p>{teacher.phone}</p>
                             </div>
                         </Tooltip>
+
                         <Tooltip title='Address' placement='left' arrow>
                             <div className="single-area">
                                 <p>{teacher.address}</p>
@@ -97,11 +105,6 @@ function DetailTeacher() {
                             <div className="single-area">
                                 <p>{moment(teacher.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                             </div>
-                        </Tooltip>
-                        <Tooltip title='Go to list' arrow placement="bottom-start">
-                            <NavLink to='/staff'>
-                                <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
-                            </NavLink>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">
                             <NavLink to='/teachers'>

@@ -5,8 +5,6 @@ import axios from 'axios'
 import React,{ useEffect ,useState} from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Swal from 'sweetalert2'
 
 function EditAbout() {
@@ -101,12 +99,7 @@ function EditAbout() {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <CKEditor
-                                        editor={ClassicEditor}
-                                        // onChange={(editor)=>handleTitleChange(editor)}
-                                        name='title'
-                                    />
-                                    {/* <Input type='text' value={title} name={title} onChange={(e)=>setTitle(e.target.value)} /> */}
+                                    <Input type='text' value={title} name={title} onChange={(e)=>setTitle(e.target.value)} />
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>

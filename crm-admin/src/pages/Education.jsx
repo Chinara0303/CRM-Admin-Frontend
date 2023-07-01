@@ -83,6 +83,7 @@ function Education() {
     useEffect(() => {
         getAllAsync();
     }, [])
+    
     return (
         <div className='area'>
             <Tooltip title='Add' arrow placement="top-start">

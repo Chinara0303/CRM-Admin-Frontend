@@ -21,6 +21,7 @@ function Group() {
 
     const [showTable, setShowTable] = useState(false);
     const [groups, setGroups] = useState([]);
+    const [teachers, setTeachers] = useState([]);
     const baseUrl = "https://localhost:7069";
     let count = 1;
 
@@ -46,6 +47,7 @@ function Group() {
             })
         }
     }
+   
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -106,16 +108,38 @@ function Group() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
+                                    {/* {
+                                        console.log(teachers)
+        console.log(teacherList);
+                                       
+                                        // teachers.map(function (item, i) {
+                                        //    return <p key={i}> {item.fullName}</p>
+                                        // })
+                                    }
+                                    {
+                                         console.log(5)
+                                    } */}
+                                    {
+                                        // console.log(teachers)
+
+                                    }
+
                                     {
                                         groups.map(function (group, i) {
                                             return <TableRow key={i}>
                                                 <TableCell>{count++}</TableCell>
                                                 <TableCell>{group.name}</TableCell>
                                                 <TableCell>
-                                                    teacherler gelmelidi
-                                                   {/* {group.teacherName} */}
+                                                    {
+                                                        // console.log(teachers)
+                                                        // teachers.map(function (item, i) {
+                                                        //    return <p key={i}> {item.fullName}</p>
+                                                        // })
+                                                    }
+
+                                                    {/* teacherler gelmelidi */}
                                                 </TableCell>
-                                               
+
                                                 <TableCell>
                                                     <div className="d-flex">
                                                         <Tooltip title='Info' placement='top-start'>
@@ -173,7 +197,6 @@ function Group() {
                                             </TableRow>
                                         })
                                     }
-
 
                                 </TableBody>
                             </Table>

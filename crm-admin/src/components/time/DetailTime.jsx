@@ -65,7 +65,7 @@ function DetailTime() {
                         <Paper>
                             <Tooltip title='Interval' placement='left' arrow>
                                 <div className="single-area">
-                                    <p>{time.interval}</p>
+                                    <p>{time.start} - {time.end}</p>
                                 </div>
                             </Tooltip>
                             <Tooltip title='Seans name' placement='left' arrow>

@@ -2,11 +2,9 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useParams } from 'react-router-dom'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { useState } from 'react'
 import moment from 'moment';
 
 function DetailStaff() {

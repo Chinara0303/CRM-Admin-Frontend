@@ -2,14 +2,17 @@
 
 .area {
     margin-top: 60px;
+
     .image-area {
         width: 150px;
         height: 150px;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
         }
     }
+
     .css-15wwp11-MuiTableHead-root {
         background-color: $mainColor;
 
@@ -94,10 +97,15 @@
     .image-area {
         width: 300px;
         height: 200px;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
         }
+    }
+
+    .image {
+        width: 500px;
     }
 
     .css-1ps6pg7-MuiPaper-root {
@@ -141,10 +149,6 @@
         border-width: 0 0 1px 0;
         border-radius: 20px;
 
-        img {
-            border-radius: 100%;
-        }
-
         p {
             text-transform: capitalize;
             font-weight: 500;
@@ -165,7 +169,6 @@
         padding: 15px;
     }
 }
-
 
 [type="file"] {
     display: none !important;

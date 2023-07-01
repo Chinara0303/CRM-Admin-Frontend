@@ -18,11 +18,10 @@ function AddGroup() {
     const [roomId, setRoomId] = useState(0);
     const [timeId, setTimeId] = useState(0);
     const [educationId, setEducationId] = useState(0);
+    const [weeks, setWeeks] = useState([]);
     const [weekday, setWeekday] = useState(0);
 
-    const seanses = { 1: 'Weekdays', 2: 'Weekend' };
-
-    const newGroup = { roomId: roomId, educationId: educationId, weekday: weekday, timeI: timeId };
+    const newGroup = { roomId: roomId, educationId: educationId, weekday: weekday, timeId: timeId };
 
     const getRoomsAsync = async () => {
         try {
@@ -61,6 +60,22 @@ function AddGroup() {
             await axios.get(`${baseUrl}/api/time/getall`)
                 .then((res) => {
                     setTime(res.data)
+                });
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+
+    }
+    const getWeekdayAsync = async () => {
+        try {
+            await axios.get(`${baseUrl}/api/week/getall`)
+                .then((res) => {
+                    setWeeks(res.data)
                 });
         } catch (error) {
             Swal.fire({
@@ -112,23 +127,21 @@ function AddGroup() {
     const handleEducationChange = (e) => {
         setEducationId(e.target.value);
     };
-
     const handleRoomChange = (e) => {
         setRoomId(e.target.value);
     };
-
     const handleTimeChange = (e) => {
         setTimeId(e.target.value);
     };
-
     const handleWeekdayChange = (e) => {
         setWeekday(e.target.value);
     };
-
+    
     useEffect(() => {
         getEducationsAsync();
         getTimeAsync();
         getRoomsAsync();
+        getWeekdayAsync();
     }, [])
 
     return (
@@ -140,12 +153,13 @@ function AddGroup() {
             </div>
             <Container maxWidth='lg'>
                 <Grid container >
-                    <Paper>
+                    <Paper onSubmit={(e)=>handleSubmit(e)}>
                         <Form>
                             <FormGroup >
                                 <InputGroup>
                                     <InputGroupText>Education</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleEducationChange(e)} >
+                                    <option value="">Choose</option>
                                         {
                                             educations.map(function (education, i) {
                                                 return <option value={education.id} key={i}>{education.name}</option>
@@ -158,6 +172,7 @@ function AddGroup() {
                                 <InputGroup>
                                     <InputGroupText>Room</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleRoomChange(e)} >
+                                    <option value="">Choose</option>
                                         {
                                             rooms.map(function (room, i) {
                                                 return <option value={room.id} key={i}>{room.name}</option>
@@ -171,6 +186,7 @@ function AddGroup() {
                                 <InputGroup>
                                     <InputGroupText>Time</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleTimeChange(e)} >
+                                    <option value="">Choose</option>
                                         {
                                             time.map(function (item, i) {
                                                 return <option value={item.id} key={i}>{item.interval}</option>
@@ -179,18 +195,19 @@ function AddGroup() {
                                     </Input>
                                 </InputGroup>
                             </FormGroup>
-                            
+
                             <FormGroup >
                                 <InputGroup>
                                     <InputGroupText>WeekDay</InputGroupText>
-                                    {/* <Input type="select" name='select' onChange={(e) => handleWeekdayChange(e)} >
+                                    <Input type="select" name='select' onChange={(e) => handleWeekdayChange(e)} >
+                                    <option value="">Choose</option>
+
                                         {
-                                            weekday.map(function (item, i) {
-                                                return <option value={item.id} key={i}>{item.name}</option>
+                                            weeks.map(function (item, i) {
+                                                return <option value={item.weekday} key={i}>{item.name}</option>
                                             })
                                         }
-                                    </Input> */}
-                                    
+                                    </Input>
                                 </InputGroup>
                             </FormGroup>
 

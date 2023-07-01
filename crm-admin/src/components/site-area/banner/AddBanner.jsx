@@ -2,21 +2,30 @@ import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label,FormFeedback } from 'reactstrap'
 import Swal from 'sweetalert2'
 
 function AddBanner() {
     const baseUrl = "https://localhost:7069";
     const navigate = useNavigate();
 
+    const [invalidTitle, setInvalidTitle] = useState(false);
+    const [invalidFile, setInvalidFile] = useState(false);
+    const [invalidOffer, setInvalidOffer] = useState(false);
+    const [invalidDescription, setInvalidDescription] = useState(false);
+    const [invalidDescriptionMessage, setInvalidDescriptionMessage] = useState("");
+    const [invalidTitleMessage, setInvalidTitleMessage] = useState("");
+    const [invalidFileMessage, setInvalidFileMessage] = useState("");
+    const [invalidOfferMessage, setInvalidOfferMessage] = useState("");
+
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState("");
     const [offer, setOffer] = useState("");
     const [description, setDescription] = useState("");
 
-    const newBanner = { photo: file, title: title, offer:offer, description: description };
+    const newBanner = { photo: file, title: title, offer: offer, description: description };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,13 +53,31 @@ function AddBanner() {
                     navigate("/site/banners")
                 })
         } catch (error) {
-            Swal.fire({
-                title: 'Heey!',
-                text: 'Do you want to continue?',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-            console.log(error);
+            const errors = error.response.data.errors;
+            if (errors.Title != undefined) {
+                if (errors.Title.length > 0) {
+                    setInvalidTitle(true);
+                    setInvalidTitleMessage(errors.Title)
+                }
+            }
+            if (errors.Description != undefined) {
+                if (errors.Description.length > 0) {
+                    setInvalidDescription(true);
+                    setInvalidDescriptionMessage(errors.Description)
+                }
+            }
+            if (errors.Photo != undefined) {
+                if (errors.Photo.length > 0) {
+                    setInvalidFile(true);
+                    setInvalidFileMessage(errors.Photo)
+                }
+            }
+            if (errors.Offer != undefined) {
+                if (errors.Offer.length > 0) {
+                    setInvalidOffer(true);
+                    setInvalidOfferMessage(errors.Offer)
+                }
+            }
 
         }
 
@@ -58,15 +85,19 @@ function AddBanner() {
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
-      };
+        setInvalidTitle(false)
+    };
     const handleDescChange = (e) => {
         setDescription(e.target.value);
+        setInvalidDescription(false)
     }
     const handleOfferChange = (e) => {
         setOffer(e.target.value);
+        setInvalidOffer(false)
     }
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        setInvalidFile(false)
     };
     return (
         <div className='create-area mt-5'>
@@ -80,25 +111,53 @@ function AddBanner() {
                     <Paper>
                         <Form onSubmit={(e) => handleSubmit(e)}>
                             <FormGroup>
-                                <Input type='file' id='file' onChange={handleFileChange}/>
+                                <Input type='file' invalid={invalidFile} id='file' onChange={handleFileChange} />
                                 <Label className='btn-2' for='file'>Upload</Label>
+                                {
+                                    invalidFile && (
+                                        <FormFeedback invalid>
+                                            {invalidFileMessage}
+                                        </FormFeedback>
+                                    )
+                                }
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <Input type='text' name="title" onChange={(e) => handleTitleChange(e)}  />
+                                    <Input type='text' invalid={invalidTitle} name="title" onChange={(e) => handleTitleChange(e)} />
+                                    {
+                                        invalidTitle && (
+                                            <FormFeedback invalid>
+                                                {invalidTitleMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Description</InputGroupText>
-                                    <Input type='textarea' name="description" onChange={(e) => handleDescChange(e)} />
+                                    <Input type='textarea' invalid={invalidDescription} name="description" onChange={(e) => handleDescChange(e)} />
+                                    {
+                                        invalidDescription && (
+                                            <FormFeedback invalid>
+                                                {invalidDescriptionMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Offer</InputGroupText>
-                                    <Input type='textarea' name="offer" onChange={(e) => handleOfferChange(e)}  />
+                                    <Input type='textarea' invalid={invalidOffer} name="offer" onChange={(e) => handleOfferChange(e)} />
+                                    {
+                                        invalidOffer && (
+                                            <FormFeedback invalid>
+                                                {invalidOfferMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -58,17 +58,22 @@ function AddTeacherToGroup() {
     const baseUrl = "https://localhost:7069";
     const theme = useTheme();
     const [personName, setPersonName] = useState([]);
-    const [groupName, setGroupName] = useState([]);
-    const [groups, setGroups] = useState([]);
 
-    const getAllAsync = async () => {
+    const navigate = useNavigate();
+    const [groupId, setGroupId] = useState(0);
+    const [teacherIds, setTeacherIds] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+
+    const newTeacherGroup = { groupId: groupId, teacherIds: teacherIds };
+
+    const getGroupsAsync = async () => {
         try {
             await axios.get(`${baseUrl}/api/group/getall`)
                 .then((res) => {
                     if (res.data.length > 0) {
                         setGroups(res.data)
                     }
-
                 });
 
         } catch (error) {
@@ -81,27 +86,95 @@ function AddTeacherToGroup() {
         }
     }
 
+    const getTeachersAsync = async () => {
+        try {
+            await axios.get(`${baseUrl}/api/teacher/getall`)
+                .then((res) => {
+                    if (res.data.length > 0) {
+                        console.log(res.data);
+                        setTeachers(res.data)
+                    }
+                });
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+
+        for (const [key, value] of Object.entries(newTeacherGroup)) {
+            if (key === 'teacherIds') {
+                value.forEach((val, index) => {
+                    formData.append(`teacherIds[${index}]`, val)
+                })
+                continue;
+            }
+            formData.append(key, value);
+        };
+
+
+        try {
+            await axios.post(`${baseUrl}/api/teachergroup/create`, formData, {
+                headers: {
+                    Accept: "*/*",
+                }
+            })
+                .then(() => {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Added a new item',
+                        showConfirmButton: false,
+                        timer: 2000,
+                    })
+                })
+                .then(() => {
+                    navigate("/groupTeacher")
+                })
+
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
-        getAllAsync();
+        getGroupsAsync();
+        getTeachersAsync();
     }, [])
 
+    const handleGroupChange = (e) => {
+        setGroupId(e.target.value)
+    }
 
-    const handleGroupChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setGroupName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
-    const handleTeacherChange = (event) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
+    const handleTeacherChange = (e) => {
+        const selectedValues = Array.from(e.target.selectedOptions, (option) => parseInt(option.value));
+        setTeacherIds(selectedValues);
+    }
+
+    // const handleGroupChange = (event) => {
+    //     const {
+    //         target: { value },
+    //     } = event;
+    //     setGroupName(
+    //         typeof value === 'string' ? value.split(',') : value,
+    //     );
+    // };
+    // const handleTeacherChange = (event) => {
+    //     const {
+    //         target: { value },
+    //     } = event;
+    //     setPersonName(
+    //         typeof value === 'string' ? value.split(',') : value,
+    //     );
+    // };
 
     return (
         <div className='create-area  mt-5'>
@@ -113,9 +186,35 @@ function AddTeacherToGroup() {
             <Container maxWidth='lg'>
                 <Grid container >
                     <Paper>
-                        <Form>
-                            <div className="forms mt-5">
+                        <Form onSubmit={(e)=>handleSubmit(e)}>
+                            <div className="forms mt-5 ">
+                                <FormGroup className='mx-2'>
+                                    <InputGroup>
+                                        <InputGroupText>Group</InputGroupText>
+                                        <Input type="select" name='select' onChange={(e) => handleGroupChange(e)} >
+                                            <option value="">Choose</option>
+                                            {
+                                                groups.map(function (group, i) {
+                                                    return <option value={group.id} key={i}>{group.name}</option>
+                                                })
+                                            }
+                                        </Input>
+                                    </InputGroup>
+                                </FormGroup>
                                 <FormGroup >
+                                    <InputGroup>
+                                        <InputGroupText>Teachers</InputGroupText>
+                                        <Input type="select" name='select' multiple onChange={(e) => handleTeacherChange(e)} >
+                                            <option value="">Choose</option>
+                                            {
+                                                teachers.map(function (teacher, i) {
+                                                    return <option value={teacher.id} key={i}>{teacher.fullName}</option>
+                                                })
+                                            }
+                                        </Input>
+                                    </InputGroup>
+                                </FormGroup>
+                                {/* <FormGroup >
                                     <FormControl sx={{ m: 1, width: 300 }}>
                                         <InputLabel id="demo-multiple-chip-label">Group</InputLabel>
                                         <Select
@@ -177,7 +276,7 @@ function AddTeacherToGroup() {
                                             ))}
                                         </Select>
                                     </FormControl>
-                                </FormGroup>
+                                </FormGroup> */}
                             </div>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/groupteacher'>

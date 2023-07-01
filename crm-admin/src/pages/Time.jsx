@@ -22,7 +22,6 @@ function Time() {
     const [showTable, setShowTable] = useState(false);
     const [time, setTime] = useState([]);
     const [seans, setSeans] = useState([]);
-    const [showCreateArea, setShowCreateArea] = useState(true);
 
     const baseUrl = "https://localhost:7069";
     let count = 1;
@@ -31,15 +30,13 @@ function Time() {
         try {
             await axios.get(`${baseUrl}/api/time/getall`)
                 .then((res) => {
-
                     if (res.data.length <= 0) {
                         setShowTable(false)
-                        setShowCreateArea(true)
                     }
                     if (res.data.length > 0) {
                         setShowTable(true);
                         setTime(res.data);
-                        getSeansByIdAsync(res.data)
+                        getSeansByIdAsync(res.data.seansId)
                     }
                 }
                 );
@@ -87,18 +84,12 @@ function Time() {
         })
     }
 
-    const getSeansByIdAsync = async (times) => {
+    const getSeansByIdAsync = async (seansId) => {
         try {
-            const seansList = [];
-            for (const time of times) {
-                await axios.get(`${baseUrl}/api/seans/getbyid/${time.seansId}`)
+            await axios.get(`${baseUrl}/api/seans/getbyid/${seansId}`)
                 .then((res) => {
-                    seansList.push(res.data)
-                    setSeans(seansList);
+                    setSeans(res.data);
                 });
-            }
-           
-
         } catch (error) {
             Swal.fire({
                 title: 'Oops...',
@@ -115,15 +106,11 @@ function Time() {
 
     return (
         <div className='area'>
-            {
-                showCreateArea && (
-                    <Tooltip title='Add' arrow placement="top-start">
-                        <NavLink to='/time/create'>
-                            <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                        </NavLink>
-                    </Tooltip>
-                )
-            }
+            <Tooltip title='Add' arrow placement="top-start">
+                <NavLink to='/time/create'>
+                    <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                </NavLink>
+            </Tooltip>
 
             {
                 showTable && (
@@ -154,11 +141,11 @@ function Time() {
                                                 </TableCell>
                                                 <TableCell>
                                                     <div className="d-flex">
-                                                    <Tooltip title='Info' placement='top-start'>
+                                                        <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/time/detail/${time.id}`}>
                                                                     <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
-                                                                    </NavLink>
+                                                                </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>

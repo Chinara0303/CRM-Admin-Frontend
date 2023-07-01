@@ -2,14 +2,23 @@ import { faChevronLeft, faFloppyDisk, faPlus } from '@fortawesome/free-solid-svg
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
-import React ,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
+import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label, FormFeedback } from 'reactstrap'
 import Swal from 'sweetalert2'
 function EditBanner() {
     const navigate = useNavigate();
     const { id } = useParams();
     const baseUrl = "https://localhost:7069";
+
+    const [invalidTitle, setInvalidTitle] = useState(false);
+    const [invalidFile, setInvalidFile] = useState(false);
+    const [invalidOffer, setInvalidOffer] = useState(false);
+    const [invalidDescription, setInvalidDescription] = useState(false);
+    const [invalidDescriptionMessage, setInvalidDescriptionMessage] = useState("");
+    const [invalidTitleMessage, setInvalidTitleMessage] = useState("");
+    const [invalidFileMessage, setInvalidFileMessage] = useState("");
+    const [invalidOfferMessage, setInvalidOfferMessage] = useState("");
 
     const [banner, setBanner] = useState();
     const [image, setImage] = useState();
@@ -59,13 +68,50 @@ function EditBanner() {
             })
         }
         catch (error) {
-            Swal.fire({
-                title: 'Heey!',
-                text: 'Do you want to continue?',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
+            const errors = error.response.data.errors;
+
+            if (errors.Title != undefined) {
+                if (errors.Title.length > 0) {
+                    setInvalidTitle(true);
+                    setInvalidTitleMessage(errors.Title)
+                }
+            }
+            if (errors.Description != undefined) {
+                if (errors.Description.length > 0) {
+                    setInvalidDescription(true);
+                    setInvalidDescriptionMessage(errors.Description)
+                }
+            }
+            if (errors.Photo != undefined) {
+                if (errors.Photo.length > 0) {
+                    setInvalidFile(true);
+                    setInvalidFileMessage(errors.Photo)
+                }
+            }
+            if (errors.Offer != undefined) {
+                if (errors.Offer.length > 0) {
+                    setInvalidOffer(true);
+                    setInvalidOfferMessage(errors.Offer)
+                }
+            }
+
         }
+    };
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+        setInvalidTitle(false)
+    };
+    const handleDescChange = (e) => {
+        setDescription(e.target.value);
+        setInvalidDescription(false)
+    }
+    const handleOfferChange = (e) => {
+        setOffer(e.target.value);
+        setInvalidOffer(false)
+    }
+    const handleFileChange = (e) => {
+        setFile(e.target.files[0]);
+        setInvalidFile(false)
     };
     useEffect(() => {
         getAsync(id)
@@ -89,25 +135,53 @@ function EditBanner() {
                         }
                         <Form className='mt-5' onSubmit={handleSubmit}>
                             <FormGroup>
-                                <Input type='file' id='file' name={file} onChange={(e)=> setFile(e.target.files[0])}  />
+                                <Input type='file' id='file' invalid={invalidFile} name={file} onChange={(e) => handleFileChange(e)} />
                                 <Label className='btn-2' for='file'>Upload</Label>
+                                {
+                                    invalidFile && (
+                                        <FormFeedback invalid>
+                                            {invalidFileMessage}
+                                        </FormFeedback>
+                                    )
+                                }
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Title</InputGroupText>
-                                    <Input type='text'  name={title} value={title} onChange={(e)=>setTitle(e.target.value)} />
+                                    <Input type='text' invalid={invalidFile} name={title} value={title} onChange={(e) => handleTitleChange(e)} />
+                                    {
+                                        invalidTitle && (
+                                            <FormFeedback invalid>
+                                                {invalidTitleMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Description</InputGroupText>
-                                    <Input type='textarea' value={description} name={description} onChange={(e)=>setDescription(e.target.value)}/>
+                                    <Input type='textarea' invalid={invalidDescription} value={description} name={description} onChange={(e) => handleDescChange(e)} />
+                                    {
+                                        invalidDescription && (
+                                            <FormFeedback invalid>
+                                                {invalidDescriptionMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Offer</InputGroupText>
-                                    <Input type='textarea' value={offer} name={offer} onChange={(e)=>setOffer(e.target.value)}/>
+                                    <Input type='textarea' invalid={invalidOffer} value={offer} name={offer} onChange={(e) => handleOfferChange(e)} />
+                                    {
+                                        invalidOffer && (
+                                            <FormFeedback invalid>
+                                                {invalidOfferMessage}
+                                            </FormFeedback>
+                                        )
+                                    }
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
@@ -116,7 +190,7 @@ function EditBanner() {
                                 </NavLink>
                             </Tooltip>
                             <Button type='submit' style={{ border: "none" }} color='transparent'>
-                                <Tooltip title='add' arrow placement="bottom-start">
+                                <Tooltip title='Update' arrow placement="bottom-start">
                                     <FontAwesomeIcon icon={faFloppyDisk} size="2xl" style={{ color: "#0ae60d", }} />
                                 </Tooltip>
                             </Button>
