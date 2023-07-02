@@ -10,14 +10,6 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Group() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const [showTable, setShowTable] = useState(false);
     const [groups, setGroups] = useState([]);
@@ -39,6 +31,7 @@ function Group() {
                 });
 
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
@@ -47,7 +40,7 @@ function Group() {
             })
         }
     }
-   
+
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -108,40 +101,22 @@ function Group() {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {/* {
-                                        console.log(teachers)
-        console.log(teacherList);
-                                       
-                                        // teachers.map(function (item, i) {
-                                        //    return <p key={i}> {item.fullName}</p>
-                                        // })
-                                    }
-                                    {
-                                         console.log(5)
-                                    } */}
-                                    {
-                                        // console.log(teachers)
-
-                                    }
-
                                     {
                                         groups.map(function (group, i) {
+                                            
                                             return <TableRow key={i}>
                                                 <TableCell>{count++}</TableCell>
                                                 <TableCell>{group.name}</TableCell>
                                                 <TableCell>
                                                     {
-                                                        // console.log(teachers)
-                                                        // teachers.map(function (item, i) {
-                                                        //    return <p key={i}> {item.fullName}</p>
-                                                        // })
+                                                       group.teachers.map(function(teacher,i){
+                                                        return <span key = {i}>{teacher.fullName.concat(" ")}</span>
+                                                       })
                                                     }
-
-                                                    {/* teacherler gelmelidi */}
                                                 </TableCell>
 
                                                 <TableCell>
-                                                    <div className="d-flex">
+                                                    <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/groups/detail/${group.id}`}>
@@ -162,37 +137,6 @@ function Group() {
                                                             </Button>
                                                         </Tooltip>
                                                     </div>
-                                                    {/* <Button
-                                                    id="basic-button"
-                                                    aria-controls={open ? 'basic-menu' : undefined}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={open ? 'true' : undefined}
-                                                    onClick={handleClick}
-                                                >
-                                                    <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                                                </Button>
-                                                <Menu
-                                                    id="basic-menu"
-                                                    anchorEl={anchorEl}
-                                                    open={open}
-                                                    onClose={handleClose}
-                                                >
-                                                    <Tooltip title='Info' placement='top-start'>
-                                                        <MenuItem>
-                                                            <NavLink to='/groups/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                    <Tooltip title='Edit' placement='top-start'>
-                                                        <MenuItem>
-                                                            <NavLink to='/groups/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                    <Tooltip title='Delete' placement='top-start'>
-                                                        <MenuItem>
-                                                            <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                        </MenuItem>
-                                                    </Tooltip>
-                                                </Menu> */}
                                                 </TableCell>
                                             </TableRow>
                                         })

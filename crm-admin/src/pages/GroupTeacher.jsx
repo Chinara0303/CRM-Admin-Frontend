@@ -25,23 +25,15 @@ function GroupTeacher() {
                     if (res.data.length > 0) {
                         setShowTable(true);
                         setGroups(res.data);
-                        for (const data of res.data) {
-                            console.log(data.teacherIds);
-                            if (data.teacherIds.length > 0) {
-                                for (let i = 0; i < data.teacherIds.length; i++) {
-                                    getTeacherAsync(data.teacherIds[i])
-                                }
-                            }
-                        }
+
                     }
                     else {
                         setShowTable(false)
                     }
                 });
         }
-        
+
         catch (error) {
-            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
@@ -51,27 +43,6 @@ function GroupTeacher() {
         }
     }
 
-
-    const getTeacherAsync = async (teacherId) => {
-        try {
-            await axios.get(`${baseUrl}/api/teacher/${teacherId}`)
-                .then((res) => {
-                    if (res.data.length > 0) {
-                        setTeachers(res.data)
-                    }
-                });
-
-        } catch (error) {
-            console.log(error);
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        }
-
-    }
     useEffect(() => {
         getAllAsync();
     }, [])
@@ -106,23 +77,21 @@ function GroupTeacher() {
                                                         <span>{group.name} </span>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell style={{ display: "flex" }}>
-
-                                                    <div className="img-area">
-                                                        <img className='img-fluid' src={require('../assets/images/download.jpeg')} alt="" />
-                                                    </div>
-                                                    <div className="img-area">
-                                                        <img className='img-fluid' src={require('../assets/images/download.jpeg')} alt="" />
-                                                    </div>
-                                                    <div className="img-area">
-                                                        <img className='img-fluid' src={require('../assets/images/download.jpeg')} alt="" />
-                                                    </div>
+                                                <TableCell style={{ display: "flex",justifyContent:"center" }}>
+                                                    {
+                                                        group.teachers.map(function (teacher, i) {
+                                                            return <div className="img-area">
+                                                                <img className='img-fluid' src={`data:image/png;base64,${teacher.image}`} alt="" />
+                                                            </div>
+                                                        })
+                                                    }
+                                                  
                                                 </TableCell>
                                                 <TableCell>
 
                                                     <Tooltip title='Edit' placement='top-start'>
                                                         <MenuItem>
-                                                            <NavLink to='/groupteacher/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                                                            <NavLink to={`/groupteacher/edit/${group.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                                                         </MenuItem>
                                                     </Tooltip>
 

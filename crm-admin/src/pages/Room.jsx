@@ -9,14 +9,6 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 export default function Room() {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const [showTable, setShowTable] = useState(false);
   const [rooms, setRooms] = useState([]);
   const baseUrl = "https://localhost:7069";
@@ -112,7 +104,7 @@ export default function Room() {
                         <TableCell>{room.capacity}</TableCell>
                         <TableCell>{room.groupCount}</TableCell>
                         <TableCell>
-                          <div className="d-flex">
+                          <div className="actions">
                             <Tooltip title='Info' placement='top-start'>
                               <MenuItem>
                                 <NavLink to={`/rooms/detail/${room.id}`}>
@@ -133,38 +125,10 @@ export default function Room() {
                               </Button>
                             </Tooltip>
                           </div>
-                          {/* <Button
-                            id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                          >
-                            <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                          </Button>
-                          <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                          >
-                            <Tooltip title='Edit' placement='top-start'>
-                              <MenuItem>
-                                <NavLink to='/rooms/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                              </MenuItem>
-                            </Tooltip>
-                            <Tooltip title='Delete' placement='top-start'>
-                              <MenuItem>
-                                <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                              </MenuItem>
-                            </Tooltip>
-                          </Menu> */}
                         </TableCell>
                       </TableRow>
                     })
                   }
-
-
                 </TableBody>
               </Table>
             </TableContainer>

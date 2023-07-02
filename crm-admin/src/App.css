@@ -222,9 +222,22 @@
 .area {
   margin-top: 60px;
 }
+.area .css-1oj2twp-MuiPagination-root {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+.area .css-1ygcj2i-MuiTableCell-root {
+  border-bottom: none;
+  text-align: center;
+}
+.area .css-1ex1afd-MuiTableCell-root {
+  text-align: center;
+}
 .area .image-area {
   width: 150px;
   height: 150px;
+  margin: 0 auto;
 }
 .area .image-area img {
   width: 100%;
@@ -273,6 +286,10 @@
 .area .img-area:hover .remove-area {
   opacity: 1;
   visibility: visible;
+}
+.area .actions {
+  display: flex;
+  justify-content: center;
 }
 
 #basic-menu .css-6hp17o-MuiList-root-MuiMenu-list {

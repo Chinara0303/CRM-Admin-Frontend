@@ -91,7 +91,6 @@ function AddTeacherToGroup() {
             await axios.get(`${baseUrl}/api/teacher/getall`)
                 .then((res) => {
                     if (res.data.length > 0) {
-                        console.log(res.data);
                         setTeachers(res.data)
                     }
                 });
@@ -141,7 +140,12 @@ function AddTeacherToGroup() {
 
         }
         catch (error) {
-            console.log(error);
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
         }
     };
 

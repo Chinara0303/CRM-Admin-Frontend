@@ -10,18 +10,8 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Time() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const [showTable, setShowTable] = useState(false);
     const [time, setTime] = useState([]);
-    const [seans, setSeans] = useState([]);
 
     const baseUrl = "https://localhost:7069";
     let count = 1;
@@ -36,7 +26,6 @@ function Time() {
                     if (res.data.length > 0) {
                         setShowTable(true);
                         setTime(res.data);
-                        getSeansByIdAsync(res.data.seansId)
                     }
                 }
                 );
@@ -84,21 +73,6 @@ function Time() {
         })
     }
 
-    const getSeansByIdAsync = async (seansId) => {
-        try {
-            await axios.get(`${baseUrl}/api/seans/getbyid/${seansId}`)
-                .then((res) => {
-                    setSeans(res.data);
-                });
-        } catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        }
-    }
 
     useEffect(() => {
         getAllAsync();
@@ -132,15 +106,10 @@ function Time() {
                                                 <TableCell>{count++}</TableCell>
                                                 <TableCell>{time.interval}</TableCell>
                                                 <TableCell>
-                                                    seanslar gelecek
-                                                    {/* {
-                                                        seans.map(function(item,i){
-                                                            return <p key={i}>{seans.find((item) => item.id === time.seansId)?.name}</p>
-                                                        })
-                                                    } */}
+                                                    {time.seansName}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="d-flex">
+                                                    <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/time/detail/${time.id}`}>
@@ -161,45 +130,16 @@ function Time() {
                                                             </Button>
                                                         </Tooltip>
                                                     </div>
-                                                    {/* <Button
-                          id="basic-button"
-                          aria-controls={open ? 'basic-menu' : undefined}
-                          aria-haspopup="true"
-                          aria-expanded={open ? 'true' : undefined}
-                          onClick={handleClick}
-                        >
-                          <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                        </Button>
-                        <Menu
-                          id="basic-menu"
-                          anchorEl={anchorEl}
-                          open={open}
-                          onClose={handleClose}
-                        >
-                          <Tooltip title='Edit' placement='top-start'>
-                            <MenuItem>
-                              <NavLink to='/seanses/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                            </MenuItem>
-                          </Tooltip>
-                          <Tooltip title='Delete' placement='top-start'>
-                            <MenuItem>
-                              <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                            </MenuItem>
-                          </Tooltip>
-                        </Menu> */}
                                                 </TableCell>
                                             </TableRow>
                                         })
                                     }
-
-
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </Paper>
                 )
             }
-
         </div>
     )
 }

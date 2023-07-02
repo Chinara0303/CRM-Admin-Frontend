@@ -3,36 +3,33 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
+import { Button, Menu, MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function Staff() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const baseUrl = "https://localhost:7069";
 
     const [showTable, setShowTable] = useState(false);
     const [staff, setStaff] = useState([]);
     const [filterValue, setFilterValue] = useState("ascending");
+    const [pages, setPages] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    let take = 3;
+    let count = (pages.currentPage - 1) * take;
 
-    const baseUrl = "https://localhost:7069";
-    let count = 1;
-
-    const getAllAsync = async () => {
+    const getAllAsync = async (page) => {
         try {
-            await axios.get(`${baseUrl}/api/staff/getall`)
+            await axios.get(`${baseUrl}/api/staff/getall?skip=${page}&take=${take}`)
                 .then((res) => {
-                    if (res.data.length > 0) {
+                    setPages(res.data)
+                    if (res.data.datas.length > 0) {
                         setShowTable(true);
-                        setStaff(res.data)
+                        setStaff(res.data.datas)
+                        setTotalPage(res.data.totalPage)
                     }
                     else {
                         setShowTable(false)
@@ -48,6 +45,12 @@ function Staff() {
             })
         }
     }
+
+    const handleChange = (e, page) => {
+        setCurrentPage(page);
+        getAllAsync(page);
+    };
+
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -82,12 +85,14 @@ function Staff() {
         })
     }
 
-    const getSearchResultDatasAsync = async (searchText) => {
+    const getSearchResultDatasAsync = async (searchText,page) => {
+        setCurrentPage(page);
         try {
-            await axios.post(`${baseUrl}/api/staff/search?searchText=${searchText}`)
+            await axios.post(`${baseUrl}/api/staff/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setStaff(res.data);
+                    if (res.data.datas.length > 0) {
+                        setStaff(res.data.datas);
+                        setTotalPage(res.data.totalPage)
                     }
                 })
         } catch (error) {
@@ -120,7 +125,7 @@ function Staff() {
     };
 
     useEffect(() => {
-        getAllAsync();
+        getAllAsync(currentPage);
     }, [])
 
     return (
@@ -139,7 +144,7 @@ function Staff() {
                             </svg>
                         </div>
                     </Tooltip>
-                    <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+                    <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value,pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
 
                 </div>
             </div>
@@ -160,8 +165,9 @@ function Staff() {
                                 <TableBody>
                                     {
                                         staff.map(function (employee, i) {
+                                            count++
                                             return <TableRow key={i}>
-                                                <TableCell>{count++}</TableCell>
+                                                <TableCell>{count}</TableCell>
                                                 <TableCell>
                                                     <div className="image-area">
                                                         <img src={`data:image/;base64,${employee.image}`} />
@@ -170,7 +176,7 @@ function Staff() {
                                                 <TableCell>{employee.fullName}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
                                                 <TableCell>
-                                                    <div className="d-flex">
+                                                    <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/staff/detail/${employee.id}`}>
@@ -191,45 +197,16 @@ function Staff() {
                                                             </Button>
                                                         </Tooltip>
                                                     </div>
-                                                    {/* <Button
-                                                id="basic-button"
-                                                aria-controls={open ? 'basic-menu' : undefined}
-                                                aria-haspopup="true"
-                                                aria-expanded={open ? 'true' : undefined}
-                                                onClick={handleClick}
-                                            >
-                                                <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                                            </Button>
-                                            <Menu
-                                                id="basic-menu"
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                onClose={handleClose}
-                                            >
-                                                <Tooltip title='Info' placement='top-start'>
-                                                    <MenuItem>
-                                                        <NavLink to='/staff/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
-                                                    </MenuItem>
-                                                </Tooltip>
-                                                <Tooltip title='Edit' placement='top-start'>
-                                                    <MenuItem>
-                                                        <NavLink to='/staff/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                    </MenuItem>
-                                                </Tooltip>
-                                                <Tooltip title='Delete' placement='top-start'>
-                                                    <MenuItem>
-                                                        <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                    </MenuItem>
-                                                </Tooltip>
-                                            </Menu> */}
+                                                  
                                                 </TableCell>
                                             </TableRow>
                                         })
                                     }
-
-
                                 </TableBody>
                             </Table>
+                            <Stack spacing={2}>
+                                <Pagination onChange={handleChange} count={totalPage} page={currentPage} size='large' />
+                            </Stack>
                         </TableContainer>
                     </Paper>
                 )
