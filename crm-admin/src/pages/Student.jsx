@@ -16,8 +16,10 @@ function Student() {
     const [students, setStudents] = useState([]);
     const [pages, setPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchValue, setSearchValue] = useState(undefined);
     const [totalPage, setTotalPage] = useState(1);
-    const [filterValue, setFilterValue] = useState("ascending");
+    const [filterValue, setFilterValue] = useState('ascending');
+    
     let take = 3;
     let count = (pages.currentPage - 1) * take;
 
@@ -48,9 +50,16 @@ function Student() {
 
     const handleChange = (e, page) => {
         setCurrentPage(page);
-        getAllAsync(page);
+        if(searchValue === undefined && filterValue === undefined){
+            getAllAsync(page)
+        }
+        if(filterValue === "ascending" || filterValue === "descending"){
+            getFilteredDatasAsync(page)
+        }
+        if(searchValue !== undefined){
+            getSearchResultDatasAsync(searchValue,page)
+        }
     };
-
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -95,6 +104,7 @@ function Student() {
                     }
                 })
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',

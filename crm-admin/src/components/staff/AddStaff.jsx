@@ -81,7 +81,6 @@ function AddStaff() {
 
         }
         catch (error) {
-            console.log(error);
             const errors = error.response.data.errors;
             if (errors.FullName !== undefined) {
                 if (errors.FullName.length > 0) {

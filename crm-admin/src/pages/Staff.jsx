@@ -18,6 +18,8 @@ function Staff() {
     const [pages, setPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
+    const [searchValue, setSearchValue] = useState(undefined);
+
     let take = 3;
     let count = (pages.currentPage - 1) * take;
 
@@ -45,12 +47,6 @@ function Staff() {
             })
         }
     }
-
-    const handleChange = (e, page) => {
-        setCurrentPage(page);
-        getAllAsync(page);
-    };
-
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -85,7 +81,7 @@ function Staff() {
         })
     }
 
-    const getSearchResultDatasAsync = async (searchText,page) => {
+    const getSearchResultDatasAsync = async (searchText, page) => {
         setCurrentPage(page);
         try {
             await axios.post(`${baseUrl}/api/staff/search?searchText=${searchText}&skip=${page}&take=${take}`)
@@ -105,22 +101,37 @@ function Staff() {
         }
     }
 
-    const getFilteredDatasAsync = async () => {
+    const getFilteredDatasAsync = async (page, filterValue) => {
         try {
-            await axios.post(`${baseUrl}/api/student/filter?filterValue=${filterValue}`)
+            await axios.post(`${baseUrl}/api/staff/filter?filterValue=${filterValue}&skip=${page}&take=${take}`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setStaff(res.data);
+                    if (res.data.datas.length > 0) {
+                        setStaff(res.data.datas);
+                        setTotalPage(res.data.totalPage)
                     }
                 });
 
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
                 icon: 'error',
                 confirmButtonText: 'Cool'
             });
+        }
+    };
+    
+    const handleChange = (e, page) => {
+        setCurrentPage(page);
+        if (searchValue === undefined && filterValue === undefined) {
+            getAllAsync(page)
+        }
+        if (filterValue === "ascending" || filterValue === "descending") {
+            getFilteredDatasAsync(page, filterValue)
+        }
+        if (searchValue !== undefined) {
+            getSearchResultDatasAsync(searchValue, page)
         }
     };
 
@@ -136,17 +147,7 @@ function Staff() {
                         <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
                     </NavLink>
                 </Tooltip>
-                <div className="right d-flex">
-                    <Tooltip title='Age' arrow placement="top-start">
-                        <div onClick={() => getFilteredDatasAsync(setFilterValue(filterValue === "ascending" ? "descending" : "ascending"))} className="arrow-down-up mx-2">
-                            <svg style={{ cursor: "pointer" }} xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
-                            </svg>
-                        </div>
-                    </Tooltip>
-                    <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value,pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
-
-                </div>
+                <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             </div>
             {
                 showTable && (
@@ -158,7 +159,16 @@ function Staff() {
                                         <TableCell>#</TableCell>
                                         <TableCell>Image</TableCell>
                                         <TableCell>Full name</TableCell>
-                                        <TableCell>Age</TableCell>
+                                        <TableCell style={{ display: "flex", justifyContent: "center" }}>
+                                            <Tooltip title='Age' arrow placement="top-start">
+                                                <div onClick={() => getFilteredDatasAsync(pages.currentPage, setFilterValue(filterValue === "ascending" ? "descending" : "ascending"))} className="arrow-down-up mx-2">
+                                                    <svg style={{ cursor: "pointer" }} xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5zm-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5z" />
+                                                    </svg>
+                                                </div>
+                                            </Tooltip>
+                                            Age
+                                        </TableCell>
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -197,7 +207,7 @@ function Staff() {
                                                             </Button>
                                                         </Tooltip>
                                                     </div>
-                                                  
+
                                                 </TableCell>
                                             </TableRow>
                                         })

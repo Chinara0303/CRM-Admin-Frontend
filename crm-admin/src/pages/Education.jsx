@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { Button,  MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -109,7 +109,7 @@ function Education() {
                                                 <TableCell>{education.name}</TableCell>
                                                 <TableCell>{education.groupCount}</TableCell>
                                                 <TableCell>
-                                                    <div className="d-flex">
+                                                    <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/educations/detail/${education.id}`}>

@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl } from '@mui/material'
+import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl, FormLabel, Autocomplete } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
+// import Close from '@mui/icons-material/Close';
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useEffect } from 'react'
+import SelectInput from '@mui/material/Select/SelectInput'
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -71,9 +74,10 @@ function AddTeacherToGroup() {
         try {
             await axios.get(`${baseUrl}/api/group/getall`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setGroups(res.data)
-                    }
+                    console.log(res.data);
+                    // if (res.data.length > 0) {
+                    setGroups(res.data)
+                    // }
                 });
 
         } catch (error) {
@@ -90,9 +94,9 @@ function AddTeacherToGroup() {
         try {
             await axios.get(`${baseUrl}/api/teacher/getall`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setTeachers(res.data)
-                    }
+                    // if (res.data.length > 0) {
+                    setTeachers(res.data)
+                    // }
                 });
 
         } catch (error) {
@@ -190,10 +194,25 @@ function AddTeacherToGroup() {
             <Container maxWidth='lg'>
                 <Grid container >
                     <Paper>
-                        <Form onSubmit={(e)=>handleSubmit(e)}>
+                        <Form onSubmit={(e) => handleSubmit(e)}>
                             <div className="forms mt-5 ">
-                                <FormGroup className='mx-2'>
-                                    <InputGroup>
+                                <FormGroup className='mx-2 w-100'>
+                                    <InputLabel style={{ marginTop: "20px" }} id="demo-simple-select-standard-label">Select the field</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-standart-label"
+                                        id="demo-simple-select-filled"
+                                        fullWidth
+                                        value={groupId}
+                                        name="groupId"
+                                        autoComplete="off"
+                                        onChange={(e) => handleGroupChange(e)}>
+                                        {
+                                            groups.map(function (group, i) {
+                                                return <MenuItem value={group.id} key={i}>{group.name}</MenuItem>
+                                            })
+                                        }
+                                    </Select>
+                                    {/* <InputGroup>
                                         <InputGroupText>Group</InputGroupText>
                                         <Input type="select" name='select' onChange={(e) => handleGroupChange(e)} >
                                             <option value="">Choose</option>
@@ -203,10 +222,34 @@ function AddTeacherToGroup() {
                                                 })
                                             }
                                         </Input>
-                                    </InputGroup>
+                                    </InputGroup> */}
                                 </FormGroup>
-                                <FormGroup >
-                                    <InputGroup>
+                                {/* <Autocomplete
+                                    multiple
+                                    placeholder="Decorators"
+                                    options={teachers}
+                                /> */}
+                                {/* <Autocomplete
+                                        id="tags-default"
+                                        multiple
+                                        placeholder="Favorites"
+                                        // options={teachers}
+                                        // getOptionLabel={(option) => option.fullName}
+                                        renderTags={(teachers, getTagProps) =>
+                                            teachers.map((item, index) => (
+                                                <Chip
+                                                    variant="solid"
+                                                    color="primary"
+                                                    // endDecorator={<Close fontSize="sm" />}
+                                                    {...getTagProps({ index })}
+                                                >
+                                                    {item.fullName}
+                                                </Chip>
+                                            ))
+                                        }
+                                    />
+                                     */}
+                                <InputGroup>
                                         <InputGroupText>Teachers</InputGroupText>
                                         <Input type="select" name='select' multiple onChange={(e) => handleTeacherChange(e)} >
                                             <option value="">Choose</option>
@@ -217,7 +260,6 @@ function AddTeacherToGroup() {
                                             }
                                         </Input>
                                     </InputGroup>
-                                </FormGroup>
                                 {/* <FormGroup >
                                     <FormControl sx={{ m: 1, width: 300 }}>
                                         <InputLabel id="demo-multiple-chip-label">Group</InputLabel>

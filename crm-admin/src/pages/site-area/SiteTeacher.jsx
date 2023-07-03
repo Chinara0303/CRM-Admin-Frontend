@@ -2,34 +2,36 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAlignRight, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import { Button, Input, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { Button, Input, Menu, MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 function SiteTeacher() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
+    const baseUrl = "https://localhost:7069";
     const [showTable, setShowTable] = useState(false);
     const [teachers, setTeachers] = useState([]);
-    const baseUrl = "https://localhost:7069";
-    let count = 1;
+    const [pages, setPages] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [searchValue, setSearchValue] = useState(undefined);
 
-    const getAllAsync = async () => {
+
+    let take = 3;
+    let count = (pages.currentPage - 1) * take;
+
+    const getAllAsync = async (page) => {
         try {
-            await axios.get(`${baseUrl}/api/teacher/getall`)
+            await axios.get(`${baseUrl}/api/teacher/getall?skip=${page}&take=${take}`)
                 .then((res) => {
-                    if (res.data.length > 0) {
+                    setPages(res.data)
+
+                    if (res.data.datas.length > 0) {
                         setShowTable(true);
-                        setTeachers(res.data)
+                        setTeachers(res.data.datas)
+                        setTotalPage(res.data.totalPage)
                     }
                     else {
                         setShowTable(false)
@@ -45,13 +47,44 @@ function SiteTeacher() {
             })
         }
     }
+    const getSearchDatasAsync = async (searchText, page) => {
+        setSearchValue(searchText);
+        try {
+            await axios.post(`${baseUrl}/api/teacher/search?searchText=${searchText}&skip=${page}&take=${take}`)
+                .then((res) => {
+
+                    if (res.data.datas.length > 0) {
+                        setTeachers(res.data.datas);
+                        setTotalPage(res.data.totalPage)
+                    }
+                })
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+
+    const handleChange = (e, page) => {
+        setCurrentPage(page)
+        if(searchValue !== undefined){
+            getSearchDatasAsync(searchValue,page)
+        }
+        else{
+            getAllAsync(page)
+        }
+    };
 
     useEffect(() => {
-        getAllAsync();
+        getAllAsync(currentPage);
     }, [])
 
     return (
         <div className='area'>
+            <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             {
                 showTable && (
                     <Paper style={{ marginTop: "30px" }}>
@@ -69,8 +102,9 @@ function SiteTeacher() {
                                 <TableBody>
                                     {
                                         teachers.map(function (teacher, i) {
+                                            count++
                                             return <TableRow>
-                                                <TableCell>{count++}</TableCell>
+                                                <TableCell>{count}</TableCell>
                                                 <TableCell>
                                                     <div className="image-area">
                                                         <img src={`data:image/png;base64,${teacher.image}`} />
@@ -79,54 +113,23 @@ function SiteTeacher() {
                                                 <TableCell>{teacher.fullName}</TableCell>
                                                 <TableCell>{teacher.age}</TableCell>
                                                 <TableCell>
-                                                    <div className="d-flex">
+                                                    <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/site/teachers/detail/${teacher.id}`}><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        {/* <Tooltip title='Active' placement='top-start'>
-                                                    <MenuItem>
-                                                        <Input type='checkbox' />
-                                                        <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                    </MenuItem>
-                                                </Tooltip> */}
+
                                                     </div>
-                                                    {/* <Button
-                                                id="basic-button"
-                                                aria-controls={open ? 'basic-menu' : undefined}
-                                                aria-haspopup="true"
-                                                aria-expanded={open ? 'true' : undefined}
-                                                onClick={handleClick}
-                                            >
-                                                <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                                            </Button>
-                                            <Menu
-                                                id="basic-menu"
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                onClose={handleClose}
-                                            >
-                                                <Tooltip title='Info' placement='top-start'>
-                                                    <MenuItem>
-                                                        <NavLink to='/site/teachers/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
-                                                    </MenuItem>
-                                                </Tooltip>
-                                                <Tooltip title='Active' placement='top-start'>
-                                                    <MenuItem>
-                                                        <Input type='checkbox' />
-                                                        <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                    </MenuItem>
-                                                </Tooltip>
-                                            </Menu> */}
                                                 </TableCell>
                                             </TableRow>
                                         })
                                     }
-
-
                                 </TableBody>
                             </Table>
+                            <Stack spacing={2}>
+                                <Pagination onChange={handleChange} count={totalPage} page={currentPage} size='large' />
+                            </Stack>
                         </TableContainer>
                     </Paper>
                 )

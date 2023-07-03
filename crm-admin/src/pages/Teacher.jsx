@@ -20,12 +20,12 @@ function Teacher() {
     let take = 3;
     let count = (pages.currentPage - 1) * take;
     const baseUrl = "https://localhost:7069";
+ 
     const getAllAsync = async (page) => {
         try {
             await axios.get(`${baseUrl}/api/teacher/getall?skip=${page}&take=${take}`)
                 .then((res) => {
                     setPages(res.data)
-                    console.log(res.data);
                     if (res.data.datas.length > 0) {
                         setShowTable(true);
                         setTeachers(res.data.datas);
@@ -95,7 +95,6 @@ function Teacher() {
     }
 
     const getSearchDatasAsync = async (searchText,page) => {
-        // setCurrentPage(page);
         setSearchValue(searchText);
         try {
             await axios.post(`${baseUrl}/api/teacher/search?searchText=${searchText}&skip=${page}&take=${take}`)
@@ -118,7 +117,6 @@ function Teacher() {
     }
    
     const getFilteredDatasAsync = async (page) => {
-        // setCurrentPage(page);
         try {
             await axios.post(`${baseUrl}/api/teacher/filter?filterValue=${filterValue}&skip=${page}&take=${take}`)
                 .then((res) => {

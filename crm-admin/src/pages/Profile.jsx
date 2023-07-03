@@ -4,6 +4,9 @@ import { Box, Paper, Tooltip, Container, Grid, List, ListItem, Button, Modal, Ty
 import React from 'react'
 import { Form, FormGroup, Input, InputGroup, InputGroupText, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { NavLink } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import { useState ,useEffect} from 'react'
+import axios from 'axios'
 
 const style = {
     position: 'absolute',
@@ -17,12 +20,35 @@ const style = {
 };
 
 function Profile(props) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const handleChangeClick = () => props.setChange(!props.change)
+    const [subscribes, setSubscribes] = useState([]);
+    const baseUrl = "https://localhost:7069";
 
+    const getAllAsync = async () => {
+        try {
+            await axios.get(`${baseUrl}/api/subscribe/getall`)
+                .then((res) => {
+                    if (res.data.length > 0) {
+                        setSubscribes(res.data)
+                    }
+                });
 
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+    useEffect(() => {
+        getAllAsync()
+    }, [])
+    
     return (
 
         <div className='profile-area'>
@@ -80,18 +106,6 @@ function Profile(props) {
                                                 <Form>
                                                     <FormGroup>
                                                         <InputGroup>
-                                                            <InputGroupText>Full name</InputGroupText>
-                                                            <Input type='text' />
-                                                        </InputGroup>
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <InputGroup>
-                                                            <InputGroupText>Email</InputGroupText>
-                                                            <Input type='text' />
-                                                        </InputGroup>
-                                                    </FormGroup>
-                                                    <FormGroup>
-                                                        <InputGroup>
                                                             <InputGroupText>Address</InputGroupText>
                                                             <Input type='text' />
                                                         </InputGroup>
@@ -103,6 +117,12 @@ function Profile(props) {
                                                         </InputGroup>
                                                     </FormGroup>
                                                     <FormGroup>
+                                                        <InputGroup>
+                                                            <InputGroupText >Change Password</InputGroupText>
+                                                            <Input type='text' />
+                                                        </InputGroup>
+                                                    </FormGroup>
+                                                    {/* <FormGroup>
                                                         <InputGroup>
                                                             <InputGroupText >Linkedin</InputGroupText>
                                                             <Input type='text' />
@@ -119,7 +139,7 @@ function Profile(props) {
                                                             <InputGroupText >Facebook</InputGroupText>
                                                             <Input type='text' />
                                                         </InputGroup>
-                                                    </FormGroup>
+                                                    </FormGroup> */}
                                                     <Tooltip title='Close' onClose={handleClose} arrow placement="bottom-start">
                                                         <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", cursor: 'pointer' }} />
                                                     </Tooltip>
@@ -156,14 +176,18 @@ function Profile(props) {
                             </div>
                         </Grid>
                         <Grid item lg={6} xs={12} sm={6}>
-                            <div className="subscribe-area">
+                            <div className="subscribe-area" style={{overflowY:"scroll",height:"400px"}}>
                                 <div className="top-area">
                                     <p>Subscribes</p>
                                 </div>
                                 <div className="bottom-area">
-                                    <div className="subscribe">
-                                        <p>jsjsjs</p>
+                                   {
+                                    subscribes.map(function(subscribe,i){
+                                        return  <div key={i} className="subscribe">
+                                        <p>{subscribe.email}</p>
                                     </div>
+                                    })
+                                   }
                                 </div>
                             </div>
                         </Grid>
