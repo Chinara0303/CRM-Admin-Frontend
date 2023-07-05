@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faAlignRight, faCircleCheck, faCircleInfo, faCircleXmark, faSquarePlus, faTrashCan, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import { Button, Menu, MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -18,14 +17,16 @@ function Staff() {
     const [pages, setPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
-    const [searchValue, setSearchValue] = useState(undefined);
+    const [searchValue, setSearchValue] = useState("");
+    const [icon, setIcon] = useState(faCircleXmark);
+    const [userId, setUserId] = useState("");
 
     let take = 3;
     let count = (pages.currentPage - 1) * take;
 
     const getAllAsync = async (page) => {
         try {
-            await axios.get(`${baseUrl}/api/staff/getall?skip=${page}&take=${take}`)
+            await axios.get(`${baseUrl}/api/account/getusers?skip=${page}&take=${take}`)
                 .then((res) => {
                     setPages(res.data)
                     if (res.data.datas.length > 0) {
@@ -59,7 +60,7 @@ function Staff() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/staff/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/account/usersoftdelete/${id}`)
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -82,13 +83,13 @@ function Staff() {
     }
 
     const getSearchResultDatasAsync = async (searchText, page) => {
-        setCurrentPage(page);
+        setSearchValue(searchText)
         try {
-            await axios.post(`${baseUrl}/api/staff/search?searchText=${searchText}&skip=${page}&take=${take}`)
+            await axios.post(`${baseUrl}/api/account/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
                     if (res.data.datas.length > 0) {
                         setStaff(res.data.datas);
-                        setTotalPage(res.data.totalPage)
+                        setTotalPage(res.data.totalPage);
                     }
                 })
         } catch (error) {
@@ -103,7 +104,7 @@ function Staff() {
 
     const getFilteredDatasAsync = async (page, filterValue) => {
         try {
-            await axios.post(`${baseUrl}/api/staff/filter?filterValue=${filterValue}&skip=${page}&take=${take}`)
+            await axios.post(`${baseUrl}/api/account/filter?filterValue=${filterValue}&skip=${page}&take=${take}`)
                 .then((res) => {
                     if (res.data.datas.length > 0) {
                         setStaff(res.data.datas);
@@ -112,7 +113,6 @@ function Staff() {
                 });
 
         } catch (error) {
-            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
@@ -121,19 +121,44 @@ function Staff() {
             });
         }
     };
-    
+
     const handleChange = (e, page) => {
-        setCurrentPage(page);
-        if (searchValue === undefined && filterValue === undefined) {
+
+        if (searchValue === "") {
+            setCurrentPage(page);
             getAllAsync(page)
         }
-        if (filterValue === "ascending" || filterValue === "descending") {
-            getFilteredDatasAsync(page, filterValue)
-        }
-        if (searchValue !== undefined) {
+        // if (filterValue === "ascending" || filterValue === "descending") {
+        //     setCurrentPage(page);
+        //     getFilteredDatasAsync(page, filterValue)
+        // }
+        if (searchValue !== "") {
+            setCurrentPage(page);
             getSearchResultDatasAsync(searchValue, page)
         }
     };
+
+    const handleStatusChange = async (userId) => {
+        setUserId(userId)
+        try {
+            await axios.put(`${baseUrl}/api/account/setStatus/${userId}`)
+                .then((res) => {
+                    debugger
+                    if(userId == res.data.userId){
+                        debugger
+                        if (res.data.isActive) {
+                            setIcon(faCircleCheck);
+                        }
+                        else {
+                            setIcon(faCircleXmark)
+                        }
+                    }
+                
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         getAllAsync(currentPage);
@@ -169,6 +194,7 @@ function Staff() {
                                             </Tooltip>
                                             Age
                                         </TableCell>
+                                        <TableCell>Status</TableCell>
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -186,18 +212,21 @@ function Staff() {
                                                 <TableCell>{employee.fullName}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
                                                 <TableCell>
+                                                    {
+                                                        <div className="statuses" onClick={(userId) => handleStatusChange(employee.id)}>
+                                                            <FontAwesomeIcon icon={icon} size="2xl" style={{ color: "#d10000", cursor: "pointer" }} />
+                                                        </div>
+
+                                                        // <FontAwesomeIcon icon={faCircleCheck} size="2xl" style={{color: "#37ae04",cursor:"pointer"}} />
+                                                    }
+
+                                                </TableCell>
+                                                <TableCell>
                                                     <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/staff/detail/${employee.id}`}>
                                                                     <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
-                                                                </NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/staff/edit/${employee.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>

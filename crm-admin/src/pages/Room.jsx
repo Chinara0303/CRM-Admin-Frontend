@@ -36,6 +36,7 @@ export default function Room() {
       })
     }
   }
+  
   const remove = (id) => {
     Swal.fire({
       title: 'Are you sure?',

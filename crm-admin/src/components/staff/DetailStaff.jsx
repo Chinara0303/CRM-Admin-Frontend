@@ -15,12 +15,10 @@ function DetailStaff() {
 
     const getAsync = async (id) => {
         try {
-            await axios.get(`${baseUrl}/api/staff/getbyid/${id}`)
+            await axios.get(`${baseUrl}/api/account/getuserbyid/${id}`)
                 .then((res) => {
                     setStaffMember(res.data);
-                    for (let i = 0; i < res.data.positionIds.length; i++) {
-                        getPositionById(res.data.positionIds[i])
-                    }
+                    setPositions(res.data.roleNames)
                 })
         } catch (error) {
             Swal.fire({
@@ -31,28 +29,8 @@ function DetailStaff() {
             })
         }
     }
-    const getPositionById = async (positionId) => {
-        try {
-            await axios.get(`${baseUrl}/api/position/getbyid/${positionId}`)
-                .then((res) => {
-                    const newPosition = res.data.name;
-                    setPositions((prevPositions) => {
-                        if (!prevPositions.includes(newPosition)) {
-                            return [...prevPositions, newPosition];
-                        }
-                        return prevPositions;
-                    });
-                });
+   
 
-        } catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
-        }
-    }
     useEffect(() => {
         getAsync(id);
 
@@ -90,7 +68,7 @@ function DetailStaff() {
                         </Tooltip>
                         <Tooltip title='Phone' placement='left' arrow>
                             <div className="single-area">
-                                <p>{staffMember.phone}</p>
+                                <p>{staffMember.phoneNumber}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Biography' placement='left' arrow>
@@ -101,20 +79,10 @@ function DetailStaff() {
                         <Tooltip title='Position' placement='left' arrow>
                             <div className="single-area">
                                 {
-                                    positions.map(function (name, i) {
-                                        return <p key={i}>{name}</p>
+                                    positions.map(function (roleName, i) {
+                                        return <p key={i}>{roleName}</p>
                                     })
                                 }
-                            </div>
-                        </Tooltip>
-                        <Tooltip title='Created Date' placement='left' arrow>
-                            <div className="single-area">
-                                <p>{moment(staffMember.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
-                            </div>
-                        </Tooltip>
-                        <Tooltip title='Updated Date' placement='left' arrow>
-                            <div className="single-area">
-                                <p>{moment(staffMember.modifiedDate).format('DD-MM-YYYY HH:mm:ss')}</p>
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">

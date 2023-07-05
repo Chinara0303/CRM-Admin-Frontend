@@ -1,9 +1,11 @@
 import { Breadcrumbs, Link, TextField, Container, Grid } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouseChimneyWindow } from '@fortawesome/free-solid-svg-icons'
-import React, { useContext } from 'react'
-// import { MyContext } from '../../MyContext';
+import React, { useContext, useState } from 'react'
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 function NavArea(props) {
     const handleClick = () => {
@@ -13,6 +15,35 @@ function NavArea(props) {
         let nav = this.document.querySelector(".nav-area").getBoundingClientRect().top;
         nav > 0 ? document.querySelector(".top-area").classList.remove("fixed") : document.querySelector(".top-area").classList.add("fixed");
     })
+
+    const baseUrl = "https://localhost:7069";
+    const token = JSON.parse(localStorage.getItem('user-info'));
+    const [user, setUser] = useState([])
+
+    const getUserInfoAsync = async () => {
+        try {
+            await axios.get(`${baseUrl}/api/account/profile`,
+                {
+                    headers: { "Authorization": `Bearer ${token}` }
+                })
+                .then((res) => {
+                    setUser(res.data)
+                    console.log(res.data)
+                });
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+
+    useEffect(() => {
+        getUserInfoAsync()
+    }, []);
 
     return (
         <div className='nav-area'>
@@ -36,10 +67,9 @@ function NavArea(props) {
                         </Grid>
                         <Grid item xs={6} lg={6} sm={6}>
                             <div className="right-side">
-                                {/* <TextField id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" /> */}
-                               <NavLink to='/profile' >
-                                 <img src={require('../../assets/images/logo.png')} alt="" />
-                               </NavLink>
+                                <NavLink to='/profile' >
+                                    <img src={`data:image/;base64,${user.image}`} alt="" />
+                                </NavLink>
                                 <div className={`hamburger d-lg-none ${props.menuOpen && 'active'}`} onClick={() => handleClick()}>
                                     <span className="line1"></span>
                                     <span className="line2"></span>

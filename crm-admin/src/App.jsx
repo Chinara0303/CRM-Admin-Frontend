@@ -15,8 +15,6 @@ import EditRoom from './components/room/EditRoom';
 import Seans from './pages/Seans';
 import EditSeans from './components/seans/EditSeans';
 import Position from './pages/Position';
-import AddPosition from './components/position/AddPosition';
-import EditPosition from './components/position/EditPosition';
 import Teacher from './pages/Teacher';
 import AddTeacher from './components/teacher/AddTeacher';
 import EditTeacher from './components/teacher/EditTeacher';
@@ -57,7 +55,6 @@ import AddAbout from './components/site-area/about/AddAbout';
 import DetailAbout from './components/site-area/about/DetailAbout';
 import EditBanner from './components/site-area/banner/EditBanner';
 import EditAbout from './components/site-area/about/EditAbout';
-import DetailPosition from './components/position/DetailPosition';
 import DetailRoom from './components/room/DetailRoom';
 import Time from './pages/Time';
 import AddTime from './components/time/AddTime';
@@ -72,13 +69,18 @@ function App() {
     return storedValue ? JSON.parse(storedValue) : 'Dashboard';
   });
 
-  useEffect(() => {
-    localStorage.setItem('text', JSON.stringify(text));
-  }, [text]);
-
   const [menuOpen, setMenuOpen] = useState(false);
   const [change, setChange] = useState(true);
-  const [isLoggedİn, setİsLoggedİn] = useState(true);
+  const [isLoggedİn, setİsLoggedİn] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('text', JSON.stringify(text));
+
+    if(localStorage.getItem('user-info')){
+      setİsLoggedİn(true)
+    }
+
+  }, [text]);
 
   return (
     <div className='body'>
@@ -115,9 +117,6 @@ function App() {
                 <Route path='/seanses/create' element={<AddSeans />} />
                 <Route path='/seanses/edit/:id' element={<EditSeans />} />
                 <Route path='/positions' element={<Position />} />
-                <Route path='/positions/create' element={<AddPosition />} />
-                <Route path='/positions/edit/:id' element={<EditPosition />} />
-                <Route path='/positions/detail/:id' element={<DetailPosition />} />
                 <Route path='/teachers' element={<Teacher />} />
                 <Route path='/teachers/create' element={<AddTeacher />} />
                 <Route path='/teachers/edit/:id' element={<EditTeacher />} />
