@@ -21,11 +21,9 @@ function GroupTeacher() {
         try {
             await axios.get(`${baseUrl}/api/group/getall`)
                 .then((res) => {
-                    console.log(res.data);
                     if (res.data.length > 0) {
                         setShowTable(true);
                         setGroups(res.data);
-
                     }
                     else {
                         setShowTable(false)
@@ -64,7 +62,6 @@ function GroupTeacher() {
                                         <TableCell>#</TableCell>
                                         <TableCell>Group name</TableCell>
                                         <TableCell>Teacher image</TableCell>
-                                        <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -79,7 +76,7 @@ function GroupTeacher() {
                                                 </TableCell>
                                                 <TableCell style={{ display: "flex",justifyContent:"center" }}>
                                                     {
-                                                        group.teachers.map(function (teacher, i) {
+                                                        group.teachersInfo.map(function (teacher, i) {
                                                             return <div className="img-area">
                                                                 <img className='img-fluid' src={`data:image/png;base64,${teacher.image}`} alt="" />
                                                             </div>
@@ -87,27 +84,15 @@ function GroupTeacher() {
                                                     }
                                                   
                                                 </TableCell>
-                                                <TableCell>
-
-                                                    <Tooltip title='Edit' placement='top-start'>
-                                                        <MenuItem>
-                                                            <NavLink to={`/groupteacher/edit/${group.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                        </MenuItem>
-                                                    </Tooltip>
-
-                                                </TableCell>
                                             </TableRow>
                                         })
                                     }
-
-
                                 </TableBody>
                             </Table>
                         </TableContainer>
                     </Paper>
                 )
             }
-
         </div>
     )
 }

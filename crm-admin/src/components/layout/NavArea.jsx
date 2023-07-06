@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
 function NavArea(props) {
+    
     const handleClick = () => {
         props.setMenuOpen(!props.menuOpen)
     }
@@ -28,7 +29,6 @@ function NavArea(props) {
                 })
                 .then((res) => {
                     setUser(res.data)
-                    console.log(res.data)
                 });
 
         } catch (error) {
@@ -67,7 +67,7 @@ function NavArea(props) {
                         </Grid>
                         <Grid item xs={6} lg={6} sm={6}>
                             <div className="right-side">
-                                <NavLink to='/profile' >
+                                <NavLink to='/profile'>
                                     <img src={`data:image/;base64,${user.image}`} alt="" />
                                 </NavLink>
                                 <div className={`hamburger d-lg-none ${props.menuOpen && 'active'}`} onClick={() => handleClick()}>

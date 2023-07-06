@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Paper, Tooltip, Container, Grid, List, ListItem, Button, Modal, Typography, Alert } from '@mui/material'
 import React from 'react'
 import { Form, FormFeedback, FormGroup, Input, InputGroup, InputGroupText, Label, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Navigate, NavLink, useAsyncValue, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
@@ -23,6 +23,7 @@ function Profile(props) {
     const baseUrl = "https://localhost:7069";
     const token = JSON.parse(localStorage.getItem('user-info'));
 
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [click, setClick] = useState(false);
     const [subscribes, setSubscribes] = useState([]);
@@ -69,7 +70,24 @@ function Profile(props) {
     };
     const handleChangeClick = () => props.setChange(!props.change)
 
+    const handleLogout = async () => {
+        try {
+            await axios.post(`${baseUrl}/api/account/logout`)
+            localStorage.removeItem('user-info');
+            localStorage.removeItem('text');
+            navigate("/signin")
+            window.location.reload();
 
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+
+    }
     const getAllAsync = async () => {
         try {
             await axios.get(`${baseUrl}/api/subscribe/getall`, { headers: { "Authorization": `Bearer ${token}` } })
@@ -170,6 +188,7 @@ function Profile(props) {
             }
         }
     };
+
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -287,6 +306,8 @@ function Profile(props) {
                                         </Tooltip>
                                     )
                                 }
+                            </NavLink>
+                            <NavLink to='/dashboard' onClick={() => handleChangeClick()}>
                                 {
                                     !props.change && (
                                         <Tooltip title="Management" arrow>
@@ -295,8 +316,8 @@ function Profile(props) {
                                     )
                                 }
                             </NavLink>
-                            <Button type="button" >
-                                <Tooltip title="Logout" arrow> 
+                            <Button type="button" onClick={handleLogout}>
+                                <Tooltip title="Logout" arrow>
                                     <FontAwesomeIcon icon={faArrowRightFromBracket} size="2xl" style={{ color: "white", cursor: "pointer" }} />
                                 </Tooltip>
                             </Button>
@@ -500,7 +521,7 @@ function Profile(props) {
 
                 </Container>
             </Paper>
-        </div>
+        </div >
     )
 }
 

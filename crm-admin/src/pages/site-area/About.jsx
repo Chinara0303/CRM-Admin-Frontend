@@ -8,17 +8,8 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 function About() {
-    const [anchorEl, setAnchorEl] = useState(null);
     const [showTable, setShowTable] = useState(false);
     const [showCreateArea, setShowCreateArea] = useState(true);
-
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
 
     const [about, setAbout] = useState([]);
     const baseUrl = "https://localhost:7069";
@@ -46,7 +37,6 @@ function About() {
                 icon: 'error',
                 confirmButtonText: 'Cool'
             })
-            console.log(error);
         }
     }
 
@@ -107,33 +97,6 @@ function About() {
                                                         </Tooltip>
 
                                                     </div>
-
-                                                    {/* <Button
-                                                        id="basic-button"
-                                                        aria-controls={open ? 'basic-menu' : undefined}
-                                                        aria-haspopup="true"
-                                                        aria-expanded={open ? 'true' : undefined}
-                                                        onClick={handleClick}
-                                                    >
-                                                        <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                                                    </Button>
-                                                    <Menu
-                                                        id="basic-menu"
-                                                        anchorEl={anchorEl}
-                                                        open={open}
-                                                        onClose={handleClose}
-                                                    >
-                                                        <Tooltip title='Info' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to='/site/about/detail/id'><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to='/site/about/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                    </Menu> */}
                                                 </TableCell>
                                             </TableRow>
                                         })

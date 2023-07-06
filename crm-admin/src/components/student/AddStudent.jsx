@@ -1,6 +1,6 @@
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip } from '@mui/material'
+import { Alert, Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
 import { useState, useEffect } from 'react'
@@ -18,6 +18,8 @@ function AddStudent() {
     const [invalidAge, setInvalidAge] = useState(false);
     const [invalidAddress, setInvalidAddress] = useState(false);
     const [invalidBiography, setInvalidBiography] = useState(false);
+    const [invalid, setInvalid] = useState(false);
+    const [invalidMessage, setInvalidMessage] = useState([]);
     const [invalidEmailMessage, setInvalidEmailMessage] = useState("");
     const [invalidFullNameMessage, setInvalidFullNameMessage] = useState("");
     const [invalidPhoneMessage, setInvalidPhoneMessage] = useState("");
@@ -69,42 +71,47 @@ function AddStudent() {
 
         }
         catch (error) {
-            console.log(error.response.data);
-            const errors = error.response.data.errors;
-            if (errors.FullName !== undefined) {
-                if (errors.FullName.length > 0) {
-                    setInvalidFullName(true);
-                    setInvalidFullNameMessage(errors.FullName)
-                }
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
             }
-            if (errors.Email !== undefined) {
-                if (errors.Email.length > 0) {
-                    setInvalidEmail(true);
-                    setInvalidEmailMessage(errors.Email)
+            if (errors.errors != undefined) {
+                if (errors.errors.FullName !== undefined) {
+                    if (errors.errors.FullName.length > 0) {
+                        setInvalidFullName(true);
+                        setInvalidFullNameMessage(errors.errors.FullName)
+                    }
                 }
-            }
-            if (errors.Phone !== undefined) {
-                if (errors.Phone.length > 0) {
-                    setInvalidPhone(true);
-                    setInvalidPhoneMessage(errors.Phone)
+                if (errors.errors.Email !== undefined) {
+                    if (errors.errors.Email.length > 0) {
+                        setInvalidEmail(true);
+                        setInvalidEmailMessage(errors.errors.Email)
+                    }
                 }
-            }
-            if (errors.Age !== undefined) {
-                if (errors.Age.length > 0) {
-                    setInvalidAge(true);
-                    setInvalidAgeMessage(errors.Age)
+                if (errors.errors.Phone !== undefined) {
+                    if (errors.errors.Phone.length > 0) {
+                        setInvalidPhone(true);
+                        setInvalidPhoneMessage(errors.errors.Phone)
+                    }
                 }
-            }
-            if (errors.Address !== undefined) {
-                if (errors.Address.length > 0) {
-                    setInvalidAddress(true);
-                    setInvalidAddressMessage(errors.Address)
+                if (errors.errors.Age !== undefined) {
+                    if (errors.errors.Age.length > 0) {
+                        setInvalidAge(true);
+                        setInvalidAgeMessage(errors.errors.Age)
+                    }
                 }
-            }
-            if (errors.Biography !== undefined) {
-                if (errors.Biography.length > 0) {
-                    setInvalidBiography(true);
-                    setInvalidBiographyMessage(errors.Biography)
+                if (errors.errors.Address !== undefined) {
+                    if (errors.errors.Address.length > 0) {
+                        setInvalidAddress(true);
+                        setInvalidAddressMessage(errors.errors.Address)
+                    }
+                }
+                if (errors.errors.Biography !== undefined) {
+                    if (errors.errors.Biography.length > 0) {
+                        setInvalidBiography(true);
+                        setInvalidBiographyMessage(errors.errors.Biography)
+                    }
                 }
             }
         }
@@ -173,6 +180,13 @@ function AddStudent() {
                 <Grid container >
                     <Paper>
                         <Form onSubmit={(e) => handleSubmit(e)}>
+                        <FormGroup style={{ marginBottom: "20px" }}>
+                                {
+                                    invalid && (
+                                        <Alert severity="error">{invalidMessage}</Alert>
+                                    )
+                                }
+                            </FormGroup>
                             <FormGroup>
                                 <Input type='file' id='file' onChange={handleFileChange} />
                                 <Label className='btn-2' for='file'>Upload</Label>
@@ -260,7 +274,7 @@ function AddStudent() {
                                 <InputGroup>
                                     <InputGroupText>Group</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleGroupChange(e)} >
-                                    <option value="">Choose</option>
+                                        <option value="">Choose</option>
 
                                         {
                                             groups.map(function (group, i) {

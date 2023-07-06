@@ -18,7 +18,7 @@ function Staff() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
-    const [icon, setIcon] = useState(faCircleXmark);
+    const [style, setStyle] = useState();
     const [userId, setUserId] = useState("");
 
     let take = 3;
@@ -143,18 +143,17 @@ function Staff() {
         try {
             await axios.put(`${baseUrl}/api/account/setStatus/${userId}`)
                 .then((res) => {
-                    debugger
-                    if(userId == res.data.userId){
-                        debugger
-                        if (res.data.isActive) {
-                            setIcon(faCircleCheck);
-                        }
-                        else {
-                            setIcon(faCircleXmark)
-                        }
+                    if (res.status === 200) {
+                        setStaff((prevStaff) =>
+                            prevStaff.map((employee) =>
+                                employee.id === userId
+                                    ? { ...employee, status: !employee.status }
+                                    : employee
+                            )
+                        );
                     }
-                
-                });
+                })
+
         } catch (error) {
             console.log(error);
         }
@@ -213,8 +212,14 @@ function Staff() {
                                                 <TableCell>{employee.age}</TableCell>
                                                 <TableCell>
                                                     {
-                                                        <div className="statuses" onClick={(userId) => handleStatusChange(employee.id)}>
-                                                            <FontAwesomeIcon icon={icon} size="2xl" style={{ color: "#d10000", cursor: "pointer" }} />
+                                                        <div className="statuses" onClick={() => handleStatusChange(employee.id)}>
+                                                            {/* //     <FontAwesomeIcon icon={faCircleCheck} size="2xl" style={{ color: style, cursor: "pointer" }} /> */}
+                                                            <FontAwesomeIcon
+                                                                icon={employee.status ? faCircleCheck : faCircleXmark}
+                                                                size="2xl"
+                                                                style={{ color: employee.status ? 'green' : 'red', cursor: 'pointer' }}
+                                                            />
+
                                                         </div>
 
                                                         // <FontAwesomeIcon icon={faCircleCheck} size="2xl" style={{color: "#37ae04",cursor:"pointer"}} />
@@ -231,7 +236,7 @@ function Staff() {
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
-                                                            <Button type='button' onClick={(id) => remove(employee.id)}>
+                                                            <Button type='button' onClick={() => remove(employee.id)}>
                                                                 <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
                                                             </Button>
                                                         </Tooltip>

@@ -25,6 +25,7 @@ function Teacher() {
         try {
             await axios.get(`${baseUrl}/api/teacher/getall?skip=${page}&take=${take}`)
                 .then((res) => {
+                    debugger
                     setPages(res.data)
                     if (res.data.datas.length > 0) {
                         setShowTable(true);

@@ -1,6 +1,6 @@
 import { faChevronLeft, faPlus, faUserPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip } from '@mui/material'
+import { Alert, Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios, { Axios } from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
@@ -20,6 +20,9 @@ function AddGroup() {
     const [educationId, setEducationId] = useState(0);
     const [weeks, setWeeks] = useState([]);
     const [weekday, setWeekday] = useState(0);
+
+    const [invalid, setInvalid] = useState(false);
+    const [invalidMessage, setInvalidMessage] = useState([]);
 
     const newGroup = { roomId: roomId, educationId: educationId, weekday: weekday, timeId: timeId };
 
@@ -105,7 +108,7 @@ function AddGroup() {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Added a new item',
+                        title: 'Added a new group',
                         showConfirmButton: false,
                         timer: 2000,
                     })
@@ -115,28 +118,31 @@ function AddGroup() {
                 })
         }
         catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
+            }
         }
     };
 
     const handleEducationChange = (e) => {
         setEducationId(e.target.value);
+        setInvalid(false)
     };
     const handleRoomChange = (e) => {
         setRoomId(e.target.value);
+        setInvalid(false)
     };
     const handleTimeChange = (e) => {
         setTimeId(e.target.value);
+        setInvalid(false)
     };
     const handleWeekdayChange = (e) => {
         setWeekday(e.target.value);
+        setInvalid(false)
     };
-    
+
     useEffect(() => {
         getEducationsAsync();
         getTimeAsync();
@@ -153,13 +159,20 @@ function AddGroup() {
             </div>
             <Container maxWidth='lg'>
                 <Grid container >
-                    <Paper onSubmit={(e)=>handleSubmit(e)}>
+                    <Paper onSubmit={(e) => handleSubmit(e)}>
                         <Form>
+                            <FormGroup style={{ marginBottom: "20px" }}>
+                                {
+                                    invalid && (
+                                        <Alert severity="error">{invalidMessage}</Alert>
+                                    )
+                                }
+                            </FormGroup>
                             <FormGroup >
                                 <InputGroup>
                                     <InputGroupText>Education</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleEducationChange(e)} >
-                                    <option value="">Choose</option>
+                                        <option value="">Choose</option>
                                         {
                                             educations.map(function (education, i) {
                                                 return <option value={education.id} key={i}>{education.name}</option>
@@ -172,7 +185,7 @@ function AddGroup() {
                                 <InputGroup>
                                     <InputGroupText>Room</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleRoomChange(e)} >
-                                    <option value="">Choose</option>
+                                        <option value="">Choose</option>
                                         {
                                             rooms.map(function (room, i) {
                                                 return <option value={room.id} key={i}>{room.name}</option>
@@ -186,7 +199,7 @@ function AddGroup() {
                                 <InputGroup>
                                     <InputGroupText>Time</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleTimeChange(e)} >
-                                    <option value="">Choose</option>
+                                        <option value="">Choose</option>
                                         {
                                             time.map(function (item, i) {
                                                 return <option value={item.id} key={i}>{item.interval}</option>
@@ -200,7 +213,7 @@ function AddGroup() {
                                 <InputGroup>
                                     <InputGroupText>WeekDay</InputGroupText>
                                     <Input type="select" name='select' onChange={(e) => handleWeekdayChange(e)} >
-                                    <option value="">Choose</option>
+                                        <option value="">Choose</option>
 
                                         {
                                             weeks.map(function (item, i) {

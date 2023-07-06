@@ -32,18 +32,6 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Dashboard</h5>
                             </div>
                         </NavLink>
-                        {/* <NavLink className='navigate' to='/signin'>
-                        <div className="single-nav">
-                            <FontAwesomeIcon icon={faArrowRightToBracket} size="lg" style={{ color: "#fff", }} />
-                            <h5 onClick={(e) => handleClick(e)}>Sign in</h5>
-                        </div>
-                    </NavLink> */}
-                        {/* <NavLink className='navigate' to='/signup'>
-                    <div className="single-nav">
-                        <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#fff", }} />
-                        <h5 onClick={(e) => handleClick(e)}>Sign up</h5>
-                    </div>
-                    </NavLink> */}
                         <NavLink className='navigate' to='/rooms' onClick={() => handleClose()}>
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faStroopwafel} size="lg" style={{ color: "#fff", }} />
@@ -90,7 +78,7 @@ function Sidebar(props) {
                         <NavLink className='navigate' to='/groupteacher' onClick={() => handleClose()}>
                             <div className="single-nav">
                                 <FontAwesomeIcon icon={faUserPlus} size="lg" style={{ color: "#fff", }} />
-                                <h5 onClick={(e) => handleClick(e)}>Add teacher to group</h5>
+                                <h5 onClick={(e) => handleClick(e)}>Teacher group</h5>
                             </div>
                         </NavLink>
                         <NavLink className='navigate' to='/educations' onClick={() => handleClose()}>
@@ -123,7 +111,7 @@ function Sidebar(props) {
                                 <h5 onClick={(e) => handleClick(e)}>Educations</h5>
                             </div>
                         </NavLink>
-                        <NavLink to='/site/settings' className='navigate' onClick={() => handleClose()} >
+                        <NavLink to='/site/setting' className='navigate' onClick={() => handleClose()} >
                             <div className="single-nav" >
                                 <FontAwesomeIcon icon={faGears} size="lg" style={{ color: "#fff", }} />
                                 <h5 onClick={(e) => handleClick(e)}>Settings</h5>

@@ -4,8 +4,9 @@ import axios from 'axios';
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import BgImage from '../assets/images/signin-bg.jpeg'
+import NavArea from '../components/layout/NavArea';
+import Sidebar from '../components/layout/Sidebar';
 
 
 function SignIn() {
@@ -39,8 +40,9 @@ function SignIn() {
                         setInvalidMessage(res.data.errors)
                     }
                     if (res.data.statusMessage === "Success") {
-                        localStorage.setItem("user-info",JSON.stringify(res.data.token));
+                        localStorage.setItem("user-info", JSON.stringify(res.data.token));
                         navigate("/dashboard")
+                        window.location.reload()
                     }
                 })
         }
@@ -80,7 +82,7 @@ function SignIn() {
                         <h4>Sign In</h4>
                     </div>
                     <Form onSubmit={(e) => handleSubmit(e)}>
-                        <FormGroup>
+                        <FormGroup style={{ marginBottom: "20px" }}>
                             {
                                 invalid && (
                                     <Alert severity="error">{invalidMessage}</Alert>

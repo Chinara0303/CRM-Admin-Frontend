@@ -74,13 +74,14 @@ function App() {
   const [isLoggedİn, setİsLoggedİn] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('text', JSON.stringify(text));
-
-    if(localStorage.getItem('user-info')){
+    if (localStorage.getItem('user-info')) {
       setİsLoggedİn(true)
     }
+    else{
+      setİsLoggedİn(false)
+    }
 
-  }, [text]);
+  }, []);
 
   return (
     <div className='body'>
@@ -150,8 +151,8 @@ function App() {
                 <Route path='/site/dashboard' element={<SiteDashboard />} />
                 <Route path='/site/educations' element={<SiteEducation />} />
                 <Route path='/site/educations/detail/:id' element={<SiteDetailEducation />} />
-                <Route path='/site/settings' element={<SiteSetting />} />
-                <Route path='/site/settings/edit/:id' element={<SiteEditSetting />} />
+                <Route path='/site/setting' element={<SiteSetting />} />
+                <Route path='/site/setting/edit/:id' element={<SiteEditSetting />} />
                 <Route path='/site/sliders' element={<SiteSlider />} />
                 <Route path='/site/sliders/create' element={<AddSlider />} />
                 <Route path='/site/sliders/edit/:id' element={<EditSlider />} />

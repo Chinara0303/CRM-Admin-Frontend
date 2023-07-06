@@ -1,6 +1,6 @@
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip } from '@mui/material'
+import { Alert, Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
@@ -17,16 +17,16 @@ function AddTime() {
     const [end, setEnd] = useState("");
     const [seansId, setSeansId] = useState(0);
     const [seanses, setSeanses] = useState([]);
+    const [invalid, setInvalid] = useState(false);
+    const [invalidMessage, setInvalidMessage] = useState([]);
     const newTime = { start: start, end: end, seansId: seansId };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-
         for (const [key, value] of Object.entries(newTime)) {
             formData.append(key, value);
         };
-
         try {
             await axios.post(`${baseUrl}/api/time/create`, formData, {
                 headers: {
@@ -46,12 +46,11 @@ function AddTime() {
                     navigate("/time")
                 })
         } catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
+            }
         }
     };
     const getSeansesAsync = async () => {
@@ -95,6 +94,13 @@ function AddTime() {
                     <Paper>
                         <Form onSubmit={(e) => handleSubmit(e)}>
                             <FormGroup >
+                            <FormGroup style={{ marginBottom: "20px" }}>
+                                {
+                                    invalid && (
+                                        <Alert severity="error">{invalidMessage}</Alert>
+                                    )
+                                }
+                            </FormGroup>
                                 <div className="d-flex justify-content-between  ">
                                     <InputGroup className='me-2'>
                                         <InputGroupText>Start</InputGroupText>

@@ -22,7 +22,6 @@ function AddStaff() {
     const [invalidPassword, setInvalidPassword] = useState(false);
     const [invalidConfirmPassword, setInvalidConfirmPassword] = useState(false);
     const [invalid, setInvalid] = useState(false);
-
     const [invalidEmailMessage, setInvalidEmailMessage] = useState("");
     const [invalidFullNameMessage, setInvalidFullNameMessage] = useState("");
     const [invalidPhoneMessage, setInvalidPhoneMessage] = useState("");
@@ -32,7 +31,6 @@ function AddStaff() {
     const [invalidPasswordMessage, setInvalidPasswordMessage] = useState("");
     const [invalidConfirmPasswordMessage, setInvalidConfirmPasswordMessage] = useState("");
     const [invalidMessage, setInvalidMessage] = useState([]);
-
 
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
@@ -200,7 +198,6 @@ function AddStaff() {
                                         <Alert severity="error">{invalidMessage}</Alert>
                                     )
                                 }
-                           
                             </FormGroup>
                             <FormGroup>
                                 <Input type='file' id='file' onChange={handleFileChange} />

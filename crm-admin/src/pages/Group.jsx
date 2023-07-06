@@ -21,6 +21,7 @@ function Group() {
         try {
             await axios.get(`${baseUrl}/api/group/getall`)
                 .then((res) => {
+                    console.log(res.data);
                     if (res.data.length > 0) {
                         setShowTable(true);
                         setGroups(res.data)
@@ -31,7 +32,6 @@ function Group() {
                 });
 
         } catch (error) {
-            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
@@ -103,13 +103,12 @@ function Group() {
                                 <TableBody>
                                     {
                                         groups.map(function (group, i) {
-                                            
                                             return <TableRow key={i}>
                                                 <TableCell>{count++}</TableCell>
                                                 <TableCell>{group.name}</TableCell>
                                                 <TableCell>
                                                     {
-                                                       group.teachers.map(function(teacher,i){
+                                                       group.teachersInfo.map(function(teacher,i){
                                                         return <span key = {i}>{teacher.fullName.concat(" ")}</span>
                                                        })
                                                     }

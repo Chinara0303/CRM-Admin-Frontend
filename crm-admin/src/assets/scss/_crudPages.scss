@@ -2,22 +2,27 @@
 
 .area {
     margin-top: 60px;
-.css-1oj2twp-MuiPagination-root{
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-}
-.css-1ygcj2i-MuiTableCell-root{
-    border-bottom: none;
-    text-align: center;
-}
-.css-1ex1afd-MuiTableCell-root {
-    text-align: center;
-}
+
+    .css-1oj2twp-MuiPagination-root {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0;
+    }
+
+    .css-1ygcj2i-MuiTableCell-root {
+        border-bottom: none;
+        text-align: center;
+    }
+
+    .css-1ex1afd-MuiTableCell-root {
+        text-align: center;
+    }
+
     .image-area {
         width: 150px;
         height: 150px;
         margin: 0 auto;
+
         img {
             width: 100%;
             height: 100%;
@@ -84,9 +89,10 @@
 
 
     }
-    .actions{
-       display: flex;
-       justify-content: center;
+
+    .actions {
+        display: flex;
+        justify-content: center;
     }
 
 
@@ -109,6 +115,49 @@
 .create-area,
 .edit-area,
 .detail-area {
+    .images-area {
+        display: flex;
+        margin-bottom: 50px;
+        opacity: 1;
+
+        .img-area {
+            width: 150px;
+            height: 150px;
+            margin-right: 15px;
+
+            img {
+                border-radius: 100%;
+            }
+
+            .remove-area {
+                color: red;
+                position: relative;
+
+                button {
+                    border: none;
+                    font-family: cursive;
+                    left: 60px;
+                    position: absolute;
+                    opacity: 0;
+                    bottom: 65px;
+                    background-color: transparent;
+                }
+            }
+
+            &:hover {
+                .remove-area {
+                    button {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+
+
     .image-area {
         width: 300px;
         height: 200px;
@@ -125,8 +174,12 @@
 
     .css-1ps6pg7-MuiPaper-root {
         width: 100%;
-        padding: 30px;
+        padding: 60px 50px;
         margin-top: 30px;
+    }
+    .css-2m9kme-MuiFormControl-root{
+        bottom: -21px !important;
+
     }
 
     .forms {

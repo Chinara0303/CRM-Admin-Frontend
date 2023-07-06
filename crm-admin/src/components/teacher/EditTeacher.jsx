@@ -20,6 +20,8 @@ function EditTeacher() {
     const [invalidAge, setInvalidAge] = useState(false);
     const [invalidAddress, setInvalidAddress] = useState(false);
     const [invalidBiography, setInvalidBiography] = useState(false);
+    const [invalid, setInvalid] = useState(false);
+    const [invalidMessage, setInvalidMessage] = useState([]);
     const [invalidEmailMessage, setInvalidEmailMessage] = useState("");
     const [invalidFullNameMessage, setInvalidFullNameMessage] = useState("");
     const [invalidPhoneMessage, setInvalidPhoneMessage] = useState("");
@@ -77,42 +79,48 @@ function EditTeacher() {
             })
         }
         catch (error) {
-            const errors = error.response.data.errors;
-            if (errors.FullName !== undefined) {
-                if (errors.FullName.length > 0) {
-                    setInvalidFullName(true);
-                    setInvalidFullNameMessage(errors.FullName)
-                }
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
             }
-            if (errors.Email !== undefined) {
-                debugger
-                if (errors.Email.length > 0) {
-                    setInvalidEmail(true);
-                    setInvalidEmailMessage(errors.Email)
+            if (errors.errors !== undefined) {
+                if (errors.errors.FullName !== undefined) {
+                    if (errors.errors.FullName.length > 0) {
+                        setInvalidFullName(true);
+                        setInvalidFullNameMessage(errors.errors.FullName)
+                    }
                 }
-            }
-            if (errors.Phone !== undefined) {
-                if (errors.Phone.length > 0) {
-                    setInvalidPhone(true);
-                    setInvalidPhoneMessage(errors.Phone)
+                if (errors.errors.Email !== undefined) {
+                    debugger
+                    if (errors.errors.Email.length > 0) {
+                        setInvalidEmail(true);
+                        setInvalidEmailMessage(errors.errors.Email)
+                    }
                 }
-            }
-            if (errors.Age !== undefined) {
-                if (errors.Age.length > 0) {
-                    setInvalidAge(true);
-                    setInvalidAgeMessage(errors.Age)
+                if (errors.errors.Phone !== undefined) {
+                    if (errors.errors.Phone.length > 0) {
+                        setInvalidPhone(true);
+                        setInvalidPhoneMessage(errors.errors.Phone)
+                    }
                 }
-            }
-            if (errors.Address !== undefined) {
-                if (errors.Address.length > 0) {
-                    setInvalidAddress(true);
-                    setInvalidAddressMessage(errors.Address)
+                if (errors.errors.Age !== undefined) {
+                    if (errors.errors.Age.length > 0) {
+                        setInvalidAge(true);
+                        setInvalidAgeMessage(errors.errors.Age)
+                    }
                 }
-            }
-            if (errors.Biography !== undefined) {
-                if (errors.Biography.length > 0) {
-                    setInvalidBiography(true);
-                    setInvalidBiographyMessage(errors.Biography)
+                if (errors.errors.Address !== undefined) {
+                    if (errors.errors.Address.length > 0) {
+                        setInvalidAddress(true);
+                        setInvalidAddressMessage(errors.errors.Address)
+                    }
+                }
+                if (errors.errors.Biography !== undefined) {
+                    if (errors.errors.Biography.length > 0) {
+                        setInvalidBiography(true);
+                        setInvalidBiographyMessage(errors.errors.Biography)
+                    }
                 }
             }
         }
@@ -121,28 +129,34 @@ function EditTeacher() {
     const handleFullNameChange = (e) => {
         setFullName(e.target.value);
         setInvalidFullName(false)
+        setInvalid(false)
     }
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         setInvalidEmail(false);
+        setInvalid(false)
     };
 
     const handleAddressChange = (e) => {
         setAddress(e.target.value);
         setInvalidAddress(false)
+        setInvalid(false)
     };
     const handleAgeChange = (e) => {
         setAge(e.target.value);
         setInvalidAge(false)
+        setInvalid(false)
     };
     const handleBiographyChange = (e) => {
         setBiography(e.target.value);
         setInvalidBiography(false);
+        setInvalid(false)
     };
     const handlePhoneChange = (e) => {
         setPhone(e.target.value);
         setInvalidPhone(false)
+        setInvalid(false)
     };
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
