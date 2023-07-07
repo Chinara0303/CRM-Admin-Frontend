@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 function Staff() {
-    const baseUrl = "https://localhost:7069";
-
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [showTable, setShowTable] = useState(false);
     const [staff, setStaff] = useState([]);
     const [filterValue, setFilterValue] = useState("ascending");

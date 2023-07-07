@@ -20,7 +20,7 @@ const style = {
 };
 
 function Profile(props) {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
 
     const navigate = useNavigate()
@@ -109,13 +109,14 @@ function Profile(props) {
 
     const getUserInfoAsync = async () => {
         try {
-            await axios.get(`${baseUrl}/api/account/profile/`,
+            await axios.get(`${baseUrl}/api/account/profile`,
                 {
                     headers: { "Authorization": `Bearer ${token}` }
                 })
                 .then((res) => {
                     setUser(res.data)
                     setPositions(res.data.roleNames)
+                    console.log(res.data);
                 });
 
         } catch (error) {
@@ -292,7 +293,7 @@ function Profile(props) {
                                 <h4>{user.fullName}</h4>
                                 {
                                     positions.map(function (roleName, i) {
-                                        return <p key={i}>{roleName}</p>
+                                        return <p key={i}>{roleName.name}</p>
                                     })
                                 }
                             </div>

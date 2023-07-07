@@ -13,15 +13,9 @@ function Banner() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [showTable, setShowTable] = useState(false);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+ 
   const [banners, setBanners] = useState([]);
-  const baseUrl = "https://localhost:7069";
+  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   let count = 1;
 
   const getAllAsync = async () => {

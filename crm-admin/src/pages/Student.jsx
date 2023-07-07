@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Student() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const [showTable, setShowTable] = useState(false);
     const [students, setStudents] = useState([]);

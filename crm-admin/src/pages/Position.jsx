@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function Position() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const [showTable, setShowTable] = useState(false);
     const [positions, setPositions] = useState([]);

@@ -12,7 +12,7 @@ function About() {
     const [showCreateArea, setShowCreateArea] = useState(true);
 
     const [about, setAbout] = useState([]);
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     let count = 1;
 
     const getAllAsync = async () => {

@@ -19,7 +19,7 @@ function Teacher() {
     const [filterValue, setFilterValue] = useState(undefined);
     let take = 3;
     let count = (pages.currentPage - 1) * take;
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const getAllAsync = async (page) => {
         try {

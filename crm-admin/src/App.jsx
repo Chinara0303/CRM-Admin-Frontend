@@ -63,9 +63,10 @@ import EditTime from './components/time/EditTime';
 import SiteEducation from './pages/site-area/SiteEducation';
 
 
+
 function App() {
   const [text, setText] = useState(() => {
-    const storedValue = localStorage.getItem('text');
+    let storedValue = localStorage.getItem('text');
     return storedValue ? JSON.parse(storedValue) : 'Dashboard';
   });
 
@@ -74,14 +75,15 @@ function App() {
   const [isLoggedİn, setİsLoggedİn] = useState(false);
 
   useEffect(() => {
+   localStorage.setItem('text', JSON.stringify(text));
     if (localStorage.getItem('user-info')) {
       setİsLoggedİn(true)
     }
-    else{
+    else {
       setİsLoggedİn(false)
     }
 
-  }, []);
+  }, [text]);
 
   return (
     <div className='body'>
@@ -108,7 +110,12 @@ function App() {
                 )
               }
               <Routes>
-                <Route path='/profile' element={<Profile change={change} setChange={setChange} />} />
+                <Route path='/profile' element={
+                  <MyContext.Provider value={{ text, setText }}>
+                    <Profile change={change} setChange={setChange} />
+                  </MyContext.Provider>
+                } />
+
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/rooms' element={<Room />} />
                 <Route path='/rooms/create' element={<AddRoom />} />

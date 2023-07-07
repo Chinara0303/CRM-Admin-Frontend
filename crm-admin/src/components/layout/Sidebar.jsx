@@ -10,8 +10,10 @@ import { faDiscourse } from '@fortawesome/free-brands-svg-icons';
 
 function Sidebar(props) {
     const { text, setText } = useContext(MyContext);
+    
     const handleClick = (e) => {
-        setText(e.target.innerText)
+        
+        setText(e.target.innerText);
     }
     const handleClose = () => {
         props.setMenuOpen(false)
