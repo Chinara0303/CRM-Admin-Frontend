@@ -11,6 +11,7 @@ import { useState } from 'react';
 function SiteTeacher() {
 
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+
     const [showTable, setShowTable] = useState(false);
     const [teachers, setTeachers] = useState([]);
     const [pages, setPages] = useState([]);
@@ -84,7 +85,7 @@ function SiteTeacher() {
 
     return (
         <div className='area'>
-            <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+            <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" label="Search..." variant="outlined" />
             {
                 showTable && (
                     <Paper style={{ marginTop: "30px" }}>
@@ -116,7 +117,8 @@ function SiteTeacher() {
                                                     <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
-                                                                <NavLink to={`/site/teachers/detail/${teacher.id}`}><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
+                                                                <NavLink to={`/site/teachers/detail/${teacher.id}`}>
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
 

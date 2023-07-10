@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-
+import { LineChart, Line } from 'recharts';
 function Dashboard() {
   const [educations, setEducations] = useState([])
   const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+  
   const getAllAsync = async () => {
     try {
       await axios.get(`${baseUrl}/api/education/getall`)
@@ -19,6 +20,7 @@ function Dashboard() {
         });
 
     } catch (error) {
+      console.log(error);
       Swal.fire({
         title: 'Oops...',
         text: 'Something went wrong',
@@ -28,37 +30,40 @@ function Dashboard() {
     }
   }
 
+
   useEffect(() => {
-    debugger
     getAllAsync()
-    const chart = new Chart(
-      document.getElementById('acquisitions'),
-      {
-        type: 'bar',
-        data: {
-          labels: educations.map(education => education.name),
-          datasets: [
-            {
-              label: 'Group count by education',
-              data: educations.map(education => education.groupCount),
-              borderWidth: 1,
-            }
-          ]
-        }
+
+    // const chart = new Chart(
+    //   document.getElementById('acquisitions'),
+    //   {
+    //     type: 'bar',
+    //     data: {
+    //       labels: educations.map(education => education.name),
+    //       datasets: [
+    //         {
+    //           label: 'Group count by education',
+    //           data: educations.map(education => education.groupCount),
+    //           borderWidth: 1,
+    //         }
+    //       ]
+    //     }
 
 
-      }
+    //   }
+    // );
+    const renderLineChart = (
+      <LineChart width={400} height={400} data={educations}>
+        <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+      </LineChart>
     );
+  
 
-    return () => {
-      debugger
+    // return () => {
+    //   chart.destroy();
+    // };
 
-      chart.destroy();
-
-
-    };
-
-  }, [])
+  }, [educations])
 
 
   return (

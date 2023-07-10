@@ -6,7 +6,6 @@ import Dashboard from './pages/Dashboard';
 import SignIn from './pages/SignIn';
 import { useEffect, useState } from 'react';
 import { MyContext } from './MyContext';
-// import Signup from './pages/Signup';
 import NavArea from './components/layout/NavArea';
 import Room from './pages/Room';
 import AddRoom from './components/room/AddRoom';
@@ -33,7 +32,6 @@ import EditStudent from './components/student/EditStudent';
 import DetailStudent from './components/student/DetailStudent';
 import GroupTeacher from './pages/GroupTeacher';
 import AddTeacherToGroup from './components/group/AddTeacherToGroup';
-import EditTeacherGroup from './components/group/EditTeacherGroup';
 import Education from './pages/Education';
 import AddEducation from './components/education/AddEducation';
 import DetailEducation from './components/education/DetailEducation';
@@ -61,8 +59,6 @@ import AddTime from './components/time/AddTime';
 import DetailTime from './components/time/DetailTime';
 import EditTime from './components/time/EditTime';
 import SiteEducation from './pages/site-area/SiteEducation';
-
-
 
 function App() {
   const [text, setText] = useState(() => {
@@ -143,7 +139,6 @@ function App() {
                 <Route path='/students/detail/:id' element={<DetailStudent />} />
                 <Route path='/groupteacher' element={<GroupTeacher />} />
                 <Route path='/groupteacher/create' element={<AddTeacherToGroup />} />
-                <Route path='/groupteacher/edit/:id' element={<EditTeacherGroup />} />
                 <Route path='/educations' element={<Education />} />
                 <Route path='/educations/create' element={<AddEducation />} />
                 <Route path='/educations/detail/:id' element={<DetailEducation />} />

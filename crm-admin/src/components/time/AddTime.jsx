@@ -10,7 +10,8 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, FormFeedbac
 import Swal from 'sweetalert2'
 
 function AddTime() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+
     const navigate = useNavigate();
 
     const [start, setStart] = useState("");
@@ -127,7 +128,7 @@ function AddTime() {
                                 </InputGroup>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
-                                <NavLink to='/positions'>
+                                <NavLink to='/time'>
                                     <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                                 </NavLink>
                             </Tooltip>

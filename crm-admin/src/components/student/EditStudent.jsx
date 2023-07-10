@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 function EditStudent() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const baseUrl = "https://localhost:7069";
+  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
   const [invalidFullName, setInvalidFullName] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);

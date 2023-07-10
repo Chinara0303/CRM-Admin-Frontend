@@ -115,6 +115,23 @@
 .create-area,
 .edit-area,
 .detail-area {
+    .role-name {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 3px 10px;
+        border: 1px solid;
+        border-radius: 15px;
+        text-align: center;
+        font-size: 17px;
+        cursor: pointer;
+        transition: all .4s;
+        &:hover{
+            background-color: $secondMainColor;
+            color: $colorWhite;
+            border-color: $mainColor;
+        }
+    }
+
     .images-area {
         display: flex;
         margin-bottom: 50px;
@@ -156,8 +173,6 @@
 
     }
 
-
-
     .image-area {
         width: 300px;
         height: 200px;
@@ -169,7 +184,7 @@
     }
 
     .image {
-        width: 500px;
+        width: 100%;
     }
 
     .css-1ps6pg7-MuiPaper-root {
@@ -177,7 +192,8 @@
         padding: 60px 50px;
         margin-top: 30px;
     }
-    .css-2m9kme-MuiFormControl-root{
+
+    .css-2m9kme-MuiFormControl-root {
         bottom: -21px !important;
 
     }
@@ -195,10 +211,11 @@
                 width: 100px !important;
             }
         }
+     
 
 
     }
-
+    
     .form-control:focus {
         color: var(--bs-body-color);
         background-color: var(--bs-body-bg);
@@ -218,10 +235,13 @@
         border-radius: 20px;
 
         p {
-            text-transform: capitalize;
             font-weight: 500;
             font-size: 18px;
             margin: 10px !important;
+        }
+
+        .img-detail {
+            width: 300px;
         }
     }
 
@@ -293,6 +313,15 @@
 }
 
 .profile-area {
+    .logo-area {
+        width: 100px;
+        height: 100px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
 
     .top-area {
         display: flex;
@@ -305,20 +334,6 @@
             font-weight: 600;
 
         }
-    }
-
-
-    hr {
-        border-top: 0px solid rgba(0, 0, 0, 0.12) !important;
-        border-left: none;
-        border-bottom: none;
-        opacity: 0.25;
-        background-color: transparent;
-        width: 0.0625rem;
-        height: 100%;
-        margin: 0px !important;
-        border-right: 0px solid rgba(0, 0, 0, 0.12) !important;
-        background-image: linear-gradient(rgba(52, 71, 103, 0), rgba(52, 71, 103, 0.4), rgba(52, 71, 103, 0)) !important;
     }
 
     .subscribe-area {

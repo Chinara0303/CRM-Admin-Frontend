@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faCircleCheck, faCircleInfo, faCircleXmark, faSquarePlus, faTrashCan, faUserXmark } from '@fortawesome/free-solid-svg-icons';
-import { Button, Menu, MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
+import { faCircleCheck, faCircleInfo, faCircleXmark, faPenToSquare, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Button,  MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
@@ -10,6 +10,8 @@ import axios from 'axios';
 
 function Staff() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
+
     const [showTable, setShowTable] = useState(false);
     const [staff, setStaff] = useState([]);
     const [filterValue, setFilterValue] = useState("ascending");
@@ -17,8 +19,6 @@ function Staff() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPage, setTotalPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
-    const [style, setStyle] = useState();
-    const [userId, setUserId] = useState("");
 
     let take = 3;
     let count = (pages.currentPage - 1) * take;
@@ -59,7 +59,8 @@ function Staff() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/account/usersoftdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/account/usersoftdelete/${id}`,
+                      { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -138,9 +139,9 @@ function Staff() {
     };
 
     const handleStatusChange = async (userId) => {
-        setUserId(userId)
         try {
-            await axios.put(`${baseUrl}/api/account/setStatus/${userId}`)
+            await axios.put(`${baseUrl}/api/account/setStatus/${userId}`,
+            { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
                     if (res.status === 200) {
                         setStaff((prevStaff) =>
@@ -212,31 +213,34 @@ function Staff() {
                                                 <TableCell>
                                                     {
                                                         <div className="statuses" onClick={() => handleStatusChange(employee.id)}>
-                                                            {/* //     <FontAwesomeIcon icon={faCircleCheck} size="2xl" style={{ color: style, cursor: "pointer" }} /> */}
                                                             <FontAwesomeIcon
                                                                 icon={employee.status ? faCircleCheck : faCircleXmark}
-                                                                size="2xl"
+                                                                size="xl"
                                                                 style={{ color: employee.status ? 'green' : 'red', cursor: 'pointer' }}
                                                             />
 
                                                         </div>
-
-                                                        // <FontAwesomeIcon icon={faCircleCheck} size="2xl" style={{color: "#37ae04",cursor:"pointer"}} />
                                                     }
-
                                                 </TableCell>
                                                 <TableCell>
                                                     <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/staff/detail/${employee.id}`}>
-                                                                    <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
+                                                                </NavLink>
+                                                            </MenuItem>
+                                                        </Tooltip>
+                                                        <Tooltip title='Edit' placement='top-start'>
+                                                            <MenuItem>
+                                                                <NavLink to={`/staff/edit/${employee.id}`}>
+                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
                                                             <Button type='button' onClick={() => remove(employee.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
+                                                                <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
                                                             </Button>
                                                         </Tooltip>
                                                     </div>

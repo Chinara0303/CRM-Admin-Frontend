@@ -11,7 +11,7 @@ import moment from 'moment';
 
 function DetailEducation() {
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [education, setEducation] = useState([]);
 
     const getAsync = async (id) => {

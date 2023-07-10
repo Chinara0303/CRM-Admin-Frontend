@@ -59,7 +59,7 @@ function SiteSetting() {
                     <TableCell>{item.value}</TableCell>
                     <TableCell>
                       <Tooltip title='Edit' placement='top-start'>
-                        <NavLink to={`/site/setting/edit/${item.id}`}><FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} /></NavLink>
+                        <NavLink to={`/site/setting/edit/${item.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                       </Tooltip>
                     </TableCell>
                   </TableRow>

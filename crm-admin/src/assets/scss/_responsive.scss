@@ -38,8 +38,30 @@
             transform: rotate(-41deg) !important;
         }
     }
+    .edit-area{
+        .image-area{
+            width: 100% !important;
+            height: auto !important;
+        }
+    }
+    [type="file"]+label {
+        padding: 1rem 79px !important; 
 
+    }
+
+    .css-1ps6pg7-MuiPaper-root {
+        padding: 30px 10px !important;
+    }
+    .forms{
+        display: block !important;
+       
+    }
+    .css-2m9kme-MuiFormControl-root{
+        width:100% !important;
+    }
 }
+
+
 
 @media (min-width:768px) and(max-width:1200px){
     .sidebar-area{

@@ -120,42 +120,16 @@ function Banner() {
                             <Tooltip title='Edit' placement='top-start'>
                               <MenuItem>
                                 <NavLink to={`/site/banners/edit/${banner.id}`}>
-                                  <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
+                                  <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                 </NavLink>
                               </MenuItem>
                             </Tooltip>
                             <Tooltip title='Delete' placement='top-start'>
                                 <Button type='button' onClick={(id) => remove(banner.id)}>
-                                  <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
+                                  <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
                                 </Button>
                             </Tooltip>
                           </div>
-                          {/* <Button
-                            id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClick}
-                          >
-                            <FontAwesomeIcon icon={faAlignRight} size='xl' style={{ color: "#174873" }} />
-                          </Button>
-                          <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                          >
-                            <Tooltip title='Edit' placement='top-start'>
-                              <MenuItem>
-                                <NavLink to='/site/banners/edit/id'><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                              </MenuItem>
-                            </Tooltip>
-                            <Tooltip title='Delete' placement='top-start'>
-                              <MenuItem>
-                                <Button><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                              </MenuItem>
-                            </Tooltip>
-                          </Menu> */}
                         </TableCell>
                       </TableRow>
                     })

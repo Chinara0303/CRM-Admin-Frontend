@@ -8,7 +8,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label,FormF
 import Swal from 'sweetalert2'
 
 function AddBanner() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const navigate = useNavigate();
 
     const [invalidTitle, setInvalidTitle] = useState(false);

@@ -12,7 +12,6 @@ import { useState } from 'react';
 function Seans() {
   const [showTable, setShowTable] = useState(false);
   const [seanses, setSeanses] = useState([]);
-  const [showCreateArea, setShowCreateArea] = useState(true);
 
   const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   let count = 1;
@@ -21,24 +20,21 @@ function Seans() {
     try {
       await axios.get(`${baseUrl}/api/seans/getall`)
         .then((res) => {
-          if(res.data.length <= 0){
+          if (res.data.length <= 0) {
             setShowTable(false)
-            setShowCreateArea(true)
           }
           if (res.data.length > 0) {
             setShowTable(true);
             setSeanses(res.data)
           }
           if (res.data.length >= 3) {
-            setShowCreateArea(false)
             setSeanses(res.data)
           }
-          else if(res.data.length < 3){
-            setShowCreateArea(true)
+          else if (res.data.length < 3) {
             setSeanses(res.data)
           }
         }
-      );
+        );
 
     } catch (error) {
       Swal.fire({
@@ -49,39 +45,6 @@ function Seans() {
       })
     }
   }
-  const remove = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        try {
-          axios.delete(`${baseUrl}/api/seans/softdelete/${id}`)
-            .then(() => {
-              Swal.fire(
-                'Deleted!',
-                'Your item has been deleted.',
-                'success'
-              )
-              getAllAsync();
-            });
-
-        } catch (error) {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Do you want to continue',
-            icon: 'error',
-            confirmButtonText: 'Cool'
-          })
-        }
-      }
-    })
-  }
 
   useEffect(() => {
     getAllAsync();
@@ -89,16 +52,6 @@ function Seans() {
 
   return (
     <div className='area'>
-      {
-        showCreateArea && (
-          <Tooltip title='Add' arrow placement="top-start">
-            <NavLink to='/seanses/create'>
-              <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-            </NavLink>
-          </Tooltip>
-        )
-      }
-
       {
         showTable && (
           <Paper style={{ marginTop: "30px" }}>
@@ -118,16 +71,12 @@ function Seans() {
                         <TableCell>{count++}</TableCell>
                         <TableCell>{seans.name}</TableCell>
                         <TableCell>
-                          <div className="d-flex">
+                          <div className="actions">
                             <Tooltip title='Edit' placement='top-start'>
                               <MenuItem>
-                                <NavLink to={`/seanses/edit/${seans.id}`}><FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} /></NavLink>
+                                <NavLink to={`/seanses/edit/${seans.id}`}>
+                                  <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                               </MenuItem>
-                            </Tooltip>
-                            <Tooltip title='Delete' placement='top-start'>
-                              <Button type="button" onClick={(id) => remove(seans.id)}>
-                                <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
-                              </Button>
                             </Tooltip>
                           </div>
                         </TableCell>

@@ -9,7 +9,7 @@ import moment from 'moment';
 
 function DetailStaff() {
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [staffMember, setStaffMember] = useState([]);
     const [positions, setPositions] = useState([]);
 
@@ -29,8 +29,6 @@ function DetailStaff() {
             })
         }
     }
-   
-
     useEffect(() => {
         getAsync(id);
 
@@ -48,7 +46,9 @@ function DetailStaff() {
                     <Paper>
                         <Tooltip title='Image' placement='left' arrow>
                             <div className="single-area">
-                                <img className='img-fluid' src={`data:image/;base64,${staffMember.image}`} alt="" />
+                                <div className="img-detail">
+                                    <img className='img-fluid' src={`data:image/;base64,${staffMember.image}`} alt="" />
+                                </div>
                             </div>
                         </Tooltip>
                         <Tooltip title='Full name' placement='left' arrow>

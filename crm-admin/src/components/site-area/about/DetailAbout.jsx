@@ -9,7 +9,7 @@ import moment from 'moment';
 
 function DetailAbout() {
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [about, setAbout] = useState([]);
 
     const getAsync = async (id) => {

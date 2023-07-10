@@ -1,8 +1,9 @@
 import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl, Alert } from '@mui/material'
+import { Container, Grid, InputLabel, Paper, Select, Tooltip, MenuItem, OutlinedInput, FormControl, Alert } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label, FormFeedback } from 'reactstrap'
@@ -11,7 +12,9 @@ import Swal from 'sweetalert2'
 function AddStaff() {
 
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+  
     const navigate = useNavigate();
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [invalidFullName, setInvalidFullName] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
@@ -41,28 +44,31 @@ function AddStaff() {
     const [age, setAge] = useState("");
     const [biography, setBiography] = useState("");
     const [file, setFile] = useState(null);
+    const [roleIds, setRoleIds] = useState([]);
+    const [roles, setRoles] = useState([]);
 
     const newEmployee = {
         fullName: fullName, email: email, phoneNumber: phoneNumber, address: address, age: age,
-        biography: biography, photo: file, password: password, confirmPassword: confirmPassword
+        biography: biography, photo: file, password: password, confirmPassword: confirmPassword, roleIds: roleIds
     };
 
     const handleSubmit = async (e) => {
+        debugger
         e.preventDefault();
         const formData = new FormData();
-
         for (const [key, value] of Object.entries(newEmployee)) {
+            if (key === 'roleIds') {
+                value.forEach((val, index) => {
+                    formData.append(`roleIds[${index}]`, val)
+                })
+                continue;
+            }
             formData.append(key, value);
         };
 
-
         try {
-            await axios.post(`${baseUrl}/api/account/signup/`, formData, {
-                headers: {
-                    Accept: "*/*",
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
+            await axios.post(`${baseUrl}/api/account/signup`, formData,
+            { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',
@@ -79,69 +85,87 @@ function AddStaff() {
         }
         catch (error) {
             const errors = error.response.data;
-            if(errors.length > 0){
+            if (errors.length > 0) {
                 setInvalid(true)
                 setInvalidMessage(errors)
             }
-            if (errors.errors != undefined) {
+            if (errors.errors !== undefined) {
                 if (errors.errors.FullName !== undefined) {
-                    if (errors.FullName.length > 0) {
+                    if (errors.errors.FullName.length > 0) {
                         setInvalidFullName(true);
-                        setInvalidFullNameMessage(errors.FullName)
+                        setInvalidFullNameMessage(errors.errors.FullName)
                     }
                 }
                 if (errors.errors.Email !== undefined) {
-                    if (errors.Email.length > 0) {
+                    if (errors.errors.Email.length > 0) {
                         setInvalidEmail(true);
-                        setInvalidEmailMessage(errors.Email)
+                        setInvalidEmailMessage(errors.errors.Email)
                     }
                 }
                 if (errors.errors.PhoneNumber !== undefined) {
-                    if (errors.PhoneNumber.length > 0) {
+                    if (errors.errors.PhoneNumber.length > 0) {
                         setInvalidPhone(true);
-                        setInvalidPhoneMessage(errors.PhoneNumber)
+                        setInvalidPhoneMessage(errors.errors.PhoneNumber)
                     }
                 }
                 if (errors.errors.Age !== undefined) {
-                    if (errors.Age.length > 0) {
+                    if (errors.errors.Age.length > 0) {
                         setInvalidAge(true);
-                        setInvalidAgeMessage(errors.Age)
+                        setInvalidAgeMessage(errors.errors.Age)
                     }
                 }
                 if (errors.errors.Address !== undefined) {
-                    if (errors.Address.length > 0) {
+                    if (errors.errors.Address.length > 0) {
                         setInvalidAddress(true);
-                        setInvalidAddressMessage(errors.Address)
+                        setInvalidAddressMessage(errors.errors.Address)
                     }
                 }
                 if (errors.errors.Biography !== undefined) {
-                    if (errors.Biography.length > 0) {
+                    if (errors.errors.Biography.length > 0) {
                         setInvalidBiography(true);
-                        setInvalidBiographyMessage(errors.Biography)
+                        setInvalidBiographyMessage(errors.errors.Biography)
                     }
                 }
                 if (errors.errors.Password !== undefined) {
-                    if (errors.Password.length > 0) {
+                    if (errors.errors.Password.length > 0) {
                         setInvalidPassword(true);
-                        setInvalidPasswordMessage(errors.Password)
+                        setInvalidPasswordMessage(errors.errors.Password)
                     }
                 }
                 if (errors.errors.ConfirmPassword !== undefined) {
-                    if (errors.ConfirmPassword.length > 0) {
+                    if (errors.errors.ConfirmPassword.length > 0) {
                         setInvalidConfirmPassword(true);
-                        setInvalidConfirmPasswordMessage(errors.ConfirmPassword)
+                        setInvalidConfirmPasswordMessage(errors.errors.ConfirmPassword)
                     }
                 }
             }
 
         }
     };
+    const getRolesAsync = async () => {
+        try {
+            await axios.get(`${baseUrl}/api/account/getroles?skip=0&take=0`)
+                .then((res) => {
+                    if (res.data.datas.length > 0) {
+                        setRoles(res.data.datas)
+                    }
+                });
 
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
     const handleFullNameChange = (e) => {
         setFullName(e.target.value);
         setInvalidFullName(false);
         setInvalid(false)
     };
+
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         setInvalidEmail(false);
@@ -180,6 +204,13 @@ function AddStaff() {
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
+    const handleRoleChange = (e) => {
+        setRoleIds(e.target.value);
+    }
+
+    useEffect(() => {
+        getRolesAsync()
+    }, [])
 
     return (
         <div className='create-area area mt-5'>
@@ -194,7 +225,7 @@ function AddStaff() {
                         <Form onSubmit={(e) => handleSubmit(e)}>
                             <FormGroup>
                                 {
-                                    invalid &&(
+                                    invalid && (
                                         <Alert severity="error">{invalidMessage}</Alert>
                                     )
                                 }
@@ -306,6 +337,28 @@ function AddStaff() {
                                         )
                                     }
                                 </InputGroup>
+                            </FormGroup>
+                            <FormGroup >
+                                <FormControl sx={{ m: 1, width: 300 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Positions</InputLabel>
+                                    <Select
+                                        labelId="demo-multiple-chip-label"
+                                        id="demo-multiple-chip"
+                                        multiple
+                                        value={roleIds}
+                                        onChange={handleRoleChange}
+                                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    >
+                                        {roles.map((role, i) => (
+                                            <MenuItem
+                                                key={i}
+                                                value={role.id}
+                                            >
+                                                {role.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             </FormGroup>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/staff'>

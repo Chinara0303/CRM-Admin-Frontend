@@ -1,9 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAlignRight, faSquarePlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Menu, Button } from '@mui/material';
+import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';

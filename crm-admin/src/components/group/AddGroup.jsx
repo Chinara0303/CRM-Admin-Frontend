@@ -10,7 +10,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } fro
 import Swal from 'sweetalert2'
 
 function AddGroup() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const [educations, setEducations] = useState([]);

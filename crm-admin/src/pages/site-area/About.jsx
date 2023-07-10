@@ -87,12 +87,12 @@ function About() {
                                                     <div className="d-flex">
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
-                                                                <NavLink to={`/site/about/detail/${about.id}`}><FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} /></NavLink>
+                                                                <NavLink to={`/site/about/detail/${about.id}`}><FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
-                                                                <NavLink to={`/site/about/edit/${about.id}`}><FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} /></NavLink>
+                                                                <NavLink to={`/site/about/edit/${about.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
 

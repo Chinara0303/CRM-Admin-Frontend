@@ -75,7 +75,7 @@ function SiteEducation() {
                             <Tooltip title='Info' placement='top-start'>
                               <MenuItem>
                                 <NavLink to={`/site/educations/detail/${education.id}`}>
-                                  <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                  <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
                                 </NavLink>
                               </MenuItem>
                             </Tooltip>

@@ -9,7 +9,7 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, FormFeedbac
 import Swal from 'sweetalert2'
 
 function AddSeans() {
-  const baseUrl = "https://localhost:7069";
+  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   const navigate = useNavigate();
 
   const [name, setName] = useState("");

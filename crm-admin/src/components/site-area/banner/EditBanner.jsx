@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 function EditBanner() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const [invalidTitle, setInvalidTitle] = useState(false);
     const [invalidFile, setInvalidFile] = useState(false);

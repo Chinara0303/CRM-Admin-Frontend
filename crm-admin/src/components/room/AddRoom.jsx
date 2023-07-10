@@ -8,8 +8,9 @@ import Swal from 'sweetalert2'
 import axios from 'axios'
 
 function AddRoom() {
-  const baseUrl = "https://localhost:7069";
+  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   const navigate = useNavigate();
+  const token = JSON.parse(localStorage.getItem('user-info'));
 
   const [invalidName, setInvalidName] = useState(false);
   const [invalidCapacity, setInvalidCapacity] = useState(false);
@@ -29,11 +30,9 @@ function AddRoom() {
     };
 
     try {
-      await axios.post(`${baseUrl}/api/room/create`, formData, {
-        headers: {
-          Accept: "*/*"
-        }
-      })
+      await axios.post(`${baseUrl}/api/room/create`, formData, 
+        { headers: { "Authorization": `Bearer ${token}` } }
+      )
         .then(() => {
           Swal.fire({
             position: 'top-end',
@@ -52,7 +51,6 @@ function AddRoom() {
       const errors = error.response.data.errors;
       if (errors.Capacity != undefined) {
         if (errors.Capacity.length > 0) {
-          debugger
           setInvalidCapacity(true);
           setInvalidCapacityMessage(errors.Capacity)
         }

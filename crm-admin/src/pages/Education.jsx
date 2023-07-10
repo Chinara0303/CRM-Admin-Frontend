@@ -14,6 +14,14 @@ function Education() {
     const [educations, setEducations] = useState([]);
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     let count = 1;
+    const token = JSON.parse(localStorage.getItem('user-info'));
+  
+    // const getRolesFromToken = () => {
+    //     const decodedToken = jwt.decode(token);
+    //     console.log(decodedToken)
+    //     return decodedToken.roles; // Yetkileri içeren bir dizi döndürür
+    // };
+    // const userRoles = getRolesFromToken();
 
     const getAllAsync = async () => {
         try {
@@ -49,7 +57,7 @@ function Education() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/education/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/education/softdelete/${id}`,  { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -77,6 +85,7 @@ function Education() {
     
     return (
         <div className='area'>
+             {/* {userRoles.includes('admin') && <button>Düğme</button>} */}
             <Tooltip title='Add' arrow placement="top-start">
                 <NavLink to='/educations/create'>
                     <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
@@ -113,23 +122,21 @@ function Education() {
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/educations/detail/${education.id}`}>
-                                                                    <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/educations/edit/${education.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
+                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
-                                                            <MenuItem>
                                                                 <Button onClick={(id) => remove(education.id)}>
-                                                                    <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
+                                                                    <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
                                                                 </Button>
-                                                            </MenuItem>
                                                         </Tooltip>
                                                     </div>
                                                 </TableCell>

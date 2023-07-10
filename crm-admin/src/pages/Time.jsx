@@ -10,10 +10,12 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Time() {
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
+   
     const [showTable, setShowTable] = useState(false);
     const [time, setTime] = useState([]);
 
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     let count = 1;
 
     const getAllAsync = async () => {
@@ -51,7 +53,8 @@ function Time() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/time/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/time/softdelete/${id}`,
+                    { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -113,21 +116,16 @@ function Time() {
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/time/detail/${time.id}`}>
-                                                                    <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/time/edit/${time.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
+                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Delete' placement='top-start'>
-                                                            <Button type="button" onClick={(id) => remove(time.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
-                                                            </Button>
                                                         </Tooltip>
                                                     </div>
                                                 </TableCell>

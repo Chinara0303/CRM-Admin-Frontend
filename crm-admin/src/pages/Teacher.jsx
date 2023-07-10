@@ -10,6 +10,10 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Teacher() {
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+
+    const token = JSON.parse(localStorage.getItem('user-info'));
+
     const [showTable, setShowTable] = useState(false);
     const [teachers, setTeachers] = useState([]);
     const [pages, setPages] = useState([]);
@@ -19,7 +23,7 @@ function Teacher() {
     const [filterValue, setFilterValue] = useState(undefined);
     let take = 3;
     let count = (pages.currentPage - 1) * take;
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+
 
     const getAllAsync = async (page) => {
         try {
@@ -53,12 +57,6 @@ function Teacher() {
 
             getAllAsync(page)
         }
-        if (filterValue === "ascending" || filterValue === "descending") {
-            setCurrentPage(page);
-
-            getFilteredDatasAsync(page)
-        }
-
         if (searchValue !== undefined) {
             setCurrentPage(page);
             getSearchDatasAsync(searchValue, page)
@@ -77,7 +75,8 @@ function Teacher() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/teacher/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/teacher/softdelete/${id}`,
+                    { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -88,6 +87,7 @@ function Teacher() {
                         });
 
                 } catch (error) {
+                    console.log(error)
                     Swal.fire({
                         title: 'Error!',
                         text: 'Do you want to continue',
@@ -151,7 +151,7 @@ function Teacher() {
                         <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
                     </NavLink>
                 </Tooltip>
-                <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+                <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} autoComplete='off' id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             </div>
             {
                 showTable && (

@@ -119,20 +119,20 @@ function Group() {
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/groups/detail/${group.id}`}>
-                                                                    <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/groups/edit/${group.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
+                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
                                                             <Button type="button" onClick={(id) => remove(group.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
+                                                                <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
                                                             </Button>
                                                         </Tooltip>
                                                     </div>

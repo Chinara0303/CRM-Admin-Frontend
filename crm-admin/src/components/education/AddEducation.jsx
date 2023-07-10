@@ -9,9 +9,10 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label, Form
 import Swal from 'sweetalert2'
 
 function AddEducation() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const navigate = useNavigate();
-
+    const token = JSON.parse(localStorage.getItem('user-info'));
+   
     const [invalidName, setInvalidName] = useState(false);
     const [invalidPrice, setInvalidPrice] = useState(false);
     const [invalidDuration, setInvalidDuration] = useState(false);
@@ -40,11 +41,8 @@ function AddEducation() {
         };
 
         try {
-            await axios.post(`${baseUrl}/api/education/create`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            })
+            await axios.post(`${baseUrl}/api/education/create`, formData,
+                { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',
@@ -129,12 +127,14 @@ function AddEducation() {
                 <Grid container >
                     <Paper>
                         <Form onSubmit={(e) => handleSubmit(e)}>
+                       
                             <FormGroup>
                                 <Input type='file' id='file' onChange={handleFileChange} />
                                 <Label className='btn-2' for='file'>Upload</Label>
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup>
+
                                     <InputGroupText>Name</InputGroupText>
                                     <Input type='text' invalid={invalidName} name="name" onChange={handleNameChange} />
                                     {
@@ -162,7 +162,7 @@ function AddEducation() {
                             <FormGroup>
                                 <InputGroup>
                                     <InputGroupText>Price</InputGroupText>
-                                    <Input  invalid={invalidPrice} name="description" onChange={handlePriceChange} />
+                                    <Input invalid={invalidPrice} name="description" onChange={handlePriceChange} />
                                     {
                                         invalidPrice && (
                                             <FormFeedback invalid>

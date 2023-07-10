@@ -90,7 +90,8 @@ function Profile(props) {
     }
     const getAllAsync = async () => {
         try {
-            await axios.get(`${baseUrl}/api/subscribe/getall`, { headers: { "Authorization": `Bearer ${token}` } })
+            await axios.get(`${baseUrl}/api/subscribe/getall`, 
+            { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
                     if (res.data.length > 0) {
                         setSubscribes(res.data)
@@ -116,7 +117,7 @@ function Profile(props) {
                 .then((res) => {
                     setUser(res.data)
                     setPositions(res.data.roleNames)
-                    console.log(res.data);
+                   
                 });
 
         } catch (error) {
@@ -188,8 +189,8 @@ function Profile(props) {
                 }
             }
         }
-    };
-
+    }
+    
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -269,7 +270,6 @@ function Profile(props) {
         setOldPassword(e.target.value);
         setInvalid(false)
     };
-
     const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value);
         setInvalid(false)
@@ -287,13 +287,13 @@ function Profile(props) {
                     <Box>
                         <div className="left-side">
                             <div className="logo-area">
-                                <img className='img-fluid' src={`data:image/;base64,${user.image}`} alt="" />
+                                <img src={`data:image/;base64,${user.image}`} alt="" />
                             </div>
                             <div className="info-area">
                                 <h4>{user.fullName}</h4>
                                 {
                                     positions.map(function (roleName, i) {
-                                        return <p key={i}>{roleName.name}</p>
+                                        return <span key={i}>{roleName.concat(" ")}</span>
                                     })
                                 }
                             </div>
@@ -303,7 +303,7 @@ function Profile(props) {
                                 {
                                     props.change && (
                                         <Tooltip title="Site" arrow>
-                                            <FontAwesomeIcon icon={faHouseChimneyWindow} size='2xl' style={{ color: "white" }} />
+                                            <FontAwesomeIcon icon={faHouseChimneyWindow} size='xl' style={{ color: "white" }} />
                                         </Tooltip>
                                     )
                                 }
@@ -312,14 +312,14 @@ function Profile(props) {
                                 {
                                     !props.change && (
                                         <Tooltip title="Management" arrow>
-                                            <FontAwesomeIcon icon={faHouse} size='xl' style={{ color: "white" }} />
+                                            <FontAwesomeIcon icon={faHouse} size='lg' style={{ color: "white" }} />
                                         </Tooltip>
                                     )
                                 }
                             </NavLink>
                             <Button type="button" onClick={handleLogout}>
                                 <Tooltip title="Logout" arrow>
-                                    <FontAwesomeIcon icon={faArrowRightFromBracket} size="2xl" style={{ color: "white", cursor: "pointer" }} />
+                                    <FontAwesomeIcon icon={faArrowRightFromBracket} size="xl" style={{ color: "white", cursor: "pointer" }} />
                                 </Tooltip>
                             </Button>
                         </div>
@@ -498,7 +498,6 @@ function Profile(props) {
                                             </Form>
                                         </Box>
                                     </Modal>
-
                                 </div>
                             </div>
                         </Grid>

@@ -10,8 +10,8 @@ import moment from 'moment';
 
 function SiteDetailTeacher() {
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
     const [teacher, setTeacher] = useState([]);
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const getAsync = async (id) => {
         try {
@@ -101,7 +101,7 @@ function SiteDetailTeacher() {
                             </div>
                         </Tooltip>
                         <Tooltip title='Go to list' arrow placement="bottom-start">
-                            <NavLink to='/teachers'>
+                            <NavLink to='/site/teachers'>
                                 <FontAwesomeIcon icon={faChevronLeft} size="2xl" style={{ color: "#005eff", }} />
                             </NavLink>
                         </Tooltip>

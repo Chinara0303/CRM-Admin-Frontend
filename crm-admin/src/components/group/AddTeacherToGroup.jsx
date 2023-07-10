@@ -3,7 +3,6 @@ import { faChevronLeft, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Box, Chip, Container, Grid, InputLabel, Paper, Select, Tooltip, useTheme, MenuItem, OutlinedInput, FormControl, FormLabel, Autocomplete, Alert } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
-// import Close from '@mui/icons-material/Close';
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } from 'reactstrap'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -11,8 +10,7 @@ import { useEffect } from 'react'
 
 
 function AddTeacherToGroup() {
-    const baseUrl = "https://localhost:7069";
-
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [invalid, setInvalid] = useState(false);
     const [invalidMessage, setInvalidMessage] = useState([]);
     const navigate = useNavigate();
@@ -129,15 +127,15 @@ function AddTeacherToGroup() {
                 <Grid container >
                     <Paper>
                         <Form onSubmit={(e) => handleSubmit(e)}>
-                        <FormGroup style={{ marginBottom: "20px" }}>
+                            <FormGroup style={{ marginBottom: "20px" }}>
                                 {
                                     invalid && (
                                         <Alert severity="error">{invalidMessage}</Alert>
                                     )
                                 }
                             </FormGroup>
-                            <div className="forms mt-5 ">
-                                <FormGroup className='mx-2 w-100'>
+                            <div className="forms mt-3">
+                                <FormGroup className='w-100'>
                                     <InputLabel style={{ marginTop: "20px" }} id="demo-simple-select-standard-label">Select the group</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-standart-label"
@@ -165,7 +163,7 @@ function AddTeacherToGroup() {
                                             onChange={handleTeacherChange}
                                             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                                         >
-                                            {teachers.map((teacher,i) => (
+                                            {teachers.map((teacher, i) => (
                                                 <MenuItem
                                                     key={i}
                                                     value={teacher.id}
@@ -175,7 +173,7 @@ function AddTeacherToGroup() {
                                             ))}
                                         </Select>
                                     </FormControl>
-                                </FormGroup> 
+                                </FormGroup>
                             </div>
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/groupteacher'>
@@ -183,7 +181,9 @@ function AddTeacherToGroup() {
                                 </NavLink>
                             </Tooltip>
                             <Tooltip title='add' arrow placement="bottom-start">
-                                <Button type='submit' style={{ border: "none" }} color='transparent'><FontAwesomeIcon icon={faPlus} size="2xl" style={{ color: "#0ae60d", }} /></Button>
+                                <Button type='submit' style={{ border: "none" }} color='transparent'>
+                                    <FontAwesomeIcon icon={faPlus} size="2xl" style={{ color: "#0ae60d", }} />
+                                </Button>
                             </Tooltip>
                         </Form>
                     </Paper>

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function AddAbout() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const navigate = useNavigate();
 
     const [file, setFile] = useState(null);

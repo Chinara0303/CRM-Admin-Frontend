@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 function Student() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [showTable, setShowTable] = useState(false);
     const [students, setStudents] = useState([]);
@@ -53,13 +54,11 @@ function Student() {
         if(searchValue === undefined && filterValue === undefined){
             getAllAsync(page)
         }
-        if(filterValue === "ascending" || filterValue === "descending"){
-            getFilteredDatasAsync(page)
-        }
         if(searchValue !== undefined){
             getSearchResultDatasAsync(searchValue,page)
         }
     };
+
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -72,7 +71,8 @@ function Student() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/student/softdelete/${id}`)
+                    axios.delete(`${baseUrl}/api/student/softdelete/${id}`,
+                    { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -93,6 +93,7 @@ function Student() {
             }
         })
     }
+   
     const getSearchResultDatasAsync = async (searchText,page) => {
         setCurrentPage(page);
         try {
@@ -113,6 +114,7 @@ function Student() {
             })
         }
     }
+    
     const getFilteredDatasAsync = async (page) => {
         setCurrentPage(page);
         try {
@@ -188,20 +190,20 @@ function Student() {
                                                         <Tooltip title='Info' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/students/detail/${student.id}`}>
-                                                                    <FontAwesomeIcon icon={faCircleInfo} size="xl" style={{ color: "#d0fa00", }} />
+                                                                    <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Edit' placement='top-start'>
                                                             <MenuItem>
                                                                 <NavLink to={`/students/edit/${student.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="xl" style={{ color: "#2ab404", }} />
+                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
                                                         <Tooltip title='Delete' placement='top-start'>
                                                             <Button type="button" onClick={(id) => remove(student.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} size="xl" style={{ color: "#f50000", }} />
+                                                                <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
                                                             </Button>
                                                         </Tooltip>
                                                     </div>

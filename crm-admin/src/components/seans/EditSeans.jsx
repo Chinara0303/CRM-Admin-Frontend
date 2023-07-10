@@ -11,12 +11,10 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, FormFeedbac
 import Swal from 'sweetalert2'
 
 function EditSeans() {
-    //     const routeParts = window.location.href.split('/');
-    //    const lastPart = routeParts[routeParts.length - 1]; 
-    //    console.log(lastPart);
+
     const navigate = useNavigate();
     const { id } = useParams();
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const [seans, setSeans] = useState([]);
     const [name, setName] = useState([]);
     const [invalidName, setInvalidName] = useState(false);

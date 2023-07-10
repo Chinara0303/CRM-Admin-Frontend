@@ -30,6 +30,22 @@
     background-color: #174873 !important;
     transform: rotate(-41deg) !important;
   }
+  .edit-area .image-area {
+    width: 100% !important;
+    height: auto !important;
+  }
+  [type=file] + label {
+    padding: 1rem 79px !important;
+  }
+  .css-1ps6pg7-MuiPaper-root {
+    padding: 30px 10px !important;
+  }
+  .forms {
+    display: block !important;
+  }
+  .css-2m9kme-MuiFormControl-root {
+    width: 100% !important;
+  }
 }
 @media (min-width: 768px) and (max-width: 1200px) {
   .sidebar-area {
@@ -44,6 +60,7 @@
 }
 
 .body .sidebar-area {
+  font-family: math;
   margin-top: 20px;
   padding: 30px 40px;
   background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
@@ -53,12 +70,10 @@
   overflow-y: scroll;
 }
 .body .sidebar-area .logo-area {
-  display: flex;
-  align-items: center;
   padding-top: 20px;
 }
 .body .sidebar-area .logo-area img {
-  width: 2rem;
+  width: 100%;
   margin-right: 15px;
 }
 .body .sidebar-area .logo-area h4 {
@@ -116,11 +131,15 @@
   align-items: center;
   flex-direction: row-reverse;
 }
-.body .nav-area .top-area .right-side img {
-  width: 4rem;
-  margin-left: 16px;
+.body .nav-area .top-area .right-side .logo-area {
+  width: 80px;
+  height: 80px;
+}
+.body .nav-area .top-area .right-side .logo-area img {
   background-color: black;
   border-radius: 100%;
+  width: 100%;
+  height: 100%;
 }
 .body .nav-area .top-area .right-side .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
   padding: 14px !important;
@@ -300,6 +319,26 @@
   width: 60px !important;
 }
 
+.create-area .role-name,
+.edit-area .role-name,
+.detail-area .role-name {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.create-area .role-name:hover,
+.edit-area .role-name:hover,
+.detail-area .role-name:hover {
+  background-color: #e79800;
+  color: #fff;
+  border-color: #174873;
+}
 .create-area .images-area,
 .edit-area .images-area,
 .detail-area .images-area {
@@ -356,7 +395,7 @@
 .create-area .image,
 .edit-area .image,
 .detail-area .image {
-  width: 500px;
+  width: 100%;
 }
 .create-area .css-1ps6pg7-MuiPaper-root,
 .edit-area .css-1ps6pg7-MuiPaper-root,
@@ -411,10 +450,14 @@
 .create-area .single-area p,
 .edit-area .single-area p,
 .detail-area .single-area p {
-  text-transform: capitalize;
   font-weight: 500;
   font-size: 18px;
   margin: 10px !important;
+}
+.create-area .single-area .img-detail,
+.edit-area .single-area .img-detail,
+.detail-area .single-area .img-detail {
+  width: 300px;
 }
 
 .title-area {
@@ -477,6 +520,14 @@
   box-shadow: none !important;
 }
 
+.profile-area .logo-area {
+  width: 100px;
+  height: 100px;
+}
+.profile-area .logo-area img {
+  width: 100%;
+  height: 100%;
+}
 .profile-area .top-area {
   display: flex;
   align-items: center;
@@ -486,18 +537,6 @@
   margin: 0 !important;
   font-size: 20px;
   font-weight: 600;
-}
-.profile-area hr {
-  border-top: 0px solid rgba(0, 0, 0, 0.12) !important;
-  border-left: none;
-  border-bottom: none;
-  opacity: 0.25;
-  background-color: transparent;
-  width: 0.0625rem;
-  height: 100%;
-  margin: 0px !important;
-  border-right: 0px solid rgba(0, 0, 0, 0.12) !important;
-  background-image: linear-gradient(rgba(52, 71, 103, 0), rgba(52, 71, 103, 0.4), rgba(52, 71, 103, 0)) !important;
 }
 .profile-area .subscribe-area .top-area {
   margin-bottom: 20px;
