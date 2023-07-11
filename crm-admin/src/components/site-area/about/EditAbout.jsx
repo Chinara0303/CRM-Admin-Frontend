@@ -8,10 +8,12 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label } fro
 import Swal from 'sweetalert2'
 
 function EditAbout() {
+    const token = JSON.parse(localStorage.getItem('user-info'));
+    console.log(token)
+
     const navigate = useNavigate();
     const { id } = useParams();
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
-
     const [about, setAbout] = useState();
     const [file, setFile] = useState(null);
     const [image, setImage] = useState();
@@ -51,15 +53,14 @@ function EditAbout() {
         };
 
         try {
-            await axios.put(`${baseUrl}/api/about/update/${id}`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            }).then(() => {
-                navigate("/site/about")
+            await axios.put(`${baseUrl}/api/about/update/${id}`, formData,
+            { headers: { "Authorization": `Bearer ${token}` } }) 
+            .then(() => {
+                navigate("/educations")
             })
         }
         catch (error) {
+            console.log(error)
             Swal.fire({
                 title: 'Heey!',
                 text: 'Do you want to continue?',

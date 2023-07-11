@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -12,17 +12,27 @@ import { useState } from 'react';
 function GroupTeacher() {
     const [showTable, setShowTable] = useState(false);
     const [groups, setGroups] = useState([]);
-    const [teachers, setTeachers] = useState([]);
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
-    let count = 1;
+    const [pages, setPages] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchValue, setSearchValue] = useState(undefined);
+    const [totalPage, setTotalPage] = useState(1);
+    let take = 3;
+    let count = (pages.currentPage - 1) * take;
 
-    const getAllAsync = async () => {
+    const token = JSON.parse(localStorage.getItem('user-info'));
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+
+    const getAllAsync = async (page) => {
         try {
-            await axios.get(`${baseUrl}/api/group/getall`)
+            await axios.get(`${baseUrl}/api/group/getall?skip=${page}&take=${take}`)
                 .then((res) => {
-                    if (res.data.length > 0) {
+                    setPages(res.data)
+                    if (res.data.datas.length > 0) {
                         setShowTable(true);
-                        setGroups(res.data);
+                        setGroups(res.data.datas);
+                        setTotalPage(res.data.totalPage)
                     }
                     else {
                         setShowTable(false)
@@ -40,17 +50,54 @@ function GroupTeacher() {
         }
     }
 
+    const getSearchResultDatasAsync = async (searchText, page) => {
+        setSearchValue(searchText)
+        try {
+            await axios.post(`${baseUrl}/api/group/search?searchText=${searchText}&skip=${page}&take=${take}`)
+                .then((res) => {
+                    if (res.data.datas.length > 0) {
+                        setGroups(res.data.datas);
+                        setTotalPage(res.data.totalPage)
+                    }
+                })
+        } catch (error) {
+            Swal.fire({
+                title: 'Oops...',
+                text: 'Something went wrong',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        }
+    }
+
+    const handleChange = (e, page) => {
+        setCurrentPage(page);
+        if (searchValue === undefined) {
+            getAllAsync(page)
+        }
+        if (searchValue !== undefined) {
+            getSearchResultDatasAsync(searchValue, page)
+        }
+    };
+
     useEffect(() => {
-        getAllAsync();
+        getAllAsync(currentPage);
     }, [])
 
     return (
         <div className='area'>
-            <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/groupteacher/create'>
-                    <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                </NavLink>
-            </Tooltip>
+            < div className="d-flex justify-content-between">
+                {userRole.includes("Admin") ?
+                    <Tooltip title='Add' arrow placement="top-start">
+                        <NavLink to='/groupteacher/create'>
+                            <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                        </NavLink>
+                    </Tooltip>
+                    : null
+                }
+                <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+            </div>
+
             {
                 showTable && (
                     <Paper style={{ marginTop: "30px" }}>
@@ -66,14 +113,15 @@ function GroupTeacher() {
                                 <TableBody>
                                     {
                                         groups.map(function (group, i) {
+                                            count++
                                             return <TableRow key={i}>
-                                                <TableCell>{count++}</TableCell>
+                                                <TableCell>{count}</TableCell>
                                                 <TableCell>
                                                     <div className="group-name">
                                                         <span>{group.name} </span>
                                                     </div>
                                                 </TableCell>
-                                                <TableCell style={{ display: "flex",justifyContent:"center" }}>
+                                                <TableCell style={{ display: "flex", justifyContent: "center" }}>
                                                     {
                                                         group.teachersInfo.map(function (teacher, i) {
                                                             return <div className="img-area">
@@ -81,13 +129,16 @@ function GroupTeacher() {
                                                             </div>
                                                         })
                                                     }
-                                                  
+
                                                 </TableCell>
                                             </TableRow>
                                         })
                                     }
                                 </TableBody>
                             </Table>
+                            <Stack spacing={2}>
+                                <Pagination onChange={handleChange} count={totalPage} page={currentPage} size='large' />
+                            </Stack>
                         </TableContainer>
                     </Paper>
                 )

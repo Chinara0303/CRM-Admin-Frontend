@@ -11,6 +11,8 @@ import { useEffect } from 'react'
 
 function AddTeacherToGroup() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
+
     const [invalid, setInvalid] = useState(false);
     const [invalidMessage, setInvalidMessage] = useState([]);
     const navigate = useNavigate();
@@ -25,8 +27,8 @@ function AddTeacherToGroup() {
         try {
             await axios.get(`${baseUrl}/api/group/getall?skip=0&take=0`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setGroups(res.data)
+                    if (res.data.datas.length > 0) {
+                        setGroups(res.data.datas)
                     }
                 });
 
@@ -64,7 +66,6 @@ function AddTeacherToGroup() {
         const formData = new FormData();
         for (const [key, value] of Object.entries(newTeacherGroup)) {
             if (key === 'teacherIds') {
-                debugger
                 value.forEach((val, index) => {
                     formData.append(`teacherIds[${index}]`, val)
                 })
@@ -75,11 +76,8 @@ function AddTeacherToGroup() {
 
 
         try {
-            await axios.post(`${baseUrl}/api/teachergroup/create`, formData, {
-                headers: {
-                    Accept: "*/*",
-                }
-            })
+            await axios.post(`${baseUrl}/api/teachergroup/create`, formData, 
+            { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',

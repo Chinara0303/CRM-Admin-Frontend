@@ -14,6 +14,10 @@ export default function Room() {
   const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   let count = 1;
 
+  const token = JSON.parse(localStorage.getItem('user-info'));
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+
   const getAllAsync = async () => {
     try {
       await axios.get(`${baseUrl}/api/room/getall`)
@@ -36,7 +40,7 @@ export default function Room() {
       })
     }
   }
-  
+
   const remove = (id) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -49,7 +53,8 @@ export default function Room() {
     }).then((result) => {
       if (result.isConfirmed) {
         try {
-          axios.delete(`${baseUrl}/api/room/softdelete/${id}`)
+          axios.delete(`${baseUrl}/api/room/softdelete/${id}`,
+            { headers: { "Authorization": `Bearer ${token}` } })
             .then(() => {
               Swal.fire(
                 'Deleted!',
@@ -77,11 +82,16 @@ export default function Room() {
 
   return (
     <div className='area'>
-      <Tooltip title='Add' arrow placement="top-start">
-        <NavLink to='/rooms/create'>
-          <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-        </NavLink>
-      </Tooltip>
+      {
+        userRole !== "Admin" ?
+          null
+          :   <Tooltip title='Add' arrow placement="top-start">
+          <NavLink to='/rooms/create'>
+            <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+          </NavLink>
+        </Tooltip>
+      }
+    
       {
         showTable && (
           <Paper style={{ marginTop: "30px" }}>
@@ -113,6 +123,7 @@ export default function Room() {
                                 </NavLink>
                               </MenuItem>
                             </Tooltip>
+
                             <Tooltip title='Edit' placement='top-start'>
                               <MenuItem>
                                 <NavLink to={`/rooms/edit/${room.id}`}>

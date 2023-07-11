@@ -23,7 +23,7 @@ function EditGroup() {
     const [roomId, setRoomId] = useState([]);
     const [teacherIds, setTeacherIds] = useState([]);
     const [invalid, setInvalid] = useState(false);
-    const [invalidMessage, setInvalidMessage] = useState([]);
+    const [invalidMessage, setInvalidMessage] = useState("");
 
 
     const newGroup = { roomId: roomId, teacherIds: teacherIds };
@@ -131,7 +131,6 @@ function EditGroup() {
             getAsync(id)
         }
         catch (error) {
-            console.log(error);
             Swal.fire({
                 title: 'Heey!',
                 text: 'Do you want to continue?',
@@ -208,7 +207,6 @@ function EditGroup() {
                                             <MenuItem
                                                 key={i}
                                                 value={teacher.id}
-                                            // style={getStyles(teacher.fullName, personName, theme)}
                                             >
                                                 {teacher.fullName}
                                             </MenuItem>
@@ -216,19 +214,6 @@ function EditGroup() {
                                     </Select>
                                 </FormControl>
                             </FormGroup>
-                            {/* <FormGroup>
-                                <InputGroup>
-                                    <InputGroupText>Teachers</InputGroupText>
-                                    <Input type="select" name='select' multiple onChange={(e) => handleTeacherChange(e)} >
-                                        <option value="">Choose</option>
-                                        {
-                                            teachers.map(function (teacher, i) {
-                                                return <option value={teacher.id} key={i}>{teacher.fullName}</option>
-                                            })
-                                        }
-                                    </Input>
-                                </InputGroup>
-                            </FormGroup> */}
 
                             <Tooltip title='Go to list' arrow placement="bottom-start">
                                 <NavLink to='/groups'>

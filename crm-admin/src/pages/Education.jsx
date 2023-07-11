@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { Button,  MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
+import { Button, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -15,13 +15,9 @@ function Education() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     let count = 1;
     const token = JSON.parse(localStorage.getItem('user-info'));
-  
-    // const getRolesFromToken = () => {
-    //     const decodedToken = jwt.decode(token);
-    //     console.log(decodedToken)
-    //     return decodedToken.roles; // Yetkileri içeren bir dizi döndürür
-    // };
-    // const userRoles = getRolesFromToken();
+   
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
 
     const getAllAsync = async () => {
         try {
@@ -57,7 +53,8 @@ function Education() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/education/softdelete/${id}`,  { headers: { "Authorization": `Bearer ${token}` } })
+                    axios.delete(`${baseUrl}/api/education/softdelete/${id}`,
+                     { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -82,15 +79,17 @@ function Education() {
     useEffect(() => {
         getAllAsync();
     }, [])
-    
+
     return (
         <div className='area'>
-             {/* {userRoles.includes('admin') && <button>Düğme</button>} */}
-            <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/educations/create'>
-                    <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                </NavLink>
-            </Tooltip>
+            {userRole.includes("Admin") ?
+                <Tooltip title='Add' arrow placement="top-start">
+                    <NavLink to='/educations/create'>
+                        <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                    </NavLink>
+                </Tooltip>
+                : null
+            }
             {
                 showTable && (
                     <Paper style={{ marginTop: "30px" }}>
@@ -108,8 +107,8 @@ function Education() {
                                 <TableBody>
                                     {
                                         educations.map(function (education, i) {
-                                            return <TableRow>
-                                                <TableCell>{count++}</TableCell>
+                                            return <TableRow key={i}>
+                                                <TableCell >{count++}</TableCell>
                                                 <TableCell>
                                                     <div className="image-area">
                                                         <img src={`data:image/png;base64,${education.image}`} />
@@ -126,18 +125,24 @@ function Education() {
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/educations/edit/${education.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
-                                                                </NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Delete' placement='top-start'>
-                                                                <Button onClick={(id) => remove(education.id)}>
-                                                                    <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
-                                                                </Button>
-                                                        </Tooltip>
+                                                        {userRole.includes("Admin") || userRole.includes("SalesManager") ?
+                                                            <>
+                                                                <Tooltip title='Edit' placement='top-start'>
+                                                                    <MenuItem>
+                                                                        <NavLink to={`/educations/edit/${education.id}`}>
+                                                                            <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
+                                                                        </NavLink>
+                                                                    </MenuItem>
+                                                                </Tooltip>
+                                                                <Tooltip title='Delete' placement='top-start'>
+                                                                    <Button onClick={(id) => remove(education.id)}>
+                                                                        <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
+                                                                    </Button>
+                                                                </Tooltip>
+                                                            </>
+                                                            : null
+                                                        }
+
                                                     </div>
                                                 </TableCell>
                                             </TableRow>

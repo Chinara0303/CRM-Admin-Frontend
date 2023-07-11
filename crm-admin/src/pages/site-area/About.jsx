@@ -66,7 +66,6 @@ function About() {
                                         <TableCell>Image</TableCell>
                                         <TableCell>Title</TableCell>
                                         <TableCell>Subtitle</TableCell>
-                                        <TableCell>Description</TableCell>
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -82,7 +81,6 @@ function About() {
                                                 </TableCell>
                                                 <TableCell>{about.title}</TableCell>
                                                 <TableCell>{about.subTitle}</TableCell>
-                                                <TableCell>{about.description}</TableCell>
                                                 <TableCell>
                                                     <div className="d-flex">
                                                         <Tooltip title='Info' placement='top-start'>

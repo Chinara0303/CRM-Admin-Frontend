@@ -1,6 +1,6 @@
 import { faChevronLeft, faPlus, } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip } from '@mui/material'
+import { Alert, Container, Grid, Paper, Tooltip } from '@mui/material'
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, FormFeedback } from 'reactstrap'
@@ -13,9 +13,11 @@ function AddRoom() {
   const token = JSON.parse(localStorage.getItem('user-info'));
 
   const [invalidName, setInvalidName] = useState(false);
+  const [invalid, setInvalid] = useState(false);
   const [invalidCapacity, setInvalidCapacity] = useState(false);
   const [invalidCapacityMessage, setInvalidCapacityMessage] = useState("");
   const [invalidNameMessage, setInvalidNameMessage] = useState("");
+  const [invalidMessage, setInvalidMessage] = useState("");
 
   const [name, setName] = useState("");
   const [capacity, setCapacity] = useState("");
@@ -30,7 +32,7 @@ function AddRoom() {
     };
 
     try {
-      await axios.post(`${baseUrl}/api/room/create`, formData, 
+      await axios.post(`${baseUrl}/api/room/create`, formData,
         { headers: { "Authorization": `Bearer ${token}` } }
       )
         .then(() => {
@@ -48,17 +50,23 @@ function AddRoom() {
 
     }
     catch (error) {
-      const errors = error.response.data.errors;
-      if (errors.Capacity != undefined) {
-        if (errors.Capacity.length > 0) {
-          setInvalidCapacity(true);
-          setInvalidCapacityMessage(errors.Capacity)
-        }
+      const errors = error.response.data;
+      if (errors.length > 0) {
+        setInvalid(true)
+        setInvalidMessage(errors)
       }
-      if (errors.Name != undefined) {
-        if (errors.Name.length > 0) {
-          setInvalidName(true);
-          setInvalidNameMessage(errors.Name)
+      if (errors.errors != undefined) {
+        if (errors.errors.Capacity != undefined) {
+          if (errors.errors.Capacity.length > 0) {
+            setInvalidCapacity(true);
+            setInvalidCapacityMessage(errors.errors.Capacity)
+          }
+        }
+        if (errors.errors.Name != undefined) {
+          if (errors.errors.Name.length > 0) {
+            setInvalidName(true);
+            setInvalidNameMessage(errors.errors.Name)
+          }
         }
       }
     }
@@ -67,11 +75,13 @@ function AddRoom() {
   const handleNameChange = (e) => {
     setName(e.target.value);
     setInvalidName(false);
+    setInvalid(false)
   };
 
   const handleCapacityChange = (e) => {
     setCapacity(e.target.value);
     setInvalidCapacity(false);
+    setInvalid(false);
   };
 
   return (
@@ -85,6 +95,13 @@ function AddRoom() {
         <Grid container >
           <Paper>
             <Form onSubmit={(e) => handleSubmit(e)}>
+              <FormGroup>
+                {
+                  invalid && (
+                    <Alert severity="error">{invalidMessage}</Alert>
+                  )
+                }
+              </FormGroup>
               <FormGroup>
                 <InputGroup>
                   <InputGroupText>Name</InputGroupText>

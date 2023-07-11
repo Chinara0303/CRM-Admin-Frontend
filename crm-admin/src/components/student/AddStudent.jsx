@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 
 function AddStudent() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const navigate = useNavigate();
 
@@ -52,11 +53,8 @@ function AddStudent() {
         };
 
         try {
-            await axios.post(`${baseUrl}/api/student/create`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            })
+            await axios.post(`${baseUrl}/api/student/create`, formData, 
+                { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',

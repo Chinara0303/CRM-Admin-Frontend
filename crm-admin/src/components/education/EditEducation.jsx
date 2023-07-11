@@ -1,7 +1,7 @@
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip } from '@mui/material'
+import { Alert, Container, Grid, Paper, Tooltip } from '@mui/material'
 import axios from 'axios'
 import React from 'react'
 import { useEffect } from 'react'
@@ -15,6 +15,7 @@ function EditEducation() {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const [invalid, setInvalid] = useState(false);
     const [invalidName, setInvalidName] = useState(false);
     const [invalidPrice, setInvalidPrice] = useState(false);
     const [invalidDuration, setInvalidDuration] = useState(false);
@@ -25,6 +26,7 @@ function EditEducation() {
     const [invalidDurationMessage, setinvalIdDurationMessage] = useState("");
     const [invalidPriceMessage, setInvalidPriceMessage] = useState("");
     const [invalidNameMessage, setInvalidNameMessage] = useState("");
+    const [invalidMessage, setInvalidMessage] = useState("");
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
@@ -61,7 +63,6 @@ function EditEducation() {
         }
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -71,67 +72,82 @@ function EditEducation() {
         };
 
         try {
-            await axios.put(`${baseUrl}/api/education/update/${id}`, formData).then(() => {
+            await axios.put(`${baseUrl}/api/education/update/${id}`, formData)
+            
+            .then(() => {
                 navigate("/educations")
             })
         }
         catch (error) {
-            const errors = error.response.data.errors;
-            if (errors.Name != undefined) {
-                if (errors.Name.length > 0) {
-                    setInvalidName(true);
-                    setInvalidNameMessage(errors.Name)
+            const errors = error.response.data;
+            if(errors.length > 0){
+                setInvalid(true)
+                setInvalidMessage(errors)
+            }
+            if (errors.errors != undefined) {
+                if (errors.errors.Name != undefined) {
+                    if (errors.errors.Name.length > 0) {
+                        setInvalidName(true);
+                        setInvalidNameMessage(errors.errors.Name)
+                    }
+                }
+                if (errors.errors.Price != undefined) {
+                    if (errors.errors.Price.length > 0) {
+                        setInvalidPrice(true);
+                        setInvalidPriceMessage(errors.errors.Price)
+                    }
+                }
+                if (errors.errors.Description != undefined) {
+                    if (errors.errors.Description.length > 0) {
+                        setInvalidDescription(true);
+                        setInvalidDescriptionMessage(errors.errors.Description)
+                    }
+                }
+                if (errors.errors.Duration != undefined) {
+                    if (errors.errors.Duration.length > 0) {
+                        setInvalidDuration(true);
+                        setinvalIdDurationMessage(errors.errors.Duration)
+                    }
+                }
+                if (errors.errors.Promise != undefined) {
+                    if (errors.errors.Promise.length > 0) {
+                        setInvalidPromise(true);
+                        setInvalidPromiseMessage(errors.errors.Promise)
+                    }
                 }
             }
-            if (errors.Price != undefined) {
-                if (errors.Price.length > 0) {
-                    setInvalidPrice(true);
-                    setInvalidPriceMessage(errors.Price)
-                }
-            }
-            if (errors.Description != undefined) {
-                if (errors.Description.length > 0) {
-                    setInvalidDescription(true);
-                    setInvalidDescriptionMessage(errors.Description)
-                }
-            }
-            if (errors.Duration != undefined) {
-                if (errors.Duration.length > 0) {
-                    setInvalidDuration(true);
-                    setinvalIdDurationMessage(errors.Duration)
-                }
-            }
-            if (errors.Promise != undefined) {
-                if (errors.Promise.length > 0) {
-                    setInvalidPromise(true);
-                    setInvalidPromiseMessage(errors.Promise)
-                }
-            }
+
         }
     };
 
     const handleNameChange = (e) => {
         setName(e.target.value);
         setInvalidName(false);
+        setInvalid(false);
     };
     const handlePriceChange = (e) => {
         setPrice(e.target.value);
         setInvalidPrice(false);
+        setInvalid(false);
     };
     const handleDurationChange = (e) => {
         setDuration(e.target.value);
         setInvalidDuration(false);
+        setInvalid(false);
     };
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
         setInvalidDescription(false)
+        setInvalid(false);
     };
     const handlePromiseChange = (e) => {
         setPromise(e.target.value);
         setInvalidPromise(false)
+        setInvalid(false);
     };
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        setInvalid(false);
     };
 
     useEffect(() => {
@@ -156,6 +172,13 @@ function EditEducation() {
                             : null
                     }
                         <Form className='mt-5' onSubmit={(e) => handleSubmit(e)}>
+                            <FormGroup>
+                                {
+                                    invalid && (
+                                        <Alert severity="error">{invalidMessage}</Alert>
+                                    )
+                                }
+                            </FormGroup>
                             <FormGroup>
                                 <Input type='file' id='file' onChange={handleFileChange} />
                                 <Label className='btn-2' for='file'>Upload</Label>

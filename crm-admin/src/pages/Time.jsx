@@ -12,7 +12,9 @@ import { useState } from 'react';
 function Time() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
-   
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+
     const [showTable, setShowTable] = useState(false);
     const [time, setTime] = useState([]);
 
@@ -54,7 +56,7 @@ function Time() {
             if (result.isConfirmed) {
                 try {
                     axios.delete(`${baseUrl}/api/time/softdelete/${id}`,
-                    { headers: { "Authorization": `Bearer ${token}` } })
+                        { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -83,11 +85,15 @@ function Time() {
 
     return (
         <div className='area'>
-            <Tooltip title='Add' arrow placement="top-start">
-                <NavLink to='/time/create'>
-                    <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                </NavLink>
-            </Tooltip>
+            {userRole.includes("Admin") ?
+                <Tooltip title='Add' arrow placement="top-start">
+                    <NavLink to='/time/create'>
+                        <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                    </NavLink>
+                </Tooltip>
+                : null
+            }
+
 
             {
                 showTable && (
@@ -120,13 +126,17 @@ function Time() {
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/time/edit/${time.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
-                                                                </NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
+                                                        {userRole.includes("Admin") ?
+                                                            <Tooltip title='Edit' placement='top-start'>
+                                                                <MenuItem>
+                                                                    <NavLink to={`/time/edit/${time.id}`}>
+                                                                        <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
+                                                                    </NavLink>
+                                                                </MenuItem>
+                                                            </Tooltip>
+                                                            : null
+                                                        }
+
                                                     </div>
                                                 </TableCell>
                                             </TableRow>

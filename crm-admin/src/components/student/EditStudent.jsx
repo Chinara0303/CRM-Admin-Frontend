@@ -13,6 +13,7 @@ function EditStudent() {
   const navigate = useNavigate();
   const { id } = useParams();
   const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+  const token = JSON.parse(localStorage.getItem('user-info'));
 
   const [invalidFullName, setInvalidFullName] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);

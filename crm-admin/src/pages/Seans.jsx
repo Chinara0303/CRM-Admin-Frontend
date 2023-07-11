@@ -16,6 +16,11 @@ function Seans() {
   const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
   let count = 1;
 
+
+  const token = JSON.parse(localStorage.getItem('user-info'));
+  const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+  const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+
   const getAllAsync = async () => {
     try {
       await axios.get(`${baseUrl}/api/seans/getall`)
@@ -72,12 +77,16 @@ function Seans() {
                         <TableCell>{seans.name}</TableCell>
                         <TableCell>
                           <div className="actions">
-                            <Tooltip title='Edit' placement='top-start'>
-                              <MenuItem>
-                                <NavLink to={`/seanses/edit/${seans.id}`}>
-                                  <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                              </MenuItem>
-                            </Tooltip>
+                            {userRole.includes("Admin") ?
+                              <Tooltip title='Edit' placement='top-start'>
+                                <MenuItem>
+                                  <NavLink to={`/seanses/edit/${seans.id}`}>
+                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                                </MenuItem>
+                              </Tooltip>
+                              : null
+                            }
+
                           </div>
                         </TableCell>
                       </TableRow>

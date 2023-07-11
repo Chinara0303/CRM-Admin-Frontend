@@ -12,6 +12,8 @@ import { useState } from 'react';
 function Student() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
 
     const [showTable, setShowTable] = useState(false);
     const [students, setStudents] = useState([]);
@@ -20,7 +22,7 @@ function Student() {
     const [searchValue, setSearchValue] = useState(undefined);
     const [totalPage, setTotalPage] = useState(1);
     const [filterValue, setFilterValue] = useState('ascending');
-    
+
     let take = 3;
     let count = (pages.currentPage - 1) * take;
 
@@ -51,11 +53,11 @@ function Student() {
 
     const handleChange = (e, page) => {
         setCurrentPage(page);
-        if(searchValue === undefined && filterValue === undefined){
+        if (searchValue === undefined && filterValue === undefined) {
             getAllAsync(page)
         }
-        if(searchValue !== undefined){
-            getSearchResultDatasAsync(searchValue,page)
+        if (searchValue !== undefined) {
+            getSearchResultDatasAsync(searchValue, page)
         }
     };
 
@@ -72,7 +74,7 @@ function Student() {
             if (result.isConfirmed) {
                 try {
                     axios.delete(`${baseUrl}/api/student/softdelete/${id}`,
-                    { headers: { "Authorization": `Bearer ${token}` } })
+                        { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
@@ -93,8 +95,8 @@ function Student() {
             }
         })
     }
-   
-    const getSearchResultDatasAsync = async (searchText,page) => {
+
+    const getSearchResultDatasAsync = async (searchText, page) => {
         setCurrentPage(page);
         try {
             await axios.post(`${baseUrl}/api/student/search?searchText=${searchText}&skip=${page}&take=${take}`)
@@ -114,7 +116,7 @@ function Student() {
             })
         }
     }
-    
+
     const getFilteredDatasAsync = async (page) => {
         setCurrentPage(page);
         try {
@@ -141,13 +143,17 @@ function Student() {
 
     return (
         <div className='area'>
-            <div className="d-flex justify-content-between">
-                <Tooltip title='Add' arrow placement="top-start">
-                    <NavLink to='/students/create'>
-                        <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                    </NavLink>
-                </Tooltip>
-                <TextField style={{ userSelect: "none" }} onChange={(e) => getSearchResultDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
+            < div className="d-flex justify-content-between">
+                {
+                    userRole.includes("Admin") ?
+                        <Tooltip title='Add' arrow placement="top-start">
+                            <NavLink to='/student/create'>
+                                <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                            </NavLink>
+                        </Tooltip>
+                        : null
+                }
+                <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             </div>
             {
                 showTable && (
@@ -194,13 +200,18 @@ function Student() {
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/students/edit/${student.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
-                                                                </NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
+                                                        {
+                                                            userRole.includes("Admin,HR,StudentCoordinator") ?
+                                                                <Tooltip title='Edit' placement='top-start'>
+                                                                    <MenuItem>
+                                                                        <NavLink to={`/students/edit/${student.id}`}>
+                                                                            <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
+                                                                        </NavLink>
+                                                                    </MenuItem>
+                                                                </Tooltip>
+                                                                : null
+                                                        }
+
                                                         <Tooltip title='Delete' placement='top-start'>
                                                             <Button type="button" onClick={(id) => remove(student.id)}>
                                                                 <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />

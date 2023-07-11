@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck, faCircleInfo, faCircleXmark, faPenToSquare, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { Button,  MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
+import { Button, MenuItem, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
@@ -11,6 +11,8 @@ import axios from 'axios';
 function Staff() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
 
     const [showTable, setShowTable] = useState(false);
     const [staff, setStaff] = useState([]);
@@ -47,6 +49,7 @@ function Staff() {
             })
         }
     }
+
     const remove = (id) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -60,14 +63,14 @@ function Staff() {
             if (result.isConfirmed) {
                 try {
                     axios.delete(`${baseUrl}/api/account/usersoftdelete/${id}`,
-                      { headers: { "Authorization": `Bearer ${token}` } })
+                        { headers: { "Authorization": `Bearer ${token}` } })
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
                                 'Your item has been deleted.',
                                 'success'
                             )
-                            getAllAsync();
+                            getAllAsync(currentPage);
                         });
 
                 } catch (error) {
@@ -128,10 +131,6 @@ function Staff() {
             setCurrentPage(page);
             getAllAsync(page)
         }
-        // if (filterValue === "ascending" || filterValue === "descending") {
-        //     setCurrentPage(page);
-        //     getFilteredDatasAsync(page, filterValue)
-        // }
         if (searchValue !== "") {
             setCurrentPage(page);
             getSearchResultDatasAsync(searchValue, page)
@@ -140,8 +139,7 @@ function Staff() {
 
     const handleStatusChange = async (userId) => {
         try {
-            await axios.put(`${baseUrl}/api/account/setStatus/${userId}`,
-            { headers: { "Authorization": `Bearer ${token}` } })
+            await axios.put(`${baseUrl}/api/account/setstatus/${userId}`,)
                 .then((res) => {
                     if (res.status === 200) {
                         setStaff((prevStaff) =>
@@ -149,13 +147,12 @@ function Staff() {
                                 employee.id === userId
                                     ? { ...employee, status: !employee.status }
                                     : employee
-                            )
+                            ),
                         );
                     }
                 })
 
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -165,12 +162,16 @@ function Staff() {
 
     return (
         <div className='area'>
-            <div className="d-flex justify-content-between">
-                <Tooltip title='Add' arrow placement="top-start">
-                    <NavLink to='/staff/create'>
-                        <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                    </NavLink>
-                </Tooltip>
+            < div className="d-flex justify-content-between">
+                {
+                    userRole.includes("Admin") ?
+                        <Tooltip title='Add' arrow placement="top-start">
+                            <NavLink to='/staff/create'>
+                                <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                            </NavLink>
+                        </Tooltip>
+                        : null
+                }
                 <TextField onChange={(e) => getSearchResultDatasAsync(e.target.value, pages.currentPage)} id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             </div>
             {
@@ -193,7 +194,12 @@ function Staff() {
                                             </Tooltip>
                                             Age
                                         </TableCell>
-                                        <TableCell>Status</TableCell>
+                                        {
+                                            userRole.includes("Admin") ?
+                                                <TableCell>Status</TableCell> : null
+
+                                        }
+
                                         <TableCell>Action</TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -210,18 +216,21 @@ function Staff() {
                                                 </TableCell>
                                                 <TableCell>{employee.fullName}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
-                                                <TableCell>
-                                                    {
-                                                        <div className="statuses" onClick={() => handleStatusChange(employee.id)}>
+
+
+                                                {
+                                                    userRole.includes("Admin") ?
+                                                        <TableCell><div className="statuses" onClick={() => handleStatusChange(employee.id)}>
                                                             <FontAwesomeIcon
                                                                 icon={employee.status ? faCircleCheck : faCircleXmark}
                                                                 size="xl"
                                                                 style={{ color: employee.status ? 'green' : 'red', cursor: 'pointer' }}
                                                             />
-
                                                         </div>
-                                                    }
-                                                </TableCell>
+                                                        </TableCell>
+                                                        : null
+                                                }
+
                                                 <TableCell>
                                                     <div className="actions">
                                                         <Tooltip title='Info' placement='top-start'>
@@ -231,18 +240,26 @@ function Staff() {
                                                                 </NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/staff/edit/${employee.id}`}>
-                                                                    <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
-                                                                </NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Delete' placement='top-start'>
-                                                            <Button type='button' onClick={() => remove(employee.id)}>
-                                                                <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
-                                                            </Button>
-                                                        </Tooltip>
+                                                        {
+                                                            userRole.includes("Admin") ?
+                                                            <>
+                                                            <Tooltip title='Edit' placement='top-start'>
+                                                                <MenuItem>
+                                                                    <NavLink to={`/staff/edit/${employee.id}`}>
+                                                                        <FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} />
+                                                                    </NavLink>
+                                                                </MenuItem>
+                                                            </Tooltip>
+                                                            <Tooltip title='Delete' placement='top-start'>
+                                                                <Button type='button' onClick={() => remove(employee.id)}>
+                                                                    <FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} />
+                                                                </Button>
+                                                            </Tooltip>
+                                                        </>
+                                                                : null
+                                                               
+                                                        }
+
                                                     </div>
 
                                                 </TableCell>
@@ -259,7 +276,7 @@ function Staff() {
                 )
             }
 
-        </div>
+        </div >
     )
 }
 

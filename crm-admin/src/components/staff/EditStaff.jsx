@@ -1,7 +1,7 @@
 import { faFloppyDisk } from '@fortawesome/free-regular-svg-icons'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Grid, Paper, Tooltip,OutlinedInput,Select,MenuItem,FormControl,InputLabel } from '@mui/material'
+import { Container, Grid, Paper, Tooltip, OutlinedInput, Select, MenuItem, FormControl, InputLabel, Alert } from '@mui/material'
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -11,16 +11,18 @@ import Swal from 'sweetalert2'
 function EditStaff() {
     const navigate = useNavigate();
     const { id } = useParams();
+
+
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [roleIds, setRoleIds] = useState([]);
     const [roles, setRoles] = useState([]);
-    const [roleName, setRoleName] = useState([]);
     const [roleNames, setRoleNames] = useState([]);
+    const [invalid, setInvalid] = useState(false);
+    const [invalidMessage, setInvalidMessage] = useState([]);
 
     const newEmployee = { roleIds: roleIds };
-    const deletedEmployee = {roleName: roleName}
 
     const getRolesAsync = async () => {
         try {
@@ -59,7 +61,6 @@ function EditStaff() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-
         for (const [key, value] of Object.entries(newEmployee)) {
             if (key === 'roleIds') {
                 value.forEach((val, index) => {
@@ -69,50 +70,43 @@ function EditStaff() {
             }
             formData.append(key, value);
         };
-
         try {
             await axios.put(`${baseUrl}/api/account/userroleupdate/${id}`, formData)
-            .then(() => {
-                navigate("/staff")
-            })
+                .then(() => {
+                    navigate("/staff")
+                })
         }
         catch (error) {
-            console.log(error)
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
+            }
         }
     };
 
- 
-
     const handleRemoveRole = async (roleName) => {
-        debugger
-        console.log(roleName)
-        setRoleName(roleName)
-        const formData = new FormData();
-
-        for (const [key, value] of Object.entries(deletedEmployee)) {
-            formData.append(key, value);
-        };
         try {
-            debugger
-            console.log(roleName)
-            await axios.delete(`${baseUrl}/api/account/deleterole/${id}`,formData,)
-            getAsync(id)
+            await axios.delete(`${baseUrl}/api/account/deleterole/${id}?roleName=${roleName}`,)
+                .then(() => {
+                    getAsync(id)
+
+                })
         }
         catch (error) {
-            console.log(error);
-            Swal.fire({
-                title: 'Heey!',
-                text: 'Do you want to continue?',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
+            const errors = error.response.data;
+            if (errors.length > 0) {
+                setInvalid(true)
+                setInvalidMessage(errors)
+            }
         }
     }
 
     const handleRoleChange = (e) => {
         setRoleIds(e.target.value);
+        setInvalid(false)
     }
-    
+
     useEffect(() => {
         getAsync(id)
         getRolesAsync();
@@ -129,12 +123,19 @@ function EditStaff() {
             <Container maxWidth='lg'>
                 <Grid container>
                     <Paper>
+                        <FormGroup style={{ marginBottom: "20px" }}>
                             {
-                                roleNames.map(function(roleName,i){
-                                   return <span className='role-name' onClick={()=>handleRemoveRole(roleName)}  key={i} >{roleName}</span>
-                                })
+                                invalid && (
+                                    <Alert severity="error">{invalidMessage}</Alert>
+                                )
                             }
-                        <Form  onSubmit={(e) => handleSubmit(e)}>
+                        </FormGroup>
+                        {
+                            roleNames.map(function (roleName, i) {
+                                return <span className='role-name' onClick={() => handleRemoveRole(roleName)} key={i} >{roleName}</span>
+                            })
+                        }
+                        <Form onSubmit={(e) => handleSubmit(e)}>
                             <FormGroup>
                                 <FormControl sx={{ m: 1, width: 300 }} >
                                     <InputLabel id="demo-multiple-chip-label">Teacher</InputLabel>

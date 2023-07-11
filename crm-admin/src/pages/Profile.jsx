@@ -22,7 +22,8 @@ const style = {
 function Profile(props) {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const token = JSON.parse(localStorage.getItem('user-info'));
-
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [click, setClick] = useState(false);
@@ -90,8 +91,8 @@ function Profile(props) {
     }
     const getAllAsync = async () => {
         try {
-            await axios.get(`${baseUrl}/api/subscribe/getall`, 
-            { headers: { "Authorization": `Bearer ${token}` } })
+            await axios.get(`${baseUrl}/api/subscribe/getall`,
+                { headers: { "Authorization": `Bearer ${token}` } })
                 .then((res) => {
                     if (res.data.length > 0) {
                         setSubscribes(res.data)
@@ -117,7 +118,7 @@ function Profile(props) {
                 .then((res) => {
                     setUser(res.data)
                     setPositions(res.data.roleNames)
-                   
+
                 });
 
         } catch (error) {
@@ -190,7 +191,7 @@ function Profile(props) {
             }
         }
     }
-    
+
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -299,15 +300,21 @@ function Profile(props) {
                             </div>
                         </div>
                         <div className="right-side">
-                            <NavLink to='/site/dashboard' onClick={() => handleChangeClick()}>
-                                {
-                                    props.change && (
-                                        <Tooltip title="Site" arrow>
-                                            <FontAwesomeIcon icon={faHouseChimneyWindow} size='xl' style={{ color: "white" }} />
-                                        </Tooltip>
-                                    )
-                                }
-                            </NavLink>
+                            {
+                                userRole.includes("Admin") ?
+
+                                    <NavLink to='/site/dashboard' onClick={() => handleChangeClick()}>
+                                        {
+                                            props.change && (
+                                                <Tooltip title="Site" arrow>
+                                                    <FontAwesomeIcon icon={faHouseChimneyWindow} size='xl' style={{ color: "white" }} />
+                                                </Tooltip>
+                                            )
+                                        }
+
+                                    </NavLink>
+                                    : null
+                            }
                             <NavLink to='/dashboard' onClick={() => handleChangeClick()}>
                                 {
                                     !props.change && (

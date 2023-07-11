@@ -16,11 +16,10 @@ function SiteSetting() {
 
   const getAllAsync = async () => {
     try {
-      await axios.get(`${baseUrl}/api/setting/getall`)
+      await axios.get(`${baseUrl}/api/setting/getsettings`)
         .then((res) => {
-          console.log(res.data)
-          if (res.data.length > 0) {
-            setSetting(res.data)
+          if (res.data.result.length > 0) {
+            setSetting(res.data.result)
           }
         });
 

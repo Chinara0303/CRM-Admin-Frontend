@@ -9,8 +9,9 @@ import { Form, FormGroup, Input, InputGroup, Button, InputGroupText, Label, Form
 import Swal from 'sweetalert2'
 
 function AddTeacher() {
-    const baseUrl = "https://localhost:7069";
+    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
     const navigate = useNavigate();
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [invalidFullName, setInvalidFullName] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
@@ -46,11 +47,8 @@ function AddTeacher() {
         };
 
         try {
-            await axios.post(`${baseUrl}/api/teacher/create`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            })
+            await axios.post(`${baseUrl}/api/teacher/create`, formData, 
+                { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',

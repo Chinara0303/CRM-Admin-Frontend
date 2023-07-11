@@ -13,7 +13,9 @@ function Teacher() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
 
     const token = JSON.parse(localStorage.getItem('user-info'));
-
+    const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;
+    const userRole = decodedToken ? decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : null;
+    
     const [showTable, setShowTable] = useState(false);
     const [teachers, setTeachers] = useState([]);
     const [pages, setPages] = useState([]);
@@ -29,7 +31,6 @@ function Teacher() {
         try {
             await axios.get(`${baseUrl}/api/teacher/getall?skip=${page}&take=${take}`)
                 .then((res) => {
-                    debugger
                     setPages(res.data)
                     if (res.data.datas.length > 0) {
                         setShowTable(true);
@@ -75,19 +76,17 @@ function Teacher() {
         }).then((result) => {
             if (result.isConfirmed) {
                 try {
-                    axios.delete(`${baseUrl}/api/teacher/softdelete/${id}`,
-                    { headers: { "Authorization": `Bearer ${token}` } })
+                    axios.delete(`${baseUrl}/api/teacher/softdelete/${id}`)
                         .then(() => {
                             Swal.fire(
                                 'Deleted!',
                                 'Your item has been deleted.',
                                 'success'
                             )
-                            getAllAsync();
+                            getAllAsync(currentPage);
                         });
 
                 } catch (error) {
-                    console.log(error)
                     Swal.fire({
                         title: 'Error!',
                         text: 'Do you want to continue',
@@ -104,7 +103,7 @@ function Teacher() {
         try {
             await axios.post(`${baseUrl}/api/teacher/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
-                   
+
                     if (res.data.datas.length > 0) {
                         setTeachers(res.data.datas);
                         setTotalPage(res.data.totalPage)
@@ -146,11 +145,14 @@ function Teacher() {
     return (
         <div className='area'>
             <div className="d-flex justify-content-between">
-                <Tooltip title='Add' arrow placement="top-start">
-                    <NavLink to='/teachers/create'>
-                        <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
-                    </NavLink>
-                </Tooltip>
+                {userRole.includes("Admin") || userRole.includes("AffairCoordinator") ?
+                    <Tooltip title='Add' arrow placement="top-start">
+                        <NavLink to='/teachers/create'>
+                            <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
+                        </NavLink>
+                    </Tooltip>
+                    : null
+                }
                 <TextField onChange={(e) => getSearchDatasAsync(e.target.value, pages.currentPage)} autoComplete='off' id="outlined-basic" className='d-lg-block d-md-block d-none' label="Search..." variant="outlined" />
             </div>
             {
@@ -195,14 +197,21 @@ function Teacher() {
                                                                     <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#d0fa00", }} /></NavLink>
                                                             </MenuItem>
                                                         </Tooltip>
-                                                        <Tooltip title='Edit' placement='top-start'>
-                                                            <MenuItem>
-                                                                <NavLink to={`/teachers/edit/${teacher.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
-                                                            </MenuItem>
-                                                        </Tooltip>
-                                                        <Tooltip title='Delete' placement='top-start'>
-                                                            <Button type="button" onClick={(id) => remove(teacher.id)}><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
-                                                        </Tooltip>
+
+                                                        {userRole.includes("Admin") ?
+                                                            <>
+                                                                <Tooltip title='Edit' placement='top-start'>
+                                                                    <MenuItem>
+                                                                        <NavLink to={`/teachers/edit/${teacher.id}`}><FontAwesomeIcon icon={faPenToSquare} size="lg" style={{ color: "#2ab404", }} /></NavLink>
+                                                                    </MenuItem>
+                                                                </Tooltip>
+                                                                <Tooltip title='Delete' placement='top-start'>
+                                                                    <Button type="button" onClick={(id) => remove(teacher.id)}><FontAwesomeIcon icon={faTrashCan} size="lg" style={{ color: "#f50000", }} /></Button>
+                                                                </Tooltip>
+                                                            </>
+                                                            :null
+                                                        }
+                                                      
                                                     </div>
                                                 </TableCell>
                                             </TableRow>

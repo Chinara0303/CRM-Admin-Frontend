@@ -11,6 +11,8 @@ import Swal from 'sweetalert2'
 
 function AddGroup() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
+    
     const navigate = useNavigate();
     const [rooms, setRooms] = useState([]);
     const [educations, setEducations] = useState([]);
@@ -42,6 +44,7 @@ function AddGroup() {
         }
 
     }
+
     const getEducationsAsync = async () => {
         try {
             await axios.get(`${baseUrl}/api/education/getall`)
@@ -58,6 +61,7 @@ function AddGroup() {
         }
 
     }
+
     const getTimeAsync = async () => {
         try {
             await axios.get(`${baseUrl}/api/time/getall`)
@@ -74,6 +78,7 @@ function AddGroup() {
         }
 
     }
+
     const getWeekdayAsync = async () => {
         try {
             await axios.get(`${baseUrl}/api/week/getall`)
@@ -90,6 +95,7 @@ function AddGroup() {
         }
 
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -99,11 +105,8 @@ function AddGroup() {
         };
 
         try {
-            await axios.post(`${baseUrl}/api/group/create`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            })
+            await axios.post(`${baseUrl}/api/group/create`, formData, 
+            { headers: { "Authorization": `Bearer ${token}` } })
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',
