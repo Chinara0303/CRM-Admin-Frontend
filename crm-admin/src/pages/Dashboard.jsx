@@ -81,6 +81,7 @@ function Dashboard() {
           <Tooltip />
           <Area type="monotone" dataKey="studentsCount" stroke="#8884d8" fill="#8884d8" />
         </AreaChart>
+
     </div >
   )
 }
