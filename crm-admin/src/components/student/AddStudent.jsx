@@ -115,14 +115,16 @@ function AddStudent() {
             }
         }
     };
+
     const getGroupsAsync = async () => {
         try {
-            await axios.get(`${baseUrl}/api/group/getall`)
+            await axios.get(`${baseUrl}/api/group/getall?skip=0&take=0`)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        setGroups(res.data);
+                    console.log(res.data)
+                    if (res.data.datas.length > 0) {
+                        setGroups(res.data.datas)
                     }
-                })
+                });
 
         } catch (error) {
             Swal.fire({
@@ -133,6 +135,7 @@ function AddStudent() {
             })
         }
     }
+   
     const handleFullNameChange = (e) => {
         setFullName(e.target.value);
         setInvalidFullName(false);

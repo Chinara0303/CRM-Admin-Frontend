@@ -55,10 +55,10 @@ function Group() {
     }
 
     const getSearchResultDatasAsync = async (searchText, page) => {
-        setSearchValue(searchText)
         try {
             await axios.post(`${baseUrl}/api/group/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
+                    console.log(res.data)
                     if (res.data.datas.length > 0) {
                         setGroups(res.data.datas);
                         setTotalPage(res.data.totalPage)
@@ -123,7 +123,6 @@ function Group() {
         getAllAsync(currentPage);
     }, [])
 
-    console.log(groups)
     return (
         <div className='area'>
             < div className="d-flex justify-content-between">

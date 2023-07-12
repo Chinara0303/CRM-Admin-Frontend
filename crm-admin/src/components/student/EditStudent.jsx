@@ -78,7 +78,9 @@ function EditStudent() {
     };
 
     try {
-      await axios.put(`${baseUrl}/api/student/update/${id}`, formData).then(() => {
+      await axios.put(`${baseUrl}/api/student/update/${id}`, formData,
+      { headers: { "Authorization": `Bearer ${token}` } })
+      .then(() => {
         navigate("/students")
       })
     }
@@ -158,9 +160,10 @@ function EditStudent() {
 
   const getGroupsAsync = async () => {
     try {
-      await axios.get(`${baseUrl}/api/group/getall`).then((res) => {
-        if (res.data.length > 0) {
-          setGroups(res.data)
+      await axios.get(`${baseUrl}/api/group/getall?skip=0&take=0`)
+      .then((res) => {
+        if (res.data.datas.length > 0) {
+          setGroups(res.data.datas)
         }
       })
     }

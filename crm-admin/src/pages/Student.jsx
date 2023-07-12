@@ -107,7 +107,6 @@ function Student() {
                     }
                 })
         } catch (error) {
-            console.log(error);
             Swal.fire({
                 title: 'Oops...',
                 text: 'Something went wrong',
@@ -147,7 +146,7 @@ function Student() {
                 {
                     userRole.includes("Admin") ?
                         <Tooltip title='Add' arrow placement="top-start">
-                            <NavLink to='/student/create'>
+                            <NavLink to='/students/create'>
                                 <FontAwesomeIcon icon={faSquarePlus} size="2xl" style={{ color: "#069a04", }} />
                             </NavLink>
                         </Tooltip>
@@ -201,7 +200,7 @@ function Student() {
                                                             </MenuItem>
                                                         </Tooltip>
                                                         {
-                                                            userRole.includes("Admin,HR,StudentCoordinator") ?
+                                                            userRole.includes("Admin") || userRole.includes("HR") || userRole.includes("StudentCoordinator")?
                                                                 <Tooltip title='Edit' placement='top-start'>
                                                                     <MenuItem>
                                                                         <NavLink to={`/students/edit/${student.id}`}>
