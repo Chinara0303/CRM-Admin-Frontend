@@ -319,6 +319,12 @@
   width: 60px !important;
 }
 
+.create-area a,
+.edit-area a,
+.detail-area a {
+  display: inline-block;
+  margin-top: 40px;
+}
 .create-area .role-name,
 .edit-area .role-name,
 .detail-area .role-name {

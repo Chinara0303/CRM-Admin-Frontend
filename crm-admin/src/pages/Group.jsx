@@ -55,6 +55,7 @@ function Group() {
     }
 
     const getSearchResultDatasAsync = async (searchText, page) => {
+        setSearchValue(searchText)
         try {
             await axios.post(`${baseUrl}/api/group/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
@@ -65,12 +66,7 @@ function Group() {
                     }
                 })
         } catch (error) {
-            Swal.fire({
-                title: 'Oops...',
-                text: 'Something went wrong',
-                icon: 'error',
-                confirmButtonText: 'Cool'
-            })
+            console.log(error)
         }
     }
 

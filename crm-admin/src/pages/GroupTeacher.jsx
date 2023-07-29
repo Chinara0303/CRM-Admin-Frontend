@@ -71,11 +71,12 @@ function GroupTeacher() {
     }
 
     const handleChange = (e, page) => {
-        setCurrentPage(page);
         if (searchValue === undefined) {
+            setCurrentPage(page);
             getAllAsync(page)
         }
         if (searchValue !== undefined) {
+            setCurrentPage(page);
             getSearchResultDatasAsync(searchValue, page)
         }
     };

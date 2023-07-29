@@ -84,7 +84,7 @@ function Time() {
     }, [])
 
     return (
-        <div className='area'>
+        <div className='area mt-1' >
             {userRole.includes("Admin") ?
                 <Tooltip title='Add' arrow placement="top-start">
                     <NavLink to='/time/create'>

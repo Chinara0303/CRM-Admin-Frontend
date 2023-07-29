@@ -60,7 +60,6 @@ function EditRoom() {
             const errors = error.response.data.errors;
             if(errors.Capacity != undefined){
                 if (errors.Capacity.length > 0) {
-                    debugger
                     setInvalidCapacity(true);
                     setInvalidCapacityMessage(errors.Capacity)
                 }

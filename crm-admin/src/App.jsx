@@ -59,6 +59,7 @@ import AddTime from './components/time/AddTime';
 import DetailTime from './components/time/DetailTime';
 import EditTime from './components/time/EditTime';
 import SiteEducation from './pages/site-area/SiteEducation';
+import Contact from './pages/site-area/Contact';
 
 function App() {
   const [text, setText] = useState(() => {
@@ -167,6 +168,7 @@ function App() {
                 <Route path='/site/about/create' element={<AddAbout />} />
                 <Route path='/site/about/detail/:id' element={<DetailAbout />} />
                 <Route path='/site/about/edit/:id' element={<EditAbout />} />
+                <Route path='/site/contact' element={<Contact />} />
 
               </Routes>
             </Grid>

@@ -115,6 +115,10 @@
 .create-area,
 .edit-area,
 .detail-area {
+    a{
+        display: inline-block;
+        margin-top: 40px;
+    }
     .role-name {
         display: inline-block;
         margin-right: 10px;

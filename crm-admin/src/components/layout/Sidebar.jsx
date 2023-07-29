@@ -93,6 +93,7 @@ function Sidebar(props) {
                                 <h5>Time</h5>
                             </div>
                         </NavLink>
+                      
                     </div>
                 )
             }
@@ -139,6 +140,12 @@ function Sidebar(props) {
                             <div className="single-nav" onClick={(e) => handleClick(e)}>
                                 <FontAwesomeIcon icon={faCircleInfo} size="lg" style={{ color: "#fff", }} />
                                 <h5>About</h5>
+                            </div>
+                        </NavLink>
+                        <NavLink to='/site/contact' className='navigate' onClick={() => handleClose()} >
+                            <div className="single-nav" onClick={(e) => handleClick(e)}>
+                                <FontAwesomeIcon icon={faBorderAll} size="lg" style={{ color: "#fff", }} />
+                                <h5>Contacts</h5>
                             </div>
                         </NavLink>
                     </div>

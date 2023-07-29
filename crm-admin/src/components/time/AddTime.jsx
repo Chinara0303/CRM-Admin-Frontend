@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 
 function AddTime() {
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const navigate = useNavigate();
 
@@ -29,11 +30,9 @@ function AddTime() {
             formData.append(key, value);
         };
         try {
-            await axios.post(`${baseUrl}/api/time/create`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            })
+            await axios.post(`${baseUrl}/api/time/create`, formData,
+                { headers: { "Authorization": `Bearer ${token}` } })
+            
                 .then(() => {
                     Swal.fire({
                         position: 'top-end',

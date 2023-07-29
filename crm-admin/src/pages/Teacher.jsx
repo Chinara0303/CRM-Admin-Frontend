@@ -22,7 +22,7 @@ function Teacher() {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState(undefined);
     const [totalPage, setTotalPage] = useState(1);
-    const [filterValue, setFilterValue] = useState(undefined);
+    const [filterValue, setFilterValue] = useState('ascending');
     let take = 3;
     let count = (pages.currentPage - 1) * take;
 
@@ -53,9 +53,8 @@ function Teacher() {
     }
 
     const handleChange = (e, page) => {
-        if (searchValue === undefined && filterValue === undefined) {
+        if (searchValue === undefined) {
             setCurrentPage(page);
-
             getAllAsync(page)
         }
         if (searchValue !== undefined) {
@@ -103,7 +102,7 @@ function Teacher() {
         try {
             await axios.post(`${baseUrl}/api/teacher/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
-
+                    console.log(res.data)
                     if (res.data.datas.length > 0) {
                         setTeachers(res.data.datas);
                         setTotalPage(res.data.totalPage)

@@ -90,6 +90,7 @@ function Staff() {
         try {
             await axios.post(`${baseUrl}/api/account/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {
+                    console.log(res.data)
                     if (res.data.datas.length > 0) {
                         setStaff(res.data.datas);
                         setTotalPage(res.data.totalPage);
@@ -126,7 +127,6 @@ function Staff() {
     };
 
     const handleChange = (e, page) => {
-
         if (searchValue === "") {
             setCurrentPage(page);
             getAllAsync(page)
@@ -216,8 +216,6 @@ function Staff() {
                                                 </TableCell>
                                                 <TableCell>{employee.fullName}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
-
-
                                                 {
                                                     userRole.includes("Admin") ?
                                                         <TableCell><div className="statuses" onClick={() => handleStatusChange(employee.id)}>

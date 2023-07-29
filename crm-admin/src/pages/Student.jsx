@@ -53,7 +53,7 @@ function Student() {
 
     const handleChange = (e, page) => {
         setCurrentPage(page);
-        if (searchValue === undefined && filterValue === undefined) {
+        if (searchValue === undefined) {
             getAllAsync(page)
         }
         if (searchValue !== undefined) {
@@ -97,7 +97,7 @@ function Student() {
     }
 
     const getSearchResultDatasAsync = async (searchText, page) => {
-        setCurrentPage(page);
+        setSearchValue(searchText)
         try {
             await axios.post(`${baseUrl}/api/student/search?searchText=${searchText}&skip=${page}&take=${take}`)
                 .then((res) => {

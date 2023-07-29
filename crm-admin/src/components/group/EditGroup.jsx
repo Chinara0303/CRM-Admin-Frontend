@@ -15,6 +15,7 @@ function EditGroup() {
     const navigate = useNavigate();
     const { id } = useParams();
     const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+    const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [rooms, setRooms] = useState([]);
     const [group, setGroup] = useState([]);
@@ -98,11 +99,9 @@ function EditGroup() {
         };
 
         try {
-            await axios.put(`${baseUrl}/api/group/update/${id}`, formData, {
-                headers: {
-                    Accept: "*/*"
-                }
-            }).then(() => {
+            await axios.put(`${baseUrl}/api/group/update/${id}`, formData, 
+                { headers: { "Authorization": `Bearer ${token}` } })
+            .then(() => {
                 navigate("/groups")
             })
         }
@@ -127,7 +126,8 @@ function EditGroup() {
 
     const handleRemoveTeacher = async (teacherId) => {
         try {
-            await axios.delete(`${baseUrl}/api/group/deleteTeacher/${teacherId}`)
+            await axios.delete(`${baseUrl}/api/group/deleteTeacher/${teacherId}`,{
+                 headers: { "Authorization": `Bearer ${token}` } })
             getAsync(id)
         }
         catch (error) {

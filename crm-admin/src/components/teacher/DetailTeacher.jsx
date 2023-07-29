@@ -82,21 +82,7 @@ function DetailTeacher() {
                                 <p>{teacher.biography}</p>
                             </div>
                         </Tooltip>
-                        <Tooltip title='Linkedin' placement='left' arrow>
-                            <div className="single-area">
-                                <p>tyguhljghjk</p>
-                            </div>
-                        </Tooltip>
-                        <Tooltip title='Facebook' placement='left' arrow>
-                            <div className="single-area">
-                                <p>tyguhljghjk</p>
-                            </div>
-                        </Tooltip>
-                        <Tooltip title='Twitter' placement='left' arrow>
-                            <div className="single-area">
-                                <p>tyguhljghjk</p>
-                            </div>
-                        </Tooltip>
+                      
                         <Tooltip title='Created Date' placement='left' arrow>
                             <div className="single-area">
                                 <p>{moment(teacher.createdDate).format('DD-MM-YYYY HH:mm:ss')}</p>
