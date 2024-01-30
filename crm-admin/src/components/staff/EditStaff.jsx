@@ -13,7 +13,7 @@ function EditStaff() {
     const { id } = useParams();
 
 
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const token = JSON.parse(localStorage.getItem('user-info'));
 
     const [roleIds, setRoleIds] = useState([]);

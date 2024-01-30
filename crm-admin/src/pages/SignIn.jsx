@@ -10,7 +10,7 @@ import Sidebar from '../components/layout/Sidebar';
 
 
 function SignIn() {
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

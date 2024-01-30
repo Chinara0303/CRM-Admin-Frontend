@@ -9,7 +9,7 @@ import moment from 'moment';
 
 function DetailStaff() {
     const { id } = useParams();
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const [staffMember, setStaffMember] = useState([]);
     const [positions, setPositions] = useState([]);
 

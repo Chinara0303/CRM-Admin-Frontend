@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 function Contact() {
     const [contact, setContact] = useState([])
     const [education, setEducation] = useState([])
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     let count = 1;
 
     const getAllAsync = async () => {

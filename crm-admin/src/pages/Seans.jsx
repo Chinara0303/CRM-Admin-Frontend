@@ -13,7 +13,7 @@ function Seans() {
   const [showTable, setShowTable] = useState(false);
   const [seanses, setSeanses] = useState([]);
 
-  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+ const baseUrl = "https://localhost:7069";
   let count = 1;
 
 

@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 
 function DetailGroup() {
     const { id } = useParams();
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const [group, setGroup] = useState([]);
     const [room, setRoom] = useState([]);
     const [education, setEducation] = useState([]);

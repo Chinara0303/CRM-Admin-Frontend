@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 
 function AddStaff() {
 
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
   
     const navigate = useNavigate();
     const token = JSON.parse(localStorage.getItem('user-info'));

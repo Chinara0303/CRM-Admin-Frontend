@@ -13,7 +13,7 @@ import Swal from 'sweetalert2'
 function EditTime() {
     const navigate = useNavigate();
     const { id } = useParams();
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
 
 
     const [start, setStart] = useState("");

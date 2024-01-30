@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 
 function DetailRoom() {
     const { id } = useParams();
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
 
     const [room, setRoom] = useState([]);
 

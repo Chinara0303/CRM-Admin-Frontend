@@ -12,7 +12,7 @@ import { useState } from 'react';
 function GroupTeacher() {
     const [showTable, setShowTable] = useState(false);
     const [groups, setGroups] = useState([]);
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const [pages, setPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState(undefined);

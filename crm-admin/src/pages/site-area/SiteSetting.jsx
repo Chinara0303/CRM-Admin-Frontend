@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 function SiteSetting() {
   const [setting, setSetting] = useState([]);
-  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+ const baseUrl = "https://localhost:7069";
   let count = 1;
 
   const getAllAsync = async () => {

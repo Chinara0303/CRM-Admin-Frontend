@@ -14,7 +14,7 @@ function EditSeans() {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     const [seans, setSeans] = useState([]);
     const [name, setName] = useState([]);
     const [invalidName, setInvalidName] = useState(false);

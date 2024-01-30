@@ -11,7 +11,7 @@ import axios from 'axios';
 export default function Room() {
   const [showTable, setShowTable] = useState(false);
   const [rooms, setRooms] = useState([]);
-  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+ const baseUrl = "https://localhost:7069";
   let count = 1;
 
   const token = JSON.parse(localStorage.getItem('user-info'));

@@ -20,7 +20,7 @@ const TriangleBar = (props) => {
 };
 function SiteDashboard() {
   const [groups, setGroups] = useState([])
-  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+ const baseUrl = "https://localhost:7069";
 
   const getGroupsAsync = async () => {
     try {

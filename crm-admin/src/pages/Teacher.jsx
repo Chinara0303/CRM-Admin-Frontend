@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 function Teacher() {
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
 
     const token = JSON.parse(localStorage.getItem('user-info'));
     const decodedToken = token ? JSON.parse(atob(token.split('.')[1])) : null;

@@ -12,7 +12,7 @@ import { useState } from 'react';
 function Education() {
     const [showTable, setShowTable] = useState(false);
     const [educations, setEducations] = useState([]);
-    const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+   const baseUrl = "https://localhost:7069";
     let count = 1;
     const token = JSON.parse(localStorage.getItem('user-info'));
    

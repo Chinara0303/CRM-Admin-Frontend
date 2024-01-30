@@ -8,7 +8,7 @@ import { BarChart, Bar, AreaChart, Area, LineChart, Line, XAxis, YAxis, Cartesia
 function Dashboard() {
   const [educations, setEducations] = useState([])
   const [groups, setGroups] = useState([])
-  const baseUrl = "http://webfulleducation-001-site1.atempurl.com";
+ const baseUrl = "https://localhost:7069";
 
   const getEducationsAsync = async () => {
     try {
